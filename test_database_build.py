@@ -18,7 +18,6 @@ cursor.execute("CREATE TABLE IF NOT EXISTS course (course_ID INT, name VARCHAR(2
 cursor.execute("CREATE TABLE IF NOT EXISTS student_course (student_ID INT references student(student_ID), course_ID INT references course(course_ID))")
 cursor.execute("CREATE TABLE IF NOT EXISTS professor_course (professor_ID INT references professor(professor_ID), course_ID INT references course(course_ID))")
 cursor.execute("CREATE TABLE IF NOT EXISTS student_course_grade (student_ID INT references student(student_ID), class_ID INT references class(class_ID), assignment_grade FLOAT(24), weight FLOAT(24))")
-cursor.execute("INSERT INTO student (grade_level) VALUES (13)")
 mydb.commit()
 
 class Person:
