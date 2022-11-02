@@ -2,20 +2,23 @@ from types import ClassMethodDescriptorType
 import mysql.connector
 from numpy import append
 import pandas as pd
+import uuid
 
 mydb = mysql.connector.connect(
     host = "127.0.0.1",
     user = "root",
-    #password = "1234", ## My databse currently has no password
+    password = "1234", ## My databse currently has no password
     auth_plugin='mysql_native_password',
-    database = "SCHOOL_MANAGEMENT"
+    database = "test"
 )
 
 cursor = mydb.cursor()
 
 ## Create database tables based on current use cases
+cursor.execute("CREATE database IF NOT EXISTS SCHOOL_MANAGEMENT")
 cursor.execute("CREATE TABLE IF NOT EXISTS student (student_ID INT primary key auto_increment, first_name CHAR(255), last_name CHAR(255), courses VARCHAR(255), grade_level VARCHAR(255), age SMALLINT)")
 cursor.execute("CREATE TABLE IF NOT EXISTS professor (professor_ID INT, first_name CHAR(255), last_name CHAR(255), classes VARCHAR(255), class_count SMALLINT, start_date DATE)")
+#cursor.execute("INSERT INTO professor (professor_ID, first_name, last_name, classes, class_count, start_date) VALUES (%s, %s, %s, %s, %s, %s)", (1, "Jacob", "Ranz", "History", 1, "2022-08-08"))
 cursor.execute("CREATE TABLE IF NOT EXISTS course (course_ID INT, name VARCHAR(255), professor_first CHAR(255), professor_last CHAR(255), student_first CHAR(255), student_last CHAR(255), grade_level CHAR(255))")
 cursor.execute("CREATE TABLE IF NOT EXISTS student_course (student_ID INT references student(student_ID), course_ID INT references course(course_ID))")
 cursor.execute("CREATE TABLE IF NOT EXISTS professor_course (professor_ID INT references professor(professor_ID), course_ID INT references course(course_ID))")
@@ -36,7 +39,8 @@ class Student(Person): # Inherited from Person class
         self.courses = []
 
     def set_id(self, id): ## Implement logic to auto generate GUID
-        self.id = id
+        self.id = uuid.uuid1().int
+        print(self.id)
         
     def set_first_name(self, first_name): ## When entering student first name in GUI, the button runs this command 
         self.first_name = first_name
@@ -67,6 +71,9 @@ class Student(Person): # Inherited from Person class
         mydb.commit()
 
 class Professor(Person):
+    def set_id(self):
+        self.id = uuid.uuid1().int
+    
     def set_first_name(self, first_name):
         self.first_name = first_name
 
@@ -75,13 +82,16 @@ class Professor(Person):
 
     def set_age(self, age):
         self.age = age
+        
+    def set_qualifications(self, qualifictaions):
+        self.qualifications = qualifictaions
 
 class Course:
     def __init__(self):
         pass
 
     def set_course_id(self):
-        pass ## Implement auto generated GUID
+        self.id = uuid.uuid1().int
 
     def set_course_name(self, name):
         self.course_name = name
@@ -91,6 +101,17 @@ class Course:
 
     def set_max_students(self, max):
         self.max_students = max
+
+    def set_professor(self, professor):
+        self.professor = professor
+        ## Query professor to add - Include search for professor field to take input of user and search
+        cursor.execute("""SELECT last_name FROM professor
+                       WHERE last_name = %s
+                       """, self.professor)
+        result = cursor.fetchall()
+        for row in result:
+            print(row)
+            print("\n")
 
     def set_student(self, student):
         self.student = student
@@ -109,3 +130,6 @@ s.set_age("22")
 s.set_courses("History, Math") ## Output of array does not work inputting into database yet
 s.set_grade_level(16)
 s.write_database()
+
+c = Course()
+c.set_professor("Ranz")
