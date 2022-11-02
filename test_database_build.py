@@ -34,12 +34,18 @@ class Student(Person): # Inherited from Person class
     ## At the end of the class, all of the data will be entered into the database
     def __init__(self):
         self.courses = []
+
+    def set_id(self, id): ## Implement logic to auto generate GUID
+        self.id = id
         
     def set_first_name(self, first_name): ## When entering student first name in GUI, the button runs this command 
         self.first_name = first_name
     
     def set_last_name(self, last_name):
         self.last_name = last_name
+
+    def set_age(self, age):
+        self.age = age
 
     def set_courses(self, courses):
         self.course = courses.strip().split(", ")
@@ -49,15 +55,15 @@ class Student(Person): # Inherited from Person class
     def set_grade_level(self, grade_level):
         self.grade_level = grade_level
 
-    def get_courses(self): #### Not printing values - need to fix
+    def get_courses(self): ## Should not store course information here but rather students in course class
         for course in self.courses:
             print(course)
 
     def write_database(self):
         cursor.execute("""
-        INSERT INTO student (first_name, last_name, classes, grade_level, age)
-        VALUES (%s,%s,%s,%s,%s,%s)
-        """, (self.first_name , self.last_name, self.courses, self.grade_level, self.age))
+        INSERT INTO student (student_ID, first_name, last_name, classes, grade_level, age)
+        VALUES (%s,%s,%s,NULL,%s,%s)
+        """, (self.id, self.first_name , self.last_name, self.grade_level, self.age))
         mydb.commit()
 
 class Professor(Person):
@@ -67,10 +73,39 @@ class Professor(Person):
     def set_last_name(self, last_name):
         self.last_name = last_name
 
-    def set_courses(self, courses):
+    def set_age(self, age):
+        self.age = age
+
+class Course:
+    def __init__(self):
         pass
+
+    def set_course_id(self):
+        pass ## Implement auto generated GUID
+
+    def set_course_name(self, name):
+        self.course_name = name
+
+    def set_course_desc(self, desc):
+        self.course_desc = desc
+
+    def set_max_students(self, max):
+        self.max_students = max
+
+    def set_student(self, student):
+        self.student = student
+        ## Query student to add
+
+## Class for adding assignments to courses and assigning grades - may not be necessary
+class Assignment:
+    pass
 
     
 s = Student()
-s.set_courses("History, Math, Science")
-s.get_courses()
+s.set_id(69)
+s.set_first_name("Kassie")
+s.set_last_name("Estrada")
+s.set_age("22")
+s.set_courses("History, Math") ## Output of array does not work inputting into database yet
+s.set_grade_level(16)
+s.write_database()
