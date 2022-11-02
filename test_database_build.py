@@ -102,7 +102,7 @@ class Assignment:
 
     
 s = Student()
-s.set_id(69)
+s.set_id(35)
 s.set_first_name("Kassie")
 s.set_last_name("Estrada")
 s.set_age("22")
