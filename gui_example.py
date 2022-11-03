@@ -1,8 +1,8 @@
 import sys
 import subprocess
-from Tkinter import *
-from ttk import *
-import tkMessageBox
+from tkinter import *
+from tkinter.ttk import *
+from tkinter import messagebox
 
 print("Attempting to detect any pending reboots...")
 
@@ -31,24 +31,24 @@ if cmd_result == "Reboot is probably not necessary.":
         pass
     
     def clicked_info():
-        tkMessageBox.showinfo("Pending rbeoots detected!", "This system has pending reboots")
+        messagebox.showinfo("Pending rbeoots detected!", "This system has pending reboots")
         
     def clicked_reboot():
-        prompt = tkMessageBox.askquestion(title = "Reboot now?", message = "Do you wish to reboot?")
+        prompt = messagebox.askquestion(title = "Reboot now?", message = "Do you wish to reboot?")
         if prompt == 'yes':
             subprocess.check_output("systemctl reboot now", shell=True)
         else:
-            prompt = tkMessageBox.showwarning("Warning!", "You will be prompted to reboot your machine every 30 minutes until you reboot!")
+            prompt = messagebox.showwarning("Warning!", "You will be prompted to reboot your machine every 30 minutes until you reboot!")
             window.quit()
             
     def clicked_snooze():
-        prompt = tkMessageBox.showwarning("Warning!", "You will be prompted to reboot your machine every 30 minutes until you reboot!")
+        prompt = messagebox.showwarning("Warning!", "You will be prompted to reboot your machine every 30 minutes until you reboot!")
         window.quit()
         
     style = Style()
-    style.configure('W.TButton', font = ('calibri', 10, 'bold', 'underline'), foreground = blue)
-    style.configure('A.TButton', font = ('calibri', 10, 'bold', 'underline'), foreground = green)
-    style.configure('B.TButton', font = ('calibri', 10, 'bold', 'underline'), foreground = red)
+    style.configure('W.TButton', font = ('calibri', 10, 'bold', 'underline'), foreground = 'blue')
+    style.configure('A.TButton', font = ('calibri', 10, 'bold', 'underline'), foreground = 'green')
+    style.configure('B.TButton', font = ('calibri', 10, 'bold', 'underline'), foreground = 'red')
     
     btn = Button(window, text = "Notification Info", command = clicked_info(), style = 'W.TButton')
     btn.grid(row = 2, column = 6, padx = 55, pady = 10)
