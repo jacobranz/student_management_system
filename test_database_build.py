@@ -117,6 +117,21 @@ class Course:
         self.student = student
         ## Query student to add
 
+    def get_course_id(self, course_id):
+        pass ## Query database based on user input
+
+    def get_course_name(self, course_name):
+        pass ## Query database
+
+    def get_course_desc(self, desc):
+        pass ## Query database
+
+    def get_student(self, student):
+        pass ## Query database
+
+    def get_professor(self, professor):
+        pass ## Query database
+
 ## Class for adding assignments to courses and assigning grades - may not be necessary
 class Assignment:
     pass
