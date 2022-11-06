@@ -3,7 +3,7 @@ import mysql.connector
 from numpy import append
 import pandas as pd
 import uuid
-
+'''
 mydb = mysql.connector.connect(
     host = "127.0.0.1",
     user = "root",
@@ -24,7 +24,7 @@ cursor.execute("CREATE TABLE IF NOT EXISTS student_course (student_ID INT refere
 cursor.execute("CREATE TABLE IF NOT EXISTS professor_course (professor_ID INT references professor(professor_ID), course_ID INT references course(course_ID))")
 cursor.execute("CREATE TABLE IF NOT EXISTS student_course_grade (student_ID INT references student(student_ID), class_ID INT references class(class_ID), assignment_grade FLOAT(24), weight FLOAT(24))")
 mydb.commit()
-
+'''
 class Person:
     def __init__(self, first_name, last_name, age):
         self.first_name = first_name
@@ -38,7 +38,7 @@ class Student(Person): # Inherited from Person class
     def __init__(self):
         self.courses = []
 
-    def set_id(self, id): ## Implement logic to auto generate GUID
+    def set_id(self): ## Implement logic to auto generate GUID
         self.id = uuid.uuid1().int
         print(self.id)
         
@@ -50,11 +50,6 @@ class Student(Person): # Inherited from Person class
 
     def set_age(self, age):
         self.age = age
-
-    def set_courses(self, courses):
-        self.course = courses.strip().split(", ")
-        for course in self.course:
-            self.courses.append(course)
         
     def set_grade_level(self, grade_level):
         self.grade_level = grade_level
@@ -73,6 +68,7 @@ class Student(Person): # Inherited from Person class
 class Professor(Person):
     def set_id(self):
         self.id = uuid.uuid1().int
+        return self.id
     
     def set_first_name(self, first_name):
         self.first_name = first_name
@@ -136,7 +132,7 @@ class Course:
 class Assignment:
     pass
 
-    
+'''    
 s = Student()
 s.set_id(35)
 s.set_first_name("Kassie")
@@ -148,3 +144,4 @@ s.write_database()
 
 c = Course()
 c.set_professor("Ranz")
+'''
