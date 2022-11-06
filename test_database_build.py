@@ -36,11 +36,11 @@ class Student(Person): # Inherited from Person class
     ## Button correlates to each one of these functions
     ## At the end of the class, all of the data will be entered into the database
     def __init__(self):
-        self.courses = []
+        pass
 
     def set_id(self): ## Implement logic to auto generate GUID
         self.id = uuid.uuid1().int
-        print(self.id)
+        return self.id
         
     def set_first_name(self, first_name): ## When entering student first name in GUI, the button runs this command 
         self.first_name = first_name
@@ -55,8 +55,7 @@ class Student(Person): # Inherited from Person class
         self.grade_level = grade_level
 
     def get_courses(self): ## Should not store course information here but rather students in course class
-        for course in self.courses:
-            print(course)
+        pass
 
     def write_database(self):
         cursor.execute("""

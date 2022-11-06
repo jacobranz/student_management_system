@@ -12,7 +12,7 @@ class studentAdd:
     def __init__(self):
         root = tk.Tk()
         root.geometry("450x300")
-        root.title('Student Management System')
+        root.title('Student Add')
 
         self.id_var = test_database_build.Student.set_id()
         self.first_var = tk.StringVar()
