@@ -3,28 +3,28 @@ import mysql.connector
 from numpy import append
 import pandas as pd
 import uuid
-'''
+
 mydb = mysql.connector.connect(
     host = "127.0.0.1",
     user = "root",
-    password = "1234", ## My databse currently has no password
-    auth_plugin='mysql_native_password',
-    database = "test"
+    #password = "1234", ## My databse currently has no password
+    #auth_plugin='mysql_native_password',
+    database = "SCHOOL_MANAGEMENT"
 )
 
 cursor = mydb.cursor()
 
 ## Create database tables based on current use cases
 cursor.execute("CREATE database IF NOT EXISTS SCHOOL_MANAGEMENT")
-cursor.execute("CREATE TABLE IF NOT EXISTS student (student_ID INT primary key auto_increment, first_name CHAR(255), last_name CHAR(255), courses VARCHAR(255), grade_level VARCHAR(255), age SMALLINT)")
-cursor.execute("CREATE TABLE IF NOT EXISTS professor (professor_ID INT, first_name CHAR(255), last_name CHAR(255), classes VARCHAR(255), class_count SMALLINT, start_date DATE)")
+cursor.execute("CREATE TABLE IF NOT EXISTS student (student_ID INT primary key auto_increment, first_name CHAR(255), last_name CHAR(255), age SMALLINT, grade_level VARCHAR(255))")
+cursor.execute("CREATE TABLE IF NOT EXISTS professor (professor_ID INT, first_name CHAR(255), last_name CHAR(255), age SMALLINT, qualifications CHAR(255), start_date DATE)")
 #cursor.execute("INSERT INTO professor (professor_ID, first_name, last_name, classes, class_count, start_date) VALUES (%s, %s, %s, %s, %s, %s)", (1, "Jacob", "Ranz", "History", 1, "2022-08-08"))
 cursor.execute("CREATE TABLE IF NOT EXISTS course (course_ID INT, name VARCHAR(255), professor_first CHAR(255), professor_last CHAR(255), student_first CHAR(255), student_last CHAR(255), grade_level CHAR(255))")
 cursor.execute("CREATE TABLE IF NOT EXISTS student_course (student_ID INT references student(student_ID), course_ID INT references course(course_ID))")
 cursor.execute("CREATE TABLE IF NOT EXISTS professor_course (professor_ID INT references professor(professor_ID), course_ID INT references course(course_ID))")
 cursor.execute("CREATE TABLE IF NOT EXISTS student_course_grade (student_ID INT references student(student_ID), class_ID INT references class(class_ID), assignment_grade FLOAT(24), weight FLOAT(24))")
 mydb.commit()
-'''
+
 class Person:
     def __init__(self, first_name, last_name, age):
         self.first_name = first_name
