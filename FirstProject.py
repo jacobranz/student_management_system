@@ -42,6 +42,12 @@ class studentAdd:
     #    con.commit()
     #    con.close()
     #    messagebox.showinfo("Successfull", "Record has been inserted.")
+
+class studentModify:
+    pass
+
+class studentRemove:
+    pass
         
 class professorAdd:
     def __init__(self):
@@ -74,23 +80,15 @@ class professorAdd:
 
     def write(self):
         start_date = datetime.strptime(self.start_var.get(), '%Y-%m-%d').date()
-        #start_date = datetime.strptime("2022-05-05", '%Y-%m-%d').date()
-        '''
-        self.first_name = self.first_var.get()
-        self.last_name = self.last_var.get()
-        self.age = self.age_var.get()
-        self.qual = self.qual_var.get()
-        print("ID: ", self.id_var)
-        print("First Name: " + self.first_name)
-        print("Last Name: " + self.last_name)
-        print("Age: ", self.age)
-        print("Qualifications: " + self.qual)
-        print("Start Date: ", start_date)
-        '''
         test_database_build.cursor.execute('''
         INSERT INTO professor (professor_ID, first_name, last_name, age, qualifications, start_date)
         VALUES (%s, %s, %s, %s, %s, %s)
         ''', (self.id_var, self.first_var.get(), self.last_var.get(), self.age_var.get(), self.qual_var.get(), start_date))
         test_database_build.mydb.commit()
 
-professorAdd()
+class professorModify:
+    pass
+    ## Need to be able to query results of search to the screen
+
+class professorRemove:
+    pass
