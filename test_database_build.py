@@ -130,17 +130,3 @@ class Course:
 ## Class for adding assignments to courses and assigning grades - may not be necessary
 class Assignment:
     pass
-
-'''    
-s = Student()
-s.set_id(35)
-s.set_first_name("Kassie")
-s.set_last_name("Estrada")
-s.set_age("22")
-s.set_courses("History, Math") ## Output of array does not work inputting into database yet
-s.set_grade_level(16)
-s.write_database()
-
-c = Course()
-c.set_professor("Ranz")
-'''
