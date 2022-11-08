@@ -47,7 +47,11 @@ class Student(Person): # Inherited from Person class
         age = age
         grade_level = grade
         cursor.execute("""
+<<<<<<< HEAD
         INSERT INTO student (student_ID, first_name, last_name, age, grade_level)
+=======
+        INSERT INTO student (student_ID, first_name, last_name, classes, age, grade_level)
+>>>>>>> 03e4d3475c728a893f20237a581b6a7d65a8eb25
         VALUES (%s,%s,%s,NULL,%s,%s)
         """, (student_id, first_name , last_name, age, grade_level))
         mydb.commit()

@@ -36,6 +36,7 @@ class gui:
         root.mainloop()
 
     def write(self):
+<<<<<<< HEAD
         test_database_build.Student.write_add(self, id_var, first_var, last_var, age_var, grade_var)
     
     def clicked_student():
@@ -88,6 +89,15 @@ class gui:
             test_database_build.mydb.commit()
 
 #studentAdd.test(self)
+=======
+        test_database_build.Student.write_database(self.id_var, self.first_var.get(), self.last_var.get(), self.age_var.get(), self.grade_var.get())
+
+        test_database_build.cursor.execute('''
+        INSERT INTO student (student_ID, first_name, last_name, age, grade_level)
+        VALUES (%s, %s, %s, %s, %s)
+        ''', (self.id_var, self.first_var.get(), self.last_var.get(), self.age_var.get(), self.grade_var.get()))
+        test_database_build.mydb.commit()
+>>>>>>> 03e4d3475c728a893f20237a581b6a7d65a8eb25
 
 class studentModify:
     pass
