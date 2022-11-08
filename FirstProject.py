@@ -35,6 +35,8 @@ class studentAdd:
         root.mainloop()
 
     def write(self):
+        test_database_build.Student.write_database(self.id_var, self.first_var.get(), self.last_var.get(), self.age_var.get(), self.grade_var.get())
+
         test_database_build.cursor.execute('''
         INSERT INTO student (student_ID, first_name, last_name, age, grade_level)
         VALUES (%s, %s, %s, %s, %s)

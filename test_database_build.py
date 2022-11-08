@@ -59,7 +59,7 @@ class Student(Person): # Inherited from Person class
 
     def write_database(self):
         cursor.execute("""
-        INSERT INTO student (student_ID, first_name, last_name, classes, grade_level, age)
+        INSERT INTO student (student_ID, first_name, last_name, classes, age, grade_level)
         VALUES (%s,%s,%s,NULL,%s,%s)
         """, (self.id, self.first_name , self.last_name, self.grade_level, self.age))
         mydb.commit()
