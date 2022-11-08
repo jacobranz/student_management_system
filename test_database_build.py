@@ -7,7 +7,7 @@ import uuid
 mydb = mysql.connector.connect(
     host = "127.0.0.1",
     user = "root",
-    #password = "1234", ## My databse currently has no password
+    password = "1234", ## My databse currently has no password
     #auth_plugin='mysql_native_password',
     database = "SCHOOL_MANAGEMENT"
 )
@@ -27,9 +27,7 @@ mydb.commit()
 
 class Person:
     def __init__(self, first_name, last_name, age):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.age = age
+        pass
         
 class Student(Person): # Inherited from Person class
 
@@ -37,31 +35,21 @@ class Student(Person): # Inherited from Person class
     ## At the end of the class, all of the data will be entered into the database
     def __init__(self):
         pass
-
-    def set_id(self): ## Implement logic to auto generate GUID
-        self.id = uuid.uuid1().int
-        return self.id
-        
-    def set_first_name(self, first_name): ## When entering student first name in GUI, the button runs this command 
-        self.first_name = first_name
     
-    def set_last_name(self, last_name):
-        self.last_name = last_name
+    def set_id():
+        stud_id = uuid.uuid1().int
+        return stud_id
 
-    def set_age(self, age):
-        self.age = age
-        
-    def set_grade_level(self, grade_level):
-        self.grade_level = grade_level
-
-    def get_courses(self): ## Should not store course information here but rather students in course class
-        pass
-
-    def write_database(self):
+    def write_add(student_id, first, last, age, grade):
+        student_id = student_id
+        first_name = first
+        last_name = last
+        age = age
+        grade_level = grade
         cursor.execute("""
-        INSERT INTO student (student_ID, first_name, last_name, classes, grade_level, age)
+        INSERT INTO student (student_ID, first_name, last_name, age, grade_level)
         VALUES (%s,%s,%s,NULL,%s,%s)
-        """, (self.id, self.first_name , self.last_name, self.grade_level, self.age))
+        """, (student_id, first_name , last_name, age, grade_level))
         mydb.commit()
 
 class Professor(Person):
