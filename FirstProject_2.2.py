@@ -85,7 +85,7 @@ class Example(tk.Frame):
         Student_Label_6.grid(row=1, column=0, padx=5, pady=5)
         Student_Entry_6 = tk.Entry(Student_read_Frame, textvariable = self.studentSearchID_var)
         Student_Entry_6.grid(row=2, column=0, padx=5, pady=5)
-        Student_Label_7 = tk.Label(Student_read_Frame, text="Search By Name", bg="LightBlue", bd=5)
+        Student_Label_7 = tk.Label(Student_read_Frame, text="Search By Last Name", bg="LightBlue", bd=5)
         Student_Label_7.grid(row=3, column=0, padx=5, pady=5) 
         Student_Entry_7 = tk.Entry(Student_read_Frame, textvariable = self.studentSearchName_var)
         Student_Entry_7.grid(row=4, column=0, padx=5, pady=5)
@@ -177,7 +177,7 @@ class Example(tk.Frame):
         Teacher_Label_7.grid(row=1, column=0, padx=5, pady=5)
         Teacher_Entry_7 = tk.Entry(Teacher_read_Frame, textvariable = self.teacherSearchID_var)
         Teacher_Entry_7.grid(row=2, column=0, padx=5, pady=5)
-        Teacher_Label_8 = tk.Label(Teacher_read_Frame, text="Search By Name", bg="LightBlue", bd=5)
+        Teacher_Label_8 = tk.Label(Teacher_read_Frame, text="Search By Last Name", bg="LightBlue", bd=5)
         Teacher_Label_8.grid(row=3, column=0, padx=5, pady=5) 
         Teacher_Entry_9 = tk.Entry(Teacher_read_Frame, textvariable = self.teacherSearchName_var)
         Teacher_Entry_9.grid(row=4, column=0, padx=5, pady=5)
@@ -308,66 +308,142 @@ class Example(tk.Frame):
             
     def readdatastudent(self):
 
-        con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
-        cur = con.cursor()
-     
-        sql = "SELECT * FROM student WHERE student_ID = %s"
-        adr = self.studentSearchID_var.get()
+        if len(self.studentSearchID_var.get()) == 0:
 
-        val = cur.execute(sql, adr)
-        if(not val):
-            messagebox.showinfo("No", "Not availabe!")
+            con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            cur = con.cursor()
+         
+            sql = "SELECT * FROM student WHERE last_name = %s"
+            adr = self.studentSearchName_var.get()
 
-        rows = cur.fetchall()
-        if(len(rows)!=0):
-            self.studenttree.delete(*self.studenttree.get_children())
-            for row in rows:
-                self.studenttree.insert('', END, values=row)
+            val = cur.execute(sql, adr)
+            if(not val):
+                messagebox.showinfo("No", "Not availabe!")
 
-            con.commit()
-        con.close()
+            rows = cur.fetchall()
+            if(len(rows)!=0):
+                self.studenttree.delete(*self.studenttree.get_children())
+                for row in rows:
+                    self.studenttree.insert('', END, values=row)
+
+                con.commit()
+            con.close()
+
+        elif len(self.studentSearchName_var.get()) == 0:
+
+            con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            cur = con.cursor()
+         
+            sql = "SELECT * FROM student WHERE student_ID = %s"
+            adr = self.studentSearchID_var.get()
+
+            val = cur.execute(sql, adr)
+            if(not val):
+                messagebox.showinfo("No", "Not availabe!")
+
+            rows = cur.fetchall()
+            if(len(rows)!=0):
+                self.studenttree.delete(*self.studenttree.get_children())
+                for row in rows:
+                    self.studenttree.insert('', END, values=row)
+
+                con.commit()
+            con.close()
+        else:
+            messagebox.showinfo("Error", "Please use 1 criteria.")
+            
 
     def readdatateacher(self):
-            
-        con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
-        cur = con.cursor()
-     
-        sql = "SELECT * FROM professor WHERE professor_ID = %s"
-        adr = self.teacherSearchID_var.get()
 
-        val = cur.execute(sql, adr)
-        if(not val):
-            messagebox.showinfo("No", "Not availabe!")
+        if len(self.teacherSearchID_var.get()) == 0:
 
-        rows = cur.fetchall()
-        if(len(rows)!=0):
-            self.teachertree.delete(*self.teachertree.get_children())
-            for row in rows:
-                self.teachertree.insert('', END, values=row)
+            con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            cur = con.cursor()
+         
+            sql = "SELECT * FROM professor WHERE last_name = %s"
+            adr = self.teacherSearchName_var.get()
 
-            con.commit()
-        con.close()
+            val = cur.execute(sql, adr)
+            if(not val):
+                messagebox.showinfo("No", "Not availabe!")
+
+            rows = cur.fetchall()
+            if(len(rows)!=0):
+                self.teachertree.delete(*self.teachertree.get_children())
+                for row in rows:
+                    self.teachertree.insert('', END, values=row)
+
+                con.commit()
+            con.close()
+
+        elif len(self.teacherSearchName_var.get()) == 0:
+
+            con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            cur = con.cursor()
+         
+            sql = "SELECT * FROM professor WHERE professor_ID = %s"
+            adr = self.teacherSearchID_var.get()
+
+            val = cur.execute(sql, adr)
+            if(not val):
+                messagebox.showinfo("No", "Not availabe!")
+
+            rows = cur.fetchall()
+            if(len(rows)!=0):
+                self.teachertree.delete(*self.teachertree.get_children())
+                for row in rows:
+                    self.teachertree.insert('', END, values=row)
+
+                con.commit()
+            con.close()
+        else:
+            messagebox.showinfo("Error", "Please use 1 criteria.")
 
     def readdataclass(self):
             
-        con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
-        cur = con.cursor()
-     
-        sql = "SELECT * FROM course WHERE course_ID = %s"
-        adr = self.sectionSearchID_var.get()
+        if len(self.sectionSearchID_var.get()) == 0:
 
-        val = cur.execute(sql, adr)
-        if(not val):
-            messagebox.showinfo("No", "Not availabe!")
+            con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            cur = con.cursor()
+         
+            sql = "SELECT * FROM course WHERE name = %s"
+            adr = self.sectionSearchName_var.get()
 
-        rows = cur.fetchall()
-        if(len(rows)!=0):
-            self.sectiontree.delete(*self.sectiontree.get_children())
-            for row in rows:
-                self.sectiontree.insert('', END, values=row)
+            val = cur.execute(sql, adr)
+            if(not val):
+                messagebox.showinfo("No", "Not availabe!")
 
-            con.commit()
-        con.close()
+            rows = cur.fetchall()
+            if(len(rows)!=0):
+                self.sectiontree.delete(*self.sectiontree.get_children())
+                for row in rows:
+                    self.sectiontree.insert('', END, values=row)
+
+                con.commit()
+            con.close()
+
+        elif len(self.sectionSearchName_var.get()) == 0:
+
+            con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            cur = con.cursor()
+         
+            sql = "SELECT * FROM course WHERE course_ID = %s"
+            adr = self.sectionSearchID_var.get()
+
+            val = cur.execute(sql, adr)
+            if(not val):
+                messagebox.showinfo("No", "Not availabe!")
+
+            rows = cur.fetchall()
+            if(len(rows)!=0):
+                self.sectiontree.delete(*self.sectiontree.get_children())
+                for row in rows:
+                    self.sectiontree.insert('', END, values=row)
+
+                con.commit()
+            con.close()
+        else:
+            messagebox.showinfo("Error", "Please use 1 criteria.")
 
 if __name__ == "__main__":
     root = tk.Tk()
