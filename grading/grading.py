@@ -10,7 +10,7 @@ from dateutil.rrule import *
 mydb = mysql.connector.connect(
     host = "127.0.0.1",
     user = "root",
-    password = "1234", ## My databse currently has no password
+    #password = "1234", ## My databse currently has no password
     #auth_plugin='mysql_native_password',
     database = "grades"
 )
@@ -160,10 +160,7 @@ class Example(tk.Frame):
         self.teachertree['show']='headings' # removing extra index col at begining
       
     def sectionWindow(self):
-        window = tk.Toplevel(self)
-        window.geometry("%dx%d%+d%+d" % (1300, 550, 10, 10))
-        window.grid_columnconfigure((0,1), weight=1)
-
+        
         self.sectionID_var = StringVar()
         self.sectionName_var = StringVar()
         self.sectionDescription_var = IntVar()
@@ -215,6 +212,7 @@ class Example(tk.Frame):
         self.sectiontree.heading("Age", text="Age")
         self.sectiontree.heading("Year", text="Year")
         self.sectiontree['show']='headings' # removing extra index col at begining
+
 
     def sectionwrite(self):
         con = mysql.connector.connect(host="localhost", user="root", password="1234", database="grades")
