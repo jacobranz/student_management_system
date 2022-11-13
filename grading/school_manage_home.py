@@ -10,7 +10,7 @@ from dateutil.rrule import *
 mydb = mysql.connector.connect(
     host = "127.0.0.1",
     user = "root",
-    #password = "1234", ## My databse currently has no password
+    password = "ctu1234", ## My databse currently has no password
     #auth_plugin='mysql_native_password',
     database = "grades"
 )

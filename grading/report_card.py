@@ -3,8 +3,13 @@ import school_manage_home ## Importing file with database connection configurati
 
 ## Define functions
 def find_student():
+
+	total_creds = []
 	# gets last name entered in "Name" field
-	school_manage_home.cursor.execute("select student_ID from student where last_name = %s", ('Ranz',) )
+	sql = "select student_ID from student where last_name = %s"
+	adr = (last_name.get(),)
+	
+	school_manage_home.cursor.execute(sql, adr)
 	for student in school_manage_home.cursor.fetchall():
 		student_ID = student[0]
 
@@ -37,15 +42,29 @@ def find_student():
 		final_grade = 0
 		for grade in allgrades:
 			final_grade += grade[0] * grade[1]
-			#for x in grade:
-			#### grade[i] prints as a tuple not an int
-		
 		
 		final_grade = final_grade / 100
 		tk.Label(master, text=final_grade).grid(row=(row + i), column=(column + 1))
 
-		i+=1
+		## get credit count for each course
+		school_manage_home.cursor.execute("select creds from course where course_ID = %s", course_ID)
+		credit_count = school_manage_home.cursor.fetchall()
+		for creds in credit_count:
+			tk.Label(master, text=creds).grid(row=(row + i), column=4)
+			total_creds.append(creds)
 
+
+		i+=1
+	
+	## get total credential count of student
+	total = 0
+	for cred in total_creds:
+		total += cred[0]
+	tk.Label(master, text=total).grid(row=11,column=4)
+
+	## calculate student GPA
+	gpa = total / len(total_creds)
+	tk.Label(master, text=gpa).grid(row=12, column=4)
 			
 
 
@@ -139,11 +158,6 @@ def display():
 
 # label to enter name
 tk.Label(master, text="Name").grid(row=0, column=0)
-# label for registration number
-tk.Label(master, text="Reg.No").grid(row=0, column=3)
-# label for roll Number
-tk.Label(master, text="Roll.No").grid(row=1, column=0)
-
 
 # labels for subject codes
 tk.Label(master, text="Subject").grid(row=5, column=1)
@@ -170,14 +184,10 @@ tk.Label(master, text="Sub Credit").grid(row=5, column=4)
 #tk.Label(master, text="4").grid(row=7, column=3)
 
 # Name age roll entries
-e1=tk.Entry(master, textvariable=last_name.get())
-e2=tk.Entry(master)
-e3=tk.Entry(master)
+e1=tk.Entry(master, textvariable=last_name)
 
 # organizing them in the grid
 e1.grid(row=0, column=1)
-e2.grid(row=0, column=4)
-e3.grid(row=1, column=1)
 
 # button to display all the calculated credit scores and sgpa
 button1=tk.Button(master, text="submit", bg="green", command=display)
