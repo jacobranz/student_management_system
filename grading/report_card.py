@@ -1,18 +1,18 @@
 import tkinter as tk
-import grading
+import school_manage_home ## Importing file with database connection configuration
 
 ## Define functions
 def find_student():
 	# gets last name entered in "Name" field
-	grading.cursor.execute("select student_ID from student where last_name = %s", ('Ranz',) )
-	for student in grading.cursor.fetchall():
+	school_manage_home.cursor.execute("select student_ID from student where last_name = %s", ('Ranz',) )
+	for student in school_manage_home.cursor.fetchall():
 		student_ID = student[0]
 
 	# gets all courses that student is in
-	grading.cursor.execute('''select c.course_ID from course c, enrollment e where
+	school_manage_home.cursor.execute('''select c.course_ID from course c, enrollment e where
 							e.student_ID = %s and e.course_ID = c.course_ID
 							order by name asc''', (student_ID,))
-	course_list = grading.cursor.fetchall()
+	course_list = school_manage_home.cursor.fetchall()
 
 	#for course in course_list:
 	#	print(*course)
@@ -24,17 +24,17 @@ def find_student():
 		if course_ID == "":
 			break
 
-		grading.cursor.execute("select name from course where course_ID = %s", course_ID)
-		course_name = grading.cursor.fetchone()
+		school_manage_home.cursor.execute("select name from course where course_ID = %s", course_ID)
+		course_name = school_manage_home.cursor.fetchone()
 		
 		tk.Label(master, text=course_name[0]).grid(row=(row + i), column=column)
 
 		i+=1
 
-		grading.cursor.execute('''select score, weight from gradebook 
+		school_manage_home.cursor.execute('''select score, weight from gradebook 
 								where student_ID = %s and course_ID = %s
 								''', (student_ID, course_ID[0]))
-		allgrades = grading.cursor.fetchall()
+		allgrades = school_manage_home.cursor.fetchall()
 		
 		final_grade = 0
 		for grade in allgrades:

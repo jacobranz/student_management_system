@@ -160,6 +160,9 @@ class Example(tk.Frame):
         self.teachertree['show']='headings' # removing extra index col at begining
       
     def sectionWindow(self):
+        window = tk.Toplevel(self)
+        window.geometry("%dx%d%+d%+d" % (1300, 550, 10, 10))
+        window.grid_columnconfigure((0,1), weight=1)
         
         self.sectionID_var = StringVar()
         self.sectionName_var = StringVar()
@@ -223,7 +226,7 @@ class Example(tk.Frame):
         messagebox.showinfo("Successfull", "Record has been inserted.")
 
     def studentwrite(self):
-        con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="sections")
+        con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="sections")
         cur = con.cursor()
         cur.execute("insert into students values(%s, %s, %s, %s)", (self.studentID_var.get(), self.studentName_var.get(), self.studentAge_var.get(), self.studentGradeLevel_var.get()))
         con.commit()
@@ -231,7 +234,7 @@ class Example(tk.Frame):
         messagebox.showinfo("Successfull", "Record has been inserted.")
 
     def teacherwrite(self):
-        con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="sections")
+        con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="sections")
         cur = con.cursor()
         cur.execute("insert into teacher values(%s, %s, %s, %s)", (self.teacherID_var.get(), self.teacherName_var.get(), self.teacherSubject_var.get(), self.teacherContact_var.get()))
         con.commit()
