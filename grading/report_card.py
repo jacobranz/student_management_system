@@ -29,8 +29,6 @@ def find_student():
 		
 		tk.Label(master, text=course_name[0]).grid(row=(row + i), column=column)
 
-		i+=1
-
 		school_manage_home.cursor.execute('''select score, weight from gradebook 
 								where student_ID = %s and course_ID = %s
 								''', (student_ID, course_ID[0]))
@@ -44,7 +42,9 @@ def find_student():
 		
 		
 		final_grade = final_grade / 100
-		tk.Label(master, text=final_grade).grid(row=(row + 1), column=(column + 1))
+		tk.Label(master, text=final_grade).grid(row=(row + i), column=(column + 1))
+
+		i+=1
 
 			
 
