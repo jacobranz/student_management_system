@@ -28,7 +28,7 @@ class Example(tk.Frame):
 
         #Creating a frame. This frame holds all the information for writing student data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
         Student_write_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightBlue")
-        Student_write_Frame.place(x=50, y=45, width=450, height=175)
+        Student_write_Frame.place(x=50, y=45, width=50, height=175)
         
         #Setting the main window size
         window.geometry("%dx%d%+d%+d" % (1250, 550, 10, 10))

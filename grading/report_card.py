@@ -2,6 +2,18 @@ import tkinter as tk
 import school_manage_home ## Importing file with database connection configuration
 
 ## Define functions
+def Math_150():
+	pass
+
+def Physics_101():
+	pass
+
+def English_120():
+	pass
+
+def Music_100():
+	pass
+
 def find_student():
 
 	total_creds = []
@@ -19,8 +31,6 @@ def find_student():
 							order by name asc''', (student_ID,))
 	course_list = school_manage_home.cursor.fetchall()
 
-	#for course in course_list:
-	#	print(*course)
 
 	i=0
 	row=6
@@ -53,6 +63,10 @@ def find_student():
 			tk.Label(master, text=creds).grid(row=(row + i), column=4)
 			total_creds.append(creds)
 
+		## go to button next to each class
+		## ability to manage students from there
+		button_command = eval(course_name[0].replace(' ','_'))
+		tk.Button(master, text=course_name[0], command=button_command).grid(row=(row + i), column=0)
 
 		i+=1
 	
@@ -77,111 +91,20 @@ master.geometry("700x250")
 last_name = tk.StringVar()
 class1 = tk.StringVar()
 
-e1 = tk.Entry(master)
-e2 = tk.Entry(master)
-e3 = tk.Entry(master)
-#e4 = tk.Entry(master, textvariable=class1)
-e5 = tk.Entry(master)
-e6 = tk.Entry(master)
-e7 = tk.Entry(master)
-e8 = tk.Entry(master)
-
-def display():
-	# Variable to store total marks
-	tot=0
-
-	'''
-	if e4.get() == "A":
-		tot += 4
-	if e4.get() == "B":
-		tot += 3
-	if e4.get() == "C":
-		tot += 2
-	if e4.get() == "D":
-		tot += 1
-	if e4.get() == "F":
-		tot += 0
-
-
-	if e5.get() == "A":
-		tot += 4
-	if e5.get() == "B":
-		tot += 3
-	if e5.get() == "C":
-		tot += 2
-	if e5.get() == "D":
-		tot += 1
-	if e5.get() == "F":
-		tot += 0
-	
-	
-	if e6.get() == "A":
-		tk.Label(master)
-		tot += 4
-	if e6.get() == "B":
-		tot += 3
-	if e6.get() == "C":
-		tot += 2
-	if e6.get() == "D":
-		tot += 1
-	if e6.get() == "F":
-		tot += 0
-
-
-	if e7.get() == "A":
-		tot += 4
-	if e7.get() == "B":
-		tot += 3
-	if e7.get() == "C":
-		tot += 2
-	if e7.get() == "D":
-		tot += 1
-	if e7.get() == "F":
-		tot += 0
-
-
-	if e8.get() == "A":
-		tot += 4
-	if e8.get() == "B":
-		tot += 3
-	if e8.get() == "C":
-		tot += 2
-	if e8.get() == "D":
-		tot += 1
-	if e8.get() == "F":
-		tot += 0
-	'''
-
-	tk.Label(master, text=str(tot)).grid(row=9, column=4)
-	tk.Label(master, text=str(tot/5)).grid(row=10, column=4)
-
-
 # label to enter name
 tk.Label(master, text="Name").grid(row=0, column=0)
 
 # labels for subject codes
 tk.Label(master, text="Subject").grid(row=5, column=1)
-#tk.Label(master, text="Statistics").grid(row=3, column=1)
-#tk.Label(master, text="Biology").grid(row=4, column=1)
-#tk.Label(master, text="Physics").grid(row=5, column=1)
-#tk.Label(master, text="History").grid(row=6, column=1)
-#tk.Label(master, text="English").grid(row=7, column=1)
 
 # label for grades
 tk.Label(master, text="Grade").grid(row=5, column=2)
-#e4.grid(row=6, column=2)
-#e5.grid(row=7, column=2)
-#e6.grid(row=8, column=2)
-#e7.grid(row=9, column=2)
-#e8.grid(row=10, column=2)
 
 # labels for subject credits
 tk.Label(master, text="Sub Credit").grid(row=5, column=4)
-#tk.Label(master, text="4").grid(row=3, column=3)
-#tk.Label(master, text="4").grid(row=4, column=3)
-#tk.Label(master, text="3").grid(row=5, column=3)
-#tk.Label(master, text="4").grid(row=6, column=3)
-#tk.Label(master, text="4").grid(row=7, column=3)
+
+# label for course management
+tk.Label(master, text="Manage Course").grid(row=5, column=0)
 
 # Name age roll entries
 e1=tk.Entry(master, textvariable=last_name)
@@ -190,10 +113,8 @@ e1=tk.Entry(master, textvariable=last_name)
 e1.grid(row=0, column=1)
 
 # button to display all the calculated credit scores and sgpa
-button1=tk.Button(master, text="submit", bg="green", command=display)
-button1.grid(row=16, column=1)
-button2 = tk.Button(master, text="Find", command=find_student)
-button2.grid(row=0,column=2)
+find_button = tk.Button(master, text="Find", command=find_student)
+find_button.grid(row=0,column=2)
 
 tk.Label(master, text="Total credits").grid(row=11, column=3)
 tk.Label(master, text="Student GPA").grid(row=12, column=3)
