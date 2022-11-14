@@ -11,7 +11,6 @@ def find_student():
     school_manage_home.cursor.execute(sql, adr)
     for student in school_manage_home.cursor.fetchall():
         student_ID = student[0]
-
     # gets all courses that student is in
     school_manage_home.cursor.execute('''select gradebook.assignment from gradebook where
                                         gradebook.student_ID = %s and gradebook.course_ID = 1''', (student_ID,))
@@ -26,9 +25,12 @@ def find_student():
             break
         
         tk.Label(master, text=assignment[0]).grid(row=(row + i), column=column)
-        tk.Entry(master, textvariable=grade, width=5).grid(row=(row + i), column=1)
+        tk.Entry(master, textvariable=grade.get(), width=5).grid(row=(row + i), column=1)
 
         i+=1
+    
+def submit_grades():
+    pass
 
 
 ## Begin GUI
@@ -57,6 +59,7 @@ e1.grid(row=0, column=1)
 # button to display all the calculated credit scores and sgpa
 find_button = tk.Button(master, text="Find", command=find_student)
 find_button.grid(row=0,column=2)
+submit_button = tk.Button(master, text="Submit").grid(row=13, column=0)
 
 
 master.mainloop()
