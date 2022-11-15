@@ -24,23 +24,17 @@ def find_student():
         
         tk.Label(master, text=assignment[0]).grid(row=(row + i), column=column)
         #grades.append(tk.IntVar())
-        grades[i] = tk.IntVar()
-        entries.append(tk.Entry(master, textvariable=grades[i], width=5).grid(row=(row + i), column=1))
+        #entries.append(tk.Entry(master, textvariable=grades[i], width=5).grid(row=(row + i), column=1))
+        print(grades[i])
+        tk.Entry(master, textvariable=grades[i], width=5).grid(row=(row + i), column=1)
 
         i+=1
     
 def submit_grades():
-    for entry in entries:
-        print(entry)
     for grade in grades:
         print(grade)
 
 entries = []
-grade1 = 0
-grade2 = 0
-grade3 = 0
-grade4 = 0
-grades = [grade1, grade2, grade3, grade4]
 
 ## Begin GUI
 master = tk.Tk()
@@ -58,6 +52,11 @@ tk.Label(master, text="Student Last Name").grid(row=0, column=0)
 tk.Label(master, text="Subject").grid(row=1, column=0)
 
 tk.Label(master, text="Grade").grid(row=1, column=1)
+grade1 = tk.IntVar()
+grade2 = tk.IntVar()
+grade3 = tk.IntVar()
+grade4 = tk.IntVar()
+grades = [grade1, grade2, grade3, grade4]
 
 # Name age roll entries
 e1=tk.Entry(master, textvariable=last_name)
