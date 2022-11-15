@@ -65,8 +65,8 @@ def find_student():
 
 		## go to button next to each class
 		## ability to manage students from there
-		button_command = eval(course_name[0].replace(' ','_'))
-		tk.Button(master, text=course_name[0], command=button_command).grid(row=(row + i), column=0)
+		#button_command = eval(course_name[0].replace(' ','_'))
+		#tk.Button(master, text=course_name[0], command=button_command).grid(row=(row + i), column=0)
 
 		i+=1
 	

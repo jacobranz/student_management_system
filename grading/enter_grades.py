@@ -22,7 +22,7 @@ def find_student():
         student_ID = student[0]
     # gets all courses that student is in
     cursor.execute('''select gradebook.assignment from gradebook where
-                                        gradebook.student_ID = %s and gradebook.course_ID = 1''', (student_ID,))
+                                        gradebook.student_ID = %s and gradebook.course_ID = 2''', (student_ID,))
     assignment_list = cursor.fetchall()
     
 
@@ -50,7 +50,7 @@ def submit_grades():
         student_ID = student[0]
 
     cursor.execute('''select gradebook.assignment from gradebook where
-                                        gradebook.student_ID = %s and gradebook.course_ID = 1''', (student_ID,))
+                                        gradebook.student_ID = %s and gradebook.course_ID = 2''', (student_ID,))
     assignment_list = cursor.fetchall()
     assignment0 = assignment_list[0]
     assignment1 = assignment_list[1]
@@ -60,7 +60,7 @@ def submit_grades():
     i = 0
     for grade in grades:
         cursor.execute('''update gradebook set score = %s where
-                            assignment = %s and student_ID = %s''', (grade.get(), eval(f'assignment{i}[0]'), student_ID))
+                            assignment = %s and student_ID = %s and course_ID = 2''', (grade.get(), eval(f'assignment{i}[0]'), student_ID))
         mydb.commit()
         i+=1
     mydb.close()
