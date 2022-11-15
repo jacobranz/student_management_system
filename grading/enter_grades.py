@@ -1,18 +1,29 @@
 import tkinter as tk
 import school_manage_home
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host = "127.0.0.1",
+    user = "root",
+    password = "ctu1234", ## My databse currently has no password
+    #auth_plugin='mysql_native_password',
+    database = "grades"
+)
+
+cursor = mydb.cursor()
 
 def find_student():
 
     sql = "select student_ID from student where last_name = %s"
     adr = (last_name.get(),)
 
-    school_manage_home.cursor.execute(sql, adr)
-    for student in school_manage_home.cursor.fetchall():
+    cursor.execute(sql, adr)
+    for student in cursor.fetchall():
         student_ID = student[0]
     # gets all courses that student is in
-    school_manage_home.cursor.execute('''select gradebook.assignment from gradebook where
+    cursor.execute('''select gradebook.assignment from gradebook where
                                         gradebook.student_ID = %s and gradebook.course_ID = 1''', (student_ID,))
-    assignment_list = school_manage_home.cursor.fetchall()
+    assignment_list = cursor.fetchall()
     
 
     i=0
@@ -31,10 +42,28 @@ def find_student():
         tk.Entry(master, textvariable=eval(f'grade{i}'), width=5).grid(row=(row + i), column=1)
 
         i+=1
-    
+
 def submit_grades():
+
+    cursor.execute("select student_ID from student where last_name = %s", (last_name.get(),))
+    for student in cursor.fetchall():
+        student_ID = student[0]
+
+    cursor.execute('''select gradebook.assignment from gradebook where
+                                        gradebook.student_ID = %s and gradebook.course_ID = 1''', (student_ID,))
+    assignment_list = cursor.fetchall()
+    assignment0 = assignment_list[0]
+    assignment1 = assignment_list[1]
+    assignment2 = assignment_list[2]
+    assignment3 = assignment_list[3]
+
+    i = 0
     for grade in grades:
-        print(grade.get())
+        cursor.execute('''update gradebook set score = %s where
+                            assignment = %s and student_ID = %s''', (grade.get(), eval(f'assignment{i}[0]'), student_ID))
+        mydb.commit()
+        i+=1
+    mydb.close()
 
 entries = []
 
@@ -59,6 +88,13 @@ grade1 = tk.IntVar()
 grade2 = tk.IntVar()
 grade3 = tk.IntVar()
 grades = [grade0, grade1, grade2, grade3]
+
+tk.Label(master, text="Weight").grid(row=1, column=2)
+weight0 = tk.IntVar()
+weight1 = tk.IntVar()
+weight2 = tk.IntVar()
+weight3 = tk.IntVar()
+weights = [weight0, weight1, weight2, weight3]
 
 # Name age roll entries
 e1=tk.Entry(master, textvariable=last_name)
