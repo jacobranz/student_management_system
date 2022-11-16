@@ -22,4 +22,4 @@ insert into gradebook (student_ID, course_ID, assignment, weight) values (23, 4,
 update gradebook set score = 66 where
 	assignment = 'Midterm 1' and student_ID = 23;
     
-update gradebook set score = null;
+update gradebook set score = 0;

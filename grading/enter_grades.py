@@ -1,5 +1,4 @@
 import tkinter as tk
-import school_manage_home
 import mysql.connector
 
 mydb = mysql.connector.connect(
