@@ -1,7 +1,16 @@
-import tkinter as tk
-import school_manage_home ## Importing file with database connection configuration
+import tkinter as tk ## Importing file with database connection configuration
+import mysql.connector
 
 ## Define functions
+mydb = mysql.connector.connect(
+    host = "127.0.0.1",
+    user = "root",
+    password = "ctu1234",
+    database = "grades"
+)
+
+cursor = mydb.cursor()
+
 def Math_150():
 	pass
 
@@ -21,15 +30,15 @@ def find_student():
 	sql = "select student_ID from student where last_name = %s"
 	adr = (last_name.get(),)
 	
-	school_manage_home.cursor.execute(sql, adr)
-	for student in school_manage_home.cursor.fetchall():
+	cursor.execute(sql, adr)
+	for student in cursor.fetchall():
 		student_ID = student[0]
 
 	# gets all courses that student is in
-	school_manage_home.cursor.execute('''select c.course_ID from course c, enrollment e where
+	cursor.execute('''select c.course_ID from course c, enrollment e where
 							e.student_ID = %s and e.course_ID = c.course_ID
 							order by name asc''', (student_ID,))
-	course_list = school_manage_home.cursor.fetchall()
+	course_list = cursor.fetchall()
 
 
 	i=0
@@ -39,15 +48,15 @@ def find_student():
 		if course_ID == "":
 			break
 
-		school_manage_home.cursor.execute("select name from course where course_ID = %s", course_ID)
-		course_name = school_manage_home.cursor.fetchone()
+		cursor.execute("select name from course where course_ID = %s", course_ID)
+		course_name = cursor.fetchone()
 		
 		tk.Label(master, text=course_name[0]).grid(row=(row + i), column=column)
 
-		school_manage_home.cursor.execute('''select score, weight from gradebook 
+		cursor.execute('''select score, weight from gradebook 
 								where student_ID = %s and course_ID = %s
 								''', (student_ID, course_ID[0]))
-		allgrades = school_manage_home.cursor.fetchall()
+		allgrades = cursor.fetchall()
 		
 		final_grade = 0
 		for grade in allgrades:
@@ -57,8 +66,8 @@ def find_student():
 		tk.Label(master, text=final_grade).grid(row=(row + i), column=(column + 1))
 
 		## get credit count for each course
-		school_manage_home.cursor.execute("select creds from course where course_ID = %s", course_ID)
-		credit_count = school_manage_home.cursor.fetchall()
+		cursor.execute("select creds from course where course_ID = %s", course_ID)
+		credit_count = cursor.fetchall()
 		for creds in credit_count:
 			tk.Label(master, text=creds).grid(row=(row + i), column=4)
 			total_creds.append(creds)
