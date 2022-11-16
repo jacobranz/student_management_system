@@ -10,7 +10,7 @@ from dateutil.rrule import *
 mydb = mysql.connector.connect(
     host = "127.0.0.1",
     user = "root",
-    #password = "1234", ## My databse currently has no password
+    password = "ctu1234", ## My databse currently has no password
     #auth_plugin='mysql_native_password',
     database = "grades"
 )
@@ -244,7 +244,7 @@ class Example(tk.Frame):
             
     def readdatastudent(self):
 
-        con = mydb.connect(host="localhost", user="root", password="ctu1234", database="sections")
+        con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
         cur = con.cursor()
      
         sql = "SELECT * FROM students WHERE idstudents = %s"
