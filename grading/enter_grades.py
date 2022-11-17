@@ -10,6 +10,16 @@ mydb = mysql.connector.connect(
 
 cursor = mydb.cursor()
 
+def clear():
+    for label in master.grid_slaves():
+        if 1 < int(label.grid_info()["row"]) < 14:
+            label.grid_forget()
+
+    tk.Label(master, text="Subject").grid(row=1, column=0)
+    tk.Label(master, text="Grade").grid(row=1, column=1)
+
+    submit_button = tk.Button(master, text="Submit", command=submit_grades).grid(row=13, column=0)
+
 def find_student():
 
     sql = "select student_ID from student where last_name = %s"
@@ -87,13 +97,6 @@ grade2 = tk.IntVar()
 grade3 = tk.IntVar()
 grades = [grade0, grade1, grade2, grade3]
 
-tk.Label(master, text="Weight").grid(row=1, column=2)
-weight0 = tk.IntVar()
-weight1 = tk.IntVar()
-weight2 = tk.IntVar()
-weight3 = tk.IntVar()
-weights = [weight0, weight1, weight2, weight3]
-
 # Name age roll entries
 e1=tk.Entry(master, textvariable=last_name)
 
@@ -104,6 +107,7 @@ e1.grid(row=0, column=1)
 find_button = tk.Button(master, text="Find", command=find_student)
 find_button.grid(row=0,column=2)
 submit_button = tk.Button(master, text="Submit", command=submit_grades).grid(row=13, column=0)
+clear_button = tk.Button(master, text="Clear", command=clear, width=20).grid(row=14, column=1)
 
 
 master.mainloop()
