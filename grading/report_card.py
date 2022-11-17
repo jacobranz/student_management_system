@@ -29,6 +29,7 @@ class Music_100():
 def find_student():
 
 	total_creds = []
+	total_gpa = []
 	# gets last name entered in "Name" field
 	sql = "select student_ID from student where last_name = %s"
 	adr = (last_name.get(),)
@@ -42,7 +43,6 @@ def find_student():
 							e.student_ID = %s and e.course_ID = c.course_ID
 							order by name asc''', (student_ID,))
 	course_list = cursor.fetchall()
-
 
 	i=0
 	row=6
@@ -62,10 +62,26 @@ def find_student():
 		allgrades = cursor.fetchall()
 		
 		final_grade = 0
+		creds_earned = 0
 		for grade in allgrades:
 			final_grade += grade[0] * grade[1]
-		
+
 		final_grade = final_grade / 100
+
+		if final_grade >= 90:
+			creds_earned += 4
+		if 80 <= final_grade <= 89.9:
+			creds_earned += 3
+		if 70 <= final_grade <= 79.9:
+			creds_earned += 2
+		if 60 <= final_grade <= 69.9:
+			creds_earned += 1
+		else:
+			creds_earned += 0
+
+		gpa = creds_earned / len(course_list)
+		total_gpa.append(gpa)
+
 		tk.Label(master, text=final_grade).grid(row=(row + i), column=(column + 1))
 
 		## get credit count for each course
@@ -82,15 +98,19 @@ def find_student():
 
 		i+=1
 	
-	## get total credential count of student
+	## get amount of earned creds from student
 	total = 0
 	for cred in total_creds:
 		total += cred[0]
+		
 	tk.Label(master, text=total).grid(row=11,column=4)
 
 	## calculate student GPA
-	gpa = total / len(total_creds)
-	tk.Label(master, text=gpa).grid(row=12, column=4)
+	total_student_gpa = 0
+	for gpa in total_gpa:
+		total_student_gpa += gpa
+
+	tk.Label(master, text=total_student_gpa).grid(row=12, column=4)
 			
 
 
