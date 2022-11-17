@@ -1,6 +1,7 @@
 import tkinter as tk
 import mysql.connector
 
+## connect to database
 mydb = mysql.connector.connect(
     host = "127.0.0.1",
     user = "root",
@@ -8,8 +9,11 @@ mydb = mysql.connector.connect(
     database = "grades"
 )
 
+## access database via this command
 cursor = mydb.cursor()
 
+## function to clear all fields 
+## this will enable users to rerun queries
 def clear():
     for label in master.grid_slaves():
         if 1 < int(label.grid_info()["row"]) < 14:
@@ -20,6 +24,7 @@ def clear():
 
     submit_button = tk.Button(master, text="Submit", command=submit_grades).grid(row=13, column=0)
 
+## function for finding students and their total grades in all classes they are apart of
 def find_student():
 
     sql = "select student_ID from student where last_name = %s"
@@ -28,6 +33,7 @@ def find_student():
     cursor.execute(sql, adr)
     for student in cursor.fetchall():
         student_ID = student[0]
+        
     # gets all courses that student is in
     cursor.execute('''select gradebook.assignment from gradebook where
                                         gradebook.student_ID = %s and gradebook.course_ID = 3''', (student_ID,))
@@ -37,6 +43,8 @@ def find_student():
     i=0
     row=6
     column=0
+    
+    ## for each assignment set a label for the name and a corresponding entry
     for assignment in assignment_list:
         if assignment == "":
             break
