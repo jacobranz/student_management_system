@@ -4,7 +4,7 @@ from tkinter import *
 import mysql.connector
 from tkinter import messagebox
 from PIL import ImageTk, Image
-import Math_150
+import grading.Math_150
 
 class Example(tk.Frame):
     def __init__(self, root):
@@ -577,7 +577,7 @@ class Example(tk.Frame):
         window.title("Class Selection")
         window.geometry("300x250")
         
-        tk.Button(window, text="Math 150", command=Math_150, width=10).place(x=115, y=10)
+        tk.Button(window, text="Math 150", command=grading.Math_150.main, width=10).place(x=115, y=10)
         tk.Button(window, text="Physics 110", width=10).place(x=115, y=40)
         tk.Button(window, text="Biology 103", width=10).place(x=115, y=70)
         tk.Button(window, text="History 101",width=10).place(x=115, y=100)

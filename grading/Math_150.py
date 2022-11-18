@@ -1,16 +1,16 @@
 import tkinter as tk
 import mysql.connector
 
+mydb = mysql.connector.connect(
+    host = "127.0.0.1",
+    user = "root",
+    password = "ctu1234",
+    database = "grades"
+)
+
+cursor = mydb.cursor()
+
 def main():
-
-    mydb = mysql.connector.connect(
-        host = "127.0.0.1",
-        user = "root",
-        password = "ctu1234",
-        database = "grades"
-    )
-
-    cursor = mydb.cursor()
 
     def find_student():
 
@@ -110,5 +110,3 @@ def main():
 
     master.mainloop()
 
-if __name__ == "__main__":
-    main()
