@@ -21,7 +21,6 @@ class Physics_101():
 class English_120():
 	pass
 
-
 class Music_100():
 	pass
 

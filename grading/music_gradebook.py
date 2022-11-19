@@ -1,5 +1,6 @@
 import tkinter as tk
 import mysql.connector
+from tkinter import messagebox
 
 mydb = mysql.connector.connect(
     host = "127.0.0.1",
@@ -10,17 +11,33 @@ mydb = mysql.connector.connect(
 
 cursor = mydb.cursor()
 
+def clear():
+    for label in master.grid_slaves():
+        if int(label.grid_info()["row"]) > 2:
+            label.grid_forget()
+
+    last_name.set("")
+
+    tk.Button(master, text="Submit", command=submit_grades).grid(row=13, column=0)
+
 def find_student():
 
     sql = "select student_ID from student where last_name = %s"
     adr = (last_name.get(),)
 
     cursor.execute(sql, adr)
-    for student in cursor.fetchall():
+    students = cursor.fetchall()
+    for student in students:
         student_ID = student[0]
-    # gets all courses that student is in
+
+    ## throw warning if student does not exist
+    if len(students) == 0:
+        messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
+        quit()
+
+    ## get all assignments in the course
     cursor.execute('''select gradebook.assignment from gradebook where
-                                        gradebook.student_ID = %s and gradebook.course_ID = 3''', (student_ID,))
+                                        gradebook.student_ID = %s and gradebook.course_ID = 4''', (student_ID,))
     assignment_list = cursor.fetchall()
     
 
@@ -32,14 +49,12 @@ def find_student():
             break
         
         tk.Label(master, text=assignment[0]).grid(row=(row + i), column=column)
-        #grades.append(tk.IntVar())
-        #entries.append(tk.Entry(master, textvariable=grades[i], width=5).grid(row=(row + i), column=1))
-        #print(grades[i])
-        #for i in range(4):
-            #globals()[f'grade{i}'] = tk.IntVar()
         tk.Entry(master, textvariable=eval(f'grade{i}'), width=5).grid(row=(row + i), column=1)
 
         i+=1
+
+    ## define button for clearing all fields
+    tk.Button(master, text="Clear", command=clear, width=20).grid(row=13, column=1)
 
 def submit_grades():
 
@@ -48,7 +63,7 @@ def submit_grades():
         student_ID = student[0]
 
     cursor.execute('''select gradebook.assignment from gradebook where
-                                        gradebook.student_ID = %s and gradebook.course_ID = 3''', (student_ID,))
+                                        gradebook.student_ID = %s and gradebook.course_ID = 4''', (student_ID,))
     assignment_list = cursor.fetchall()
     assignment0 = assignment_list[0]
     assignment1 = assignment_list[1]
@@ -58,9 +73,10 @@ def submit_grades():
     i = 0
     for grade in grades:
         cursor.execute('''update gradebook set score = %s where
-                            assignment = %s and student_ID = %s and course_ID = 3''', (grade.get(), eval(f'assignment{i}[0]'), student_ID))
+                            assignment = %s and student_ID = %s and course_ID = 4''', (grade.get(), eval(f'assignment{i}[0]'), student_ID))
         mydb.commit()
         i+=1
+    messagebox.showinfo("Success", "Student grades have been entered.")
     mydb.close()
 
 entries = []

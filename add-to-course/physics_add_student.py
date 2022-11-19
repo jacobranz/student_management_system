@@ -30,25 +30,30 @@ def add_student():
         messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
         quit()
    
-    ## insert the value of student ID into the enrollment table with the appropriate class
-    cursor.execute("insert into enrollment values (%s, 1)", (student,))
-    mydb.commit()
-    
-    ## insert student into gradebook where assignments can be assigned to them and later graded
-    sql = "insert into gradebook values (%s, 1, %s, 0, 25)"
-    val = [
-        (student, 'Midterm 1'),
-        (student, 'Midterm 2'),
-        (student, 'Group Project'),
-        (student, 'Final')
-    ]
-    cursor.executemany(sql, val)
-    mydb.commit()
-    messagebox.showinfo("Success", "Student has been added to Physics 101!")
+    cursor.execute("select student_ID from enrollment where course_ID = 1")
+    is_enrolled = cursor.fetchall()
+    if len(is_enrolled) == 0:
+        ## insert the value of student ID into the enrollment table with the appropriate class
+        cursor.execute("insert into enrollment values (%s, 1)", (student,))
+        mydb.commit()
 
-    ## clear entry field to add more students
-    last_name.set("")
+        ## insert student into gradebook where assignments can be assigned to them and later graded
+        sql = "insert into gradebook values (%s, 1, %s, 0, 25)"
+        val = [
+            (student, 'Midterm 1'),
+            (student, 'Midterm 2'),
+            (student, 'Group Project'),
+            (student, 'Final')
+        ]
+        cursor.executemany(sql, val)
+        mydb.commit()
+        messagebox.showinfo("Success", "Student has been added to Physics 101!")
 
+        ## clear entry field to add more students
+        last_name.set("")
+    else:
+        messagebox.showwarning("Enrolled", "Student is already enrolled in this class!")
+        quit()
 
 window = tk.Tk()
 window.title("Add Student to Course")
