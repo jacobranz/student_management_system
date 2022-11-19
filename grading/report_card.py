@@ -1,5 +1,6 @@
 import tkinter as tk
 import mysql.connector
+from tkinter import messagebox
 
 ## Define functions
 mydb = mysql.connector.connect(
@@ -21,10 +22,43 @@ class Physics_101():
 class English_120():
 	pass
 
-
 class Music_100():
 	pass
 
+class Biology_103():
+    pass
+
+class Math_250():
+    pass
+
+class Physics_110():
+    pass
+
+class History_101():
+    pass
+
+def clear():
+	for label in master.grid_slaves():
+		if int(label.grid_info()["row"]) > 3:
+			label.grid_forget()
+
+	# label to enter name
+	tk.Label(master, text="Name").grid(row=0, column=0)
+
+	# labels for subject codes
+	tk.Label(master, text="Subject").grid(row=5, column=1)
+
+	# label for grades
+	tk.Label(master, text="Grade").grid(row=5, column=2)
+
+	# labels for subject credits
+	tk.Label(master, text="Sub Credit").grid(row=5, column=4)
+
+	# label for course management
+	tk.Label(master, text="Manage Course").grid(row=5, column=0)
+ 
+	tk.Label(master, text="Total credits").grid(row=11, column=3)
+	tk.Label(master, text="Student GPA").grid(row=12, column=3)
 
 def find_student():
 
@@ -35,8 +69,14 @@ def find_student():
 	adr = (last_name.get(),)
 	
 	cursor.execute(sql, adr)
-	for student in cursor.fetchall():
+	students = cursor.fetchall()
+	for student in students:
 		student_ID = student[0]
+
+	if len(students) == 0:
+		messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
+		last_name.set("")
+		quit()
 
 	# gets all courses that student is in
 	cursor.execute('''select c.course_ID from course c, enrollment e where
@@ -111,6 +151,9 @@ def find_student():
 		total_student_gpa += gpa
 
 	tk.Label(master, text=total_student_gpa).grid(row=12, column=4)
+ 
+	## define button for clearing all fields
+	tk.Button(master, text="Clear", command=clear, width=20).grid(row=13, column=1)
 			
 
 
