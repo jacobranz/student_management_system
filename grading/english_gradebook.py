@@ -33,27 +33,40 @@ def find_student():
     ## throw warning if student does not exist
     if len(students) == 0:
         messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
-        quit()
+        last_name.set("")
 
-    ## get all assignments in the course
-    cursor.execute('''select gradebook.assignment from gradebook where
-                                        gradebook.student_ID = %s and gradebook.course_ID = 3''', (student_ID,))
-    assignment_list = cursor.fetchall()
-    
-    i=0
-    row=6
-    column=0
-    for assignment in assignment_list:
-        if assignment == "":
-            break
+    ## throw warning if student exists but is not enrolled in the class
+    cursor.execute('''select c.course_ID from course c, enrollment e where
+                            e.student_ID = %s and e.course_ID = c.course_ID
+                            order by name asc''', (student_ID,))
+    course_list = cursor.fetchall()
+    is_enrolled = False
+    for course in course_list:
+        if course[0] == 3:
+            is_enrolled = True
+    if is_enrolled == False:
+        messagebox.showwarning("Not Enrolled", "Student is not enrolled in this class!")
+        last_name.set("")
+    else:
+        ## get all assignments in the course
+        cursor.execute('''select gradebook.assignment from gradebook where
+                                            gradebook.student_ID = %s and gradebook.course_ID = 3''', (student_ID,))
+        assignment_list = cursor.fetchall()
         
-        tk.Label(master, text=assignment[0]).grid(row=(row + i), column=column)
-        tk.Entry(master, textvariable=eval(f'grade{i}'), width=5).grid(row=(row + i), column=1)
+        i=0
+        row=6
+        column=0
+        for assignment in assignment_list:
+            if assignment == "":
+                break
+            
+            tk.Label(master, text=assignment[0]).grid(row=(row + i), column=column)
+            tk.Entry(master, textvariable=eval(f'grade{i}'), width=5).grid(row=(row + i), column=1)
 
-        i+=1
-    
-    ## define button for clearing all fields
-    tk.Button(master, text="Clear", command=clear, width=20).grid(row=13, column=1)
+            i+=1
+        
+        ## define button for clearing all fields
+        tk.Button(master, text="Clear", command=clear, width=20).grid(row=13, column=1)
 
 def submit_grades():
 
@@ -76,7 +89,6 @@ def submit_grades():
         mydb.commit()
         i+=1
     messagebox.showinfo("Success", "Student grades have been entered.")
-    mydb.close()
 
 entries = []
 

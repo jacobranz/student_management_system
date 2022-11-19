@@ -33,7 +33,7 @@ def find_student():
     ## throw warning if student does not exist
     if len(students) == 0:
         messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
-        quit()
+        last_name.set("")
 
     ## get all assignments in the course
     cursor.execute('''select gradebook.assignment from gradebook where
@@ -77,7 +77,6 @@ def submit_grades():
         mydb.commit()
         i+=1
     messagebox.showinfo("Success", "Student grades have been entered.")
-    mydb.close()
 
 entries = []
 

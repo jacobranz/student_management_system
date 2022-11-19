@@ -1,5 +1,6 @@
 import tkinter as tk
 import mysql.connector
+from tkinter import messagebox
 
 ## Define functions
 mydb = mysql.connector.connect(
@@ -68,8 +69,14 @@ def find_student():
 	adr = (last_name.get(),)
 	
 	cursor.execute(sql, adr)
-	for student in cursor.fetchall():
+	students = cursor.fetchall()
+	for student in students:
 		student_ID = student[0]
+
+	if len(students) == 0:
+		messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
+		last_name.set("")
+		quit()
 
 	# gets all courses that student is in
 	cursor.execute('''select c.course_ID from course c, enrollment e where
