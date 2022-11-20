@@ -4,7 +4,6 @@ import mysql.connector
 from tkinter import messagebox
 from tkinter import *
 from tkinter import ttk
-import pymysql
 from tkinter import messagebox
 from PIL import ImageTk, Image
 
@@ -979,24 +978,24 @@ class Example(tk.Frame):
 
         #Creating a frame. This frame holds all the information for writing student data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
         Student_write_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightBlue")
-        Student_write_Frame.place(x=50, y=45, width=450, height=175)
+        Student_write_Frame.place(x=50, y=45, width=550, height=200)
         
         #Setting the main window size
-        #window.geometry("%dx%d%+d%+d" % (1250, 550, 10, 10))
+        window.geometry("%dx%d%+d%+d" % (1250, 550, 10, 10))
         window.grid_columnconfigure((0,1), weight=1)
 
         #Creating variables used in this window
-        self.studentID_var = StringVar()
+        self.studentID_var = IntVar()
         self.studentFirstName_var = StringVar()
         self.studentLastName_var = StringVar()
-        self.studentAge_var = StringVar()
-        self.studentGradeLevel_var = StringVar()
+        self.studentAge_var = IntVar()
+        self.studentGradeLevel_var = IntVar()
         self.studentSearchID_var = StringVar()
         self.studentSearchName_var = StringVar()
 
         #This is creating labels
-        Student_Label_1 = tk.Label(Student_write_Frame, text="Student ID", bg="LightBlue", bd=5)
-        Student_Label_1.grid(row=1, column=0)
+        #Student_Label_1 = tk.Label(Student_write_Frame, text="Student ID", bg="LightBlue", bd=5)
+        #Student_Label_1.grid(row=1, column=0)
         Student_Label_2 = tk.Label(Student_write_Frame, text="Student First Name", bg="LightBlue", bd=5)
         Student_Label_2.grid(row=2, column=0)
         Student_Label_3 = tk.Label(Student_write_Frame, text="Student Last Name", bg="LightBlue", bd=5)
@@ -1007,8 +1006,8 @@ class Example(tk.Frame):
         Student_Label_5.grid(row=5, column=0)
 
         #This is creating labels and tying their input into variables
-        Student_Entry_1 = tk.Entry(Student_write_Frame, textvariable = self.studentID_var)
-        Student_Entry_1.grid(row=1, column=4)
+        #Student_Entry_1 = tk.Entry(Student_write_Frame, textvariable = self.studentID_var)
+        #Student_Entry_1.grid(row=1, column=4)
         Student_Entry_2 = tk.Entry(Student_write_Frame, textvariable = self.studentFirstName_var)
         Student_Entry_2.grid(row=2, column=4)
         Student_Entry_3 = tk.Entry(Student_write_Frame, textvariable = self.studentLastName_var)
@@ -1029,7 +1028,7 @@ class Example(tk.Frame):
 
         #Creating a frame. This frame holds all the information for reading student data from the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
         Student_read_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightBlue")
-        Student_read_Frame.place(x=1075, y=250, width=150, height=200)
+        Student_read_Frame.place(x=1075, y=250, width=210, height=250)
 
         #These are the entries and labels for querying students
         Student_Label_6 = tk.Label(Student_read_Frame, text="Search By ID", bg="LightBlue", bd=5)
@@ -1069,7 +1068,7 @@ class Example(tk.Frame):
 
         #Creating a frame. This frame holds all the information for writing student data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
         Teacher_write_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightBlue")
-        Teacher_write_Frame.place(x=50, y=45, width=450, height=200)
+        Teacher_write_Frame.place(x=50, y=45, width=550, height=230)
        
 
         #Creating variables used in this window
@@ -1083,8 +1082,8 @@ class Example(tk.Frame):
         self.teacherSearchName_var = StringVar()
 
         #This is creating labels
-        Teacher_Label_1 = tk.Label(Teacher_write_Frame, text="Teacher ID", bg="LightBlue", bd=5)
-        Teacher_Label_1.grid(row=1, column=0)
+        #Teacher_Label_1 = tk.Label(Teacher_write_Frame, text="Teacher ID", bg="LightBlue", bd=5)
+        #Teacher_Label_1.grid(row=1, column=0)
         Teacher_Label_2 = tk.Label(Teacher_write_Frame, text="Teacher First Name", bg="LightBlue", bd=5)
         Teacher_Label_2.grid(row=2, column=0)
         Teacher_Label_3 = tk.Label(Teacher_write_Frame, text="Teacher Last Name", bg="LightBlue", bd=5)
@@ -1097,8 +1096,8 @@ class Example(tk.Frame):
         Teacher_Label_6.grid(row=6, column=0)
 
         #This is creating labels and tying their input into variables
-        Teacher_Entry_1 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherID_var)
-        Teacher_Entry_1.grid(row=1, column=4)
+        #Teacher_Entry_1 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherID_var)
+        #Teacher_Entry_1.grid(row=1, column=4)
         Teacher_Entry_2 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherFirstName_var)
         Teacher_Entry_2.grid(row=2, column=4)
         Teacher_Entry_3 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherLastName_var)
@@ -1121,7 +1120,7 @@ class Example(tk.Frame):
 
         #Creating a frame. This frame holds all the information for reading student data from the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
         Teacher_read_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightBlue")
-        Teacher_read_Frame.place(x=1275, y=300, width=150, height=200)
+        Teacher_read_Frame.place(x=1275, y=300, width=210, height=250)
 
         #These are the entries and labels for querying students
         Teacher_Label_7 = tk.Label(Teacher_read_Frame, text="Search By ID", bg="LightBlue", bd=5)
@@ -1233,23 +1232,23 @@ class Example(tk.Frame):
         self.sectiontree['show']='headings'
         
     def sectionwrite(self):
-        con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
-        cur = con.cursor()
-        cur.execute("insert into course values(%s, %s, %s, %s)", (self.sectionID_var.get(), self.sectionName_var.get(), self.sectionCreds_var.get(), self.sectionProf_var.get()))
-        con.commit()
-        con.close()
+        #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
+        #cur = con.cursor()
+        cursor.execute("insert into course values(%s, %s, %s, %s)", (self.sectionID_var.get(), self.sectionName_var.get(), self.sectionCreds_var.get(), self.sectionProf_var.get()))
+        mydb.commit()
+        mydb.close()
         messagebox.showinfo("Successfull", "Record has been inserted.")
 
     def studentwrite(self):
-        con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
-        cur = con.cursor()
-        cur.execute("insert into student values(%s, %s, %s, %s, %s)", (self.studentID_var.get(), self.studentFirstName_var.get(), self.studentLastName_var.get(), self.studentAge_var.get(), self.studentGradeLevel_var.get()))
-        con.commit()
-        con.close()
+        #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
+        #cur = con.cursor()
+        cursor.execute("insert into student (first_name, last_name, age, grade_level) values (%s, %s, %s, %s)", (self.studentFirstName_var.get(), self.studentLastName_var.get(), self.studentAge_var.get(), self.studentGradeLevel_var.get()))
+        mydb.commit()
+        #mydb.close()
         messagebox.showinfo("Successfull", "Record has been inserted.")
 
     def teacherwrite(self):
-        con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
+        con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
         cur = con.cursor()
         cur.execute("insert into professor values(%s, %s, %s, %s, %s, %s)", (self.teacherID_var.get(), self.teacherFirstName_var.get(), self.teacherLastName_var.get(), self.teacherAge_var.get(), self.teacherQual_var.get(), self.teacherStart_var.get()))
         con.commit()
@@ -1261,15 +1260,13 @@ class Example(tk.Frame):
 
         if len(self.studentSearchID_var.get()) == 0:
 
-            con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
             cur = con.cursor()
          
             sql = "SELECT * FROM student WHERE last_name = %s"
             adr = self.studentSearchName_var.get()
 
-            val = cur.execute(sql, adr)
-            if(not val):
-                messagebox.showinfo("No", "Not availabe!")
+            val = cur.execute(sql, (adr,))
 
             rows = cur.fetchall()
             if(len(rows)!=0):
@@ -1278,19 +1275,20 @@ class Example(tk.Frame):
                     self.studenttree.insert('', END, values=row)
 
                 con.commit()
+            else:
+                messagebox.showinfo("No", "Student is not registered in the database!")
+                self.studentSearchName_var.set("")
             con.close()
 
         elif len(self.studentSearchName_var.get()) == 0:
 
-            con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
             cur = con.cursor()
          
             sql = "SELECT * FROM student WHERE student_ID = %s"
             adr = self.studentSearchID_var.get()
 
-            val = cur.execute(sql, adr)
-            if(not val):
-                messagebox.showinfo("No", "Not availabe!")
+            val = cur.execute(sql, (adr,))
 
             rows = cur.fetchall()
             if(len(rows)!=0):
@@ -1299,6 +1297,9 @@ class Example(tk.Frame):
                     self.studenttree.insert('', END, values=row)
 
                 con.commit()
+            else:
+                messagebox.showinfo("No", "Student is not registered in the database!")
+                self.studentSearchID_var.set("")
             con.close()
         else:
             messagebox.showinfo("Error", "Please use 1 criteria.")
@@ -1308,15 +1309,13 @@ class Example(tk.Frame):
 
         if len(self.teacherSearchID_var.get()) == 0:
 
-            con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
             cur = con.cursor()
          
             sql = "SELECT * FROM professor WHERE last_name = %s"
             adr = self.teacherSearchName_var.get()
 
-            val = cur.execute(sql, adr)
-            if(not val):
-                messagebox.showinfo("No", "Not availabe!")
+            val = cur.execute(sql, (adr,))
 
             rows = cur.fetchall()
             if(len(rows)!=0):
@@ -1325,19 +1324,20 @@ class Example(tk.Frame):
                     self.teachertree.insert('', END, values=row)
 
                 con.commit()
+            else:
+                messagebox.showinfo("No", "Professor is not registered in the database!")
+                self.teacherSearchName_var.set("")
             con.close()
 
         elif len(self.teacherSearchName_var.get()) == 0:
 
-            con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
             cur = con.cursor()
          
             sql = "SELECT * FROM professor WHERE professor_ID = %s"
             adr = self.teacherSearchID_var.get()
 
-            val = cur.execute(sql, adr)
-            if(not val):
-                messagebox.showinfo("No", "Not availabe!")
+            val = cur.execute(sql, (adr,))
 
             rows = cur.fetchall()
             if(len(rows)!=0):
@@ -1346,6 +1346,9 @@ class Example(tk.Frame):
                     self.teachertree.insert('', END, values=row)
 
                 con.commit()
+            else:
+                messagebox.showinfo("No", "Professor is not registered in the database!")
+                self.teacherSearchID_var.set("")
             con.close()
         else:
             messagebox.showinfo("Error", "Please use 1 criteria.")
@@ -1354,7 +1357,7 @@ class Example(tk.Frame):
             
         if len(self.sectionSearchID_var.get()) == 0:
 
-            con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
             cur = con.cursor()
          
             sql = "SELECT * FROM course WHERE name = %s"
@@ -1375,7 +1378,7 @@ class Example(tk.Frame):
 
         elif len(self.sectionSearchName_var.get()) == 0:
 
-            con = pymysql.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
             cur = con.cursor()
          
             sql = "SELECT * FROM course WHERE course_ID = %s"
