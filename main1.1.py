@@ -982,7 +982,7 @@ class Example(tk.Frame):
         Student_write_Frame.place(x=50, y=45, width=450, height=175)
         
         #Setting the main window size
-        window.geometry("%dx%d%+d%+d" % (1250, 550, 10, 10))
+        #window.geometry("%dx%d%+d%+d" % (1250, 550, 10, 10))
         window.grid_columnconfigure((0,1), weight=1)
 
         #Creating variables used in this window
