@@ -6,6 +6,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 from PIL import ImageTk, Image
+import time
 
 mydb = mysql.connector.connect(
     host = "127.0.0.1",
@@ -968,6 +969,27 @@ class Example(tk.Frame):
         #lambda: controller.show_frame(ClassPage)
         b3 = tk.Button(self, text="Class", command = lambda: controller.show_frame(ClassPage))
         b3.pack(side="left",anchor='n', padx=40, pady=10)
+        
+        studenttitle = tk.Label(self, width=30, text="School Force", fg="DarkBlue", font=("times new roman", 15, "bold"))
+        studenttitle.pack(side="top",anchor='w', padx=40, pady=10)
+
+        studenttitle = tk.Label(self, width=30, text="Ranz Release 4.2.1", fg="black", font=("times new roman", 8, "bold"))
+        studenttitle.pack(side="bottom",anchor='w', padx=40, pady=10)
+        
+        root.lift()
+        self.splashwindow()
+        
+    def splashwindow(self):
+        window = tk.Toplevel(self)
+        window.attributes("-topmost", True)
+        window.geometry("%dx%d%+d%+d" % (520, 350, 10, 10))
+        window.title('Loading')
+        #This is the image in the students window
+        img = Image.open('intro.jpg')
+        self.tkimage = ImageTk.PhotoImage(img)
+        Label(window,image = self.tkimage).place(x=0, y=0)
+        
+        window.after(9000,lambda:window.destroy())
       
     def studentWindow(self):
         window = tk.Toplevel(self)
@@ -1405,7 +1427,7 @@ class Example(tk.Frame):
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.geometry("400x200")
+    root.geometry("600x300")
     root.title('STUDENT MANAGEMENT SYSTEM')
     PageContainer(root).pack(side="top", fill="both", expand=True)
     root.mainloop()
