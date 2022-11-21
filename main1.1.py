@@ -31,7 +31,7 @@ class PageContainer(tk.Frame):
 
         self.frame = {}
 
-        for F in (Example, Math150, English120, Music100, Physics101, ClassPage, EnterGrades_English120, EnterGrades_Math150, EnterGrades_Music100, EnterGrades_Physics101, AddStudent_English120, AddStudent_Math150, AddStudent_Music100, AddStudent_Physics101):
+        for F in (Example, ReportCard, Math150, English120, Music100, Physics101, ClassPage, EnterGrades_English120, EnterGrades_Math150, EnterGrades_Music100, EnterGrades_Physics101, AddStudent_English120, AddStudent_Math150, AddStudent_Music100, AddStudent_Physics101):
             frame = F(container, self)
             self.frame[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -55,11 +55,13 @@ class ClassPage(tk.Frame):
         button2 = tk.Button(self, text="English 120", command= lambda: controller.show_frame(English120))
         button3 = tk.Button(self, text="Music 100", command= lambda: controller.show_frame(Music100))
         button4 = tk.Button(self, text="Physics 101", command= lambda: controller.show_frame(Physics101))
+        button5 = tk.Button(self, text="Report Cards", command= lambda: controller.show_frame(ReportCard))
 
         button1.pack()
         button2.pack()
         button3.pack()
         button4.pack()
+        button5.pack()
 
 class Math150(tk.Frame):
     def __init__(self, parent, controller):
@@ -956,7 +958,7 @@ class ReportCard(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, controller)
         # set entry variables
-        last_name = tk.StringVar()
+        self.last_name = tk.StringVar()
         # label to enter name
         tk.Label(self, text="Name").grid(row=0, column=0)
         # labels for subject codes
@@ -968,7 +970,7 @@ class ReportCard(tk.Frame):
         # label for course management
         tk.Label(self, text="Manage Course").grid(row=5, column=0)
         # Name age roll entries
-        e1=tk.Entry(self, textvariable=last_name)
+        e1=tk.Entry(self, textvariable=self.last_name)
         # organizing them in the grid
         e1.grid(row=0, column=1)
         # button to display all the calculated credit scores and sgpa
@@ -978,106 +980,126 @@ class ReportCard(tk.Frame):
         tk.Label(self, text="Total credits").grid(row=11, column=3)
         tk.Label(self, text="Student GPA").grid(row=12, column=3)
 
-        def find_student(self):
+    def find_student(self):
 
-            total_creds = []
-            total_gpa = []
-            # gets last name entered in "Name" field
-            sql = "select student_ID from student where last_name = %s"
-            adr = (last_name.get(),)
-            
-            cursor.execute(sql, adr)
-            students = cursor.fetchall()
-            for student in students:
-                student_ID = student[0]
-
-            if len(students) == 0:
-                messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
-                last_name.set("")
-                quit()
-
-            # gets all courses that student is in
-            cursor.execute('''select c.course_ID from course c, enrollment e where
-                                    e.student_ID = %s and e.course_ID = c.course_ID
-                                    order by name asc''', (student_ID,))
-            course_list = cursor.fetchall()
-
-            i=0
-            row=6
-            column=1
-            for course_ID in course_list:
-                if course_ID == "":
-                    break
-
-                cursor.execute("select name from course where course_ID = %s", course_ID)
-                course_name = cursor.fetchone()
-                
-                tk.Label(self, text=course_name[0]).grid(row=(row + i), column=column)
-
-                cursor.execute('''select score, weight from gradebook 
-                                        where student_ID = %s and course_ID = %s
-                                        ''', (student_ID, course_ID[0]))
-                allgrades = cursor.fetchall()
-                
-                final_grade = 0
-                creds_earned = 0
-                for grade in allgrades:
-                    final_grade += grade[0] * grade[1]
-
-                final_grade = final_grade / 100
-
-                if final_grade >= 90:
-                    creds_earned += 4
-                if 80 <= final_grade <= 89.9:
-                    creds_earned += 3
-                if 70 <= final_grade <= 79.9:
-                    creds_earned += 2
-                if 60 <= final_grade <= 69.9:
-                    creds_earned += 1
-                else:
-                    creds_earned += 0
-
-                gpa = creds_earned / len(course_list)
-                total_gpa.append(gpa)
-
-                tk.Label(self, text=final_grade).grid(row=(row + i), column=(column + 1))
-
-                ## get credit count for each course
-                cursor.execute("select creds from course where course_ID = %s", course_ID)
-                credit_count = cursor.fetchall()
-                for creds in credit_count:
-                    tk.Label(self, text=creds).grid(row=(row + i), column=4)
-                    total_creds.append(creds)
-
-                ## go to button next to each class
-                ## ability to manage students from there
-                button_command = eval(course_name[0].replace(' ','_'))
-                tk.Button(self, text=course_name[0], command=button_command).grid(row=(row + i), column=0)
-
-                i+=1
-            
-            ## get amount of earned creds from student
-            total = 0
-            for cred in total_creds:
-                total += cred[0]
-                
-            tk.Label(self, text=total).grid(row=11,column=4)
-
-            ## calculate student GPA
-            total_student_gpa = 0
-            for gpa in total_gpa:
-                total_student_gpa += gpa
-
-            tk.Label(self, text=total_student_gpa).grid(row=12, column=4)
+        total_creds = []
+        total_gpa = []
+        # gets last name entered in "Name" field
+        sql = "select student_ID from student where last_name = %s"
+        adr = (self.last_name.get(),)
         
-            ## define button for clearing all fields
-            tk.Button(self, text="Clear", command=self.clear, width=20).grid(row=13, column=1)
+        cursor.execute(sql, adr)
+        students = cursor.fetchall()
+        for student in students:
+            student_ID = student[0]
+
+        if len(students) == 0:
+            messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
+            last_name.set("")
+            quit()
+
+        # gets all courses that student is in
+        cursor.execute('''select c.course_ID from course c, enrollment e where
+                                e.student_ID = %s and e.course_ID = c.course_ID
+                                order by name asc''', (student_ID,))
+        course_list = cursor.fetchall()
+
+        i=0
+        row=6
+        column=1
+        for course_ID in course_list:
+            if course_ID == "":
+                break
+
+            cursor.execute("select name from course where course_ID = %s", course_ID)
+            course_name = cursor.fetchone()
+            
+            tk.Label(self, text=course_name[0]).grid(row=(row + i), column=column)
+
+            cursor.execute('''select score, weight from gradebook 
+                                    where student_ID = %s and course_ID = %s
+                                    ''', (student_ID, course_ID[0]))
+            allgrades = cursor.fetchall()
+            
+            final_grade = 0
+            creds_earned = 0
+            for grade in allgrades:
+                final_grade += grade[0] * grade[1]
+
+            final_grade = final_grade / 100
+
+            if final_grade >= 90:
+                creds_earned += 4
+            if 80 <= final_grade <= 89.9:
+                creds_earned += 3
+            if 70 <= final_grade <= 79.9:
+                creds_earned += 2
+            if 60 <= final_grade <= 69.9:
+                creds_earned += 1
+            else:
+                creds_earned += 0
+
+            gpa = creds_earned / len(course_list)
+            total_gpa.append(gpa)
+
+            tk.Label(self, text=final_grade).grid(row=(row + i), column=(column + 1))
+
+            ## get credit count for each course
+            cursor.execute("select creds from course where course_ID = %s", course_ID)
+            credit_count = cursor.fetchall()
+            for creds in credit_count:
+                tk.Label(self, text=creds).grid(row=(row + i), column=4)
+                total_creds.append(creds)
+
+            ## go to button next to each class
+            ## ability to manage students from there
+            button_command = eval(course_name[0].replace(' ','_'))
+            tk.Button(self, text=course_name[0], command=button_command).grid(row=(row + i), column=0)
+
+            i+=1
+        
+        ## get amount of earned creds from student
+        total = 0
+        for cred in total_creds:
+            total += cred[0]
+            
+        tk.Label(self, text=total).grid(row=11,column=4)
+
+        ## calculate student GPA
+        total_student_gpa = 0
+        for gpa in total_gpa:
+            total_student_gpa += gpa
+
+        tk.Label(self, text=total_student_gpa).grid(row=12, column=4)
+    
+        ## define button for clearing all fields
+        tk.Button(self, text="Clear", command=self.clear, width=20).grid(row=13, column=1)
 
 
-        def clear(self):
-            for label in self.grid_slaves():
-                if int(label.grid_info()["row"]) > 3:
-                    label.grid_forget()
+    def clear(self):
+        for label in self.grid_slaves():
+            if int(label.grid_info()["row"]) > 3:
+                label.grid_forget()
+                
+        # label to enter name
+        tk.Label(master, text="Name").grid(row=0, column=0)
+
+        # labels for subject codes
+        tk.Label(master, text="Subject").grid(row=5, column=1)
+
+        # label for grades
+        tk.Label(master, text="Grade").grid(row=5, column=2)
+
+        # labels for subject credits
+        tk.Label(master, text="Sub Credit").grid(row=5, column=4)
+
+        # label for course management
+        tk.Label(master, text="Manage Course").grid(row=5, column=0)
+    
+        tk.Label(master, text="Total credits").grid(row=11, column=3)
+        tk.Label(master, text="Student GPA").grid(row=12, column=3)
+                
+                
 #####################
 #From FirstProject.py
 #####################
@@ -1191,6 +1213,7 @@ class Example(tk.Frame):
         #This is the button for querying student data
         buttons_student_search = tk.Button(Student_read_Frame, command= self.readdatastudent, text="Search Database")
         buttons_student_search.grid(row=5, column=0, padx=25, pady=25)
+        tk.Button(Student_read_Frame, text="Student Report Card", command=self.ReportCard).grid(row=6, column=0)
         #Creating a frame. This frame holds the tree window. Move this frame around and everything inside will follow  
         Student_tree_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightBlue")
         Student_tree_Frame.place(x=20, y=250, width=1025, height=250)
@@ -1548,7 +1571,6 @@ class Example(tk.Frame):
             con.close()
         else:
             messagebox.showinfo("Error", "Please use 1 criteria.")
-
 
 if __name__ == "__main__":
     root = tk.Tk()
