@@ -31,7 +31,7 @@ class PageContainer(tk.Frame):
 
         self.frame = {}
 
-        for F in (Example, ReportCard, Math150, English120, Music100, Physics101, ClassPage, EnterGrades_English120, EnterGrades_Math150, EnterGrades_Music100, EnterGrades_Physics101, AddStudent_English120, AddStudent_Math150, AddStudent_Music100, AddStudent_Physics101):
+        for F in (Example, ReportCard, teacherWindow, studentWindow, Math150, English120, Music100, Physics101, ClassPage, EnterGrades_English120, EnterGrades_Math150, EnterGrades_Music100, EnterGrades_Physics101, AddStudent_English120, AddStudent_Math150, AddStudent_Music100, AddStudent_Physics101):
             frame = F(container, self)
             self.frame[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -1110,10 +1110,10 @@ class Example(tk.Frame):
         tk.Frame.__init__(self, parent, controller)
 
         #This is the first window you see and has the 3 buttons for navigating to other windows
-        b1 = tk.Button(self, text="Manage Students", command = self.studentWindow)
+        b1 = tk.Button(self, text="Manage Students", command= lambda: controller.show_frame(studentWindow))
         b1.pack(side="left",anchor='n', padx=40, pady=10)
 
-        b2 = tk.Button(self, text="Manage Teachers", command = self.teacherWindow)
+        b2 = tk.Button(self, text="Manage Teachers", command= lambda: controller.show_frame(teacherWindow))
         b2.pack(side="left",anchor='n', padx=40, pady=10)
 
         #lambda: controller.show_frame(ClassPage)
@@ -1569,6 +1569,307 @@ class Example(tk.Frame):
 
                 con.commit()
             con.close()
+        else:
+            messagebox.showinfo("Error", "Please use 1 criteria.")
+
+class studentWindow(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        
+        #window = tk.Toplevel(self)
+
+        #Window Title
+        studenttitle = Label(self, width=18, text="Manage Students", fg="black", font=("times new roman", 15, "bold"))
+        studenttitle.grid(row=0, column=1, padx=5, pady=5, sticky="w")
+
+        #Creating a frame. This frame holds all the information for writing student data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
+        Student_write_Frame = Frame(self, bd=4, relief=RIDGE, bg="LightGrey")
+        Student_write_Frame.place(x=50, y=45, width=550, height=200)
+        
+        #Setting the main window size
+        #self.geometry("%dx%d%+d%+d" % (1250, 550, 10, 10))
+        #self.grid_columnconfigure((0,1), weight=1)
+
+        #Creating variables used in this window
+        self.studentID_var = IntVar()
+        self.studentFirstName_var = StringVar()
+        self.studentLastName_var = StringVar()
+        self.studentAge_var = IntVar()
+        self.studentGradeLevel_var = IntVar()
+        self.studentSearchID_var = StringVar()
+        self.studentSearchName_var = StringVar()
+
+        #This is creating labels
+        #Student_Label_1 = tk.Label(Student_write_Frame, text="Student ID", bg="LightGrey", bd=5)
+        #Student_Label_1.grid(row=1, column=0)
+        Student_Label_2 = tk.Label(Student_write_Frame, text="Student First Name", bg="LightGrey", bd=5)
+        Student_Label_2.grid(row=2, column=0)
+        Student_Label_3 = tk.Label(Student_write_Frame, text="Student Last Name", bg="LightGrey", bd=5)
+        Student_Label_3.grid(row=3, column=0)
+        Student_Label_4 = tk.Label(Student_write_Frame, text="Age", bg="LightGrey", bd=5)
+        Student_Label_4.grid(row=4, column=0)
+        Student_Label_5 = tk.Label(Student_write_Frame, text="Grade Level", bg="LightGrey", bd=5)
+        Student_Label_5.grid(row=5, column=0)
+
+        #This is creating labels and tying their input into variables
+        #Student_Entry_1 = tk.Entry(Student_write_Frame, textvariable = self.studentID_var)
+        #Student_Entry_1.grid(row=1, column=4)
+        Student_Entry_2 = tk.Entry(Student_write_Frame, textvariable = self.studentFirstName_var)
+        Student_Entry_2.grid(row=2, column=4)
+        Student_Entry_3 = tk.Entry(Student_write_Frame, textvariable = self.studentLastName_var)
+        Student_Entry_3.grid(row=3, column=4)
+        Student_Entry_4 = tk.Entry(Student_write_Frame, textvariable = self.studentAge_var)
+        Student_Entry_4.grid(row=4, column=4)
+        Student_Entry_5 = tk.Entry(Student_write_Frame, textvariable = self.studentGradeLevel_var)
+        Student_Entry_5.grid(row=5, column=4)
+
+        #This is the button for writing data to a database
+        buttons_student_write = tk.Button(Student_write_Frame, text="Write to Database", command= self.studentwrite)
+        buttons_student_write.grid(row=1, column=40, padx=25, pady=5, sticky="w")
+        back_button = tk.Button(Student_write_Frame, text="Main Menu", command= lambda: controller.show_frame(Example))
+        back_button.grid(row=3, column=40, pady=25, padx=5)
+
+        #This is the image in the students window
+        img = Image.open('logo.jpg')
+        self.tkimage = ImageTk.PhotoImage(img)
+        Label(self,image = self.tkimage).place(x=750, y=45)
+
+        #Creating a frame. This frame holds all the information for reading student data from the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
+        Student_read_Frame = Frame(self, bd=4, relief=RIDGE, bg="LightGrey")
+        Student_read_Frame.place(x=1075, y=250, width=210, height=250)
+
+        #These are the entries and labels for querying students
+        Student_Label_6 = tk.Label(Student_read_Frame, text="Search By ID", bg="LightGrey", bd=5)
+        Student_Label_6.grid(row=1, column=0, padx=5, pady=5)
+        Student_Entry_6 = tk.Entry(Student_read_Frame, textvariable = self.studentSearchID_var)
+        Student_Entry_6.grid(row=2, column=0, padx=5, pady=5)
+        Student_Label_7 = tk.Label(Student_read_Frame, text="Search By Last Name", bg="LightGrey", bd=5)
+        Student_Label_7.grid(row=3, column=0, padx=5, pady=5) 
+        Student_Entry_7 = tk.Entry(Student_read_Frame, textvariable = self.studentSearchName_var)
+        Student_Entry_7.grid(row=4, column=0, padx=5, pady=5)
+
+        #This is the button for querying student data
+        buttons_student_search = tk.Button(Student_read_Frame, command= self.readdatastudent, text="Search Database")
+        buttons_student_search.grid(row=5, column=0, padx=25, pady=25)
+        #Creating a frame. This frame holds the tree window. Move this frame around and everything inside will follow  
+        Student_tree_Frame = Frame(self, bd=4, relief=RIDGE, bg="LightGrey")
+        Student_tree_Frame.place(x=20, y=250, width=1025, height=250)
+        self.studenttree = ttk.Treeview(Student_tree_Frame, columns=("ID", "FirstName","LastName","Age","Year"))
+        self.studenttree.grid(row=1, column=0, padx=5, pady=5)
+        self.studenttree.heading("ID", text="ID")
+        self.studenttree.heading("FirstName", text="First Name")
+        self.studenttree.heading("LastName", text=" Last Name")
+        self.studenttree.heading("Age", text="Age")
+        self.studenttree.heading("Year", text="Year")
+        self.studenttree['show']='headings'
+        
+    def studentwrite(self):
+        #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
+        #cur = con.cursor()
+        cursor.execute("insert into student (first_name, last_name, age, grade_level) values (%s, %s, %s, %s)", (self.studentFirstName_var.get(), self.studentLastName_var.get(), self.studentAge_var.get(), self.studentGradeLevel_var.get()))
+        mydb.commit()
+        messagebox.showinfo("Successfull", "Record has been inserted.")
+        self.studentFirstName_var.set("")
+        self.studentLastName_var.set("")
+        self.studentAge_var.set("")
+        self.studentGradeLevel_var.set("")
+        
+    def readdatastudent(self):
+
+        if len(self.studentSearchID_var.get()) == 0:
+
+            #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            #cur = con.cursor()
+         
+            sql = "SELECT * FROM student WHERE last_name = %s"
+            adr = self.studentSearchName_var.get()
+
+            val = cursor.execute(sql, (adr,))
+
+            rows = cursor.fetchall()
+            if(len(rows)!=0):
+                self.studenttree.delete(*self.studenttree.get_children())
+                for row in rows:
+                    self.studenttree.insert('', END, values=row)
+
+                mydb.commit()
+            else:
+                messagebox.showinfo("No", "Student is not registered in the database!")
+                self.studentSearchName_var.set("")
+
+        elif len(self.studentSearchName_var.get()) == 0:
+
+            #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            #cur = con.cursor()
+         
+            sql = "SELECT * FROM student WHERE student_ID = %s"
+            adr = self.studentSearchID_var.get()
+
+            val = cursor.execute(sql, (adr,))
+
+            rows = cursor.fetchall()
+            if(len(rows)!=0):
+                self.studenttree.delete(*self.studenttree.get_children())
+                for row in rows:
+                    self.studenttree.insert('', END, values=row)
+
+                mydb.commit()
+            else:
+                messagebox.showinfo("No", "Student is not registered in the database!")
+                self.studentSearchID_var.set("")
+        else:
+            messagebox.showinfo("Error", "Please use 1 criteria.")
+
+class teacherWindow(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        
+        #window = tk.Toplevel(self)
+        #window.geometry("%dx%d%+d%+d" % (1500, 600, 10, 10))
+        #window.grid_columnconfigure((0,1), weight=1)
+
+        #Window Title
+        teachertitle = Label(self, width=18, text="Manage Teachers", fg="black", font=("times new roman", 15, "bold"))
+        teachertitle.grid(row=0, column=1, padx=5, pady=5, sticky="w")
+
+        #Creating a frame. This frame holds all the information for writing student data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
+        Teacher_write_Frame = Frame(self, bd=4, relief=RIDGE, bg="LightGrey")
+        Teacher_write_Frame.place(x=50, y=45, width=550, height=230)
+       
+
+        #Creating variables used in this window
+        self.teacherID_var = StringVar()
+        self.teacherFirstName_var = StringVar()
+        self.teacherLastName_var = StringVar()
+        self.teacherAge_var = StringVar()
+        self.teacherQual_var = StringVar()
+        self.teacherStart_var = StringVar()
+        self.teacherSearchID_var = StringVar()
+        self.teacherSearchName_var = StringVar()
+
+        #This is creating labels
+        #Teacher_Label_1 = tk.Label(Teacher_write_Frame, text="Teacher ID", bg="LightGrey", bd=5)
+        #Teacher_Label_1.grid(row=1, column=0)
+        Teacher_Label_2 = tk.Label(Teacher_write_Frame, text="Teacher First Name", bg="LightGrey", bd=5)
+        Teacher_Label_2.grid(row=2, column=0)
+        Teacher_Label_3 = tk.Label(Teacher_write_Frame, text="Teacher Last Name", bg="LightGrey", bd=5)
+        Teacher_Label_3.grid(row=3, column=0)
+        Teacher_Label_4 = tk.Label(Teacher_write_Frame, text="Age", bg="LightGrey", bd=5)
+        Teacher_Label_4.grid(row=4, column=0)
+        Teacher_Label_5 = tk.Label(Teacher_write_Frame, text="Qualifications", bg="LightGrey", bd=5)
+        Teacher_Label_5.grid(row=5, column=0)
+        Teacher_Label_6 = tk.Label(Teacher_write_Frame, text="Start Date", bg="LightGrey", bd=5)
+        Teacher_Label_6.grid(row=6, column=0)
+
+        #This is creating labels and tying their input into variables
+        #Teacher_Entry_1 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherID_var)
+        #Teacher_Entry_1.grid(row=1, column=4)
+        Teacher_Entry_2 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherFirstName_var)
+        Teacher_Entry_2.grid(row=2, column=4)
+        Teacher_Entry_3 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherLastName_var)
+        Teacher_Entry_3.grid(row=3, column=4)
+        Teacher_Entry_4 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherAge_var)
+        Teacher_Entry_4.grid(row=4, column=4)
+        Teacher_Entry_5 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherQual_var)
+        Teacher_Entry_5.grid(row=5, column=4)
+        Teacher_Entry_6 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherStart_var)
+        Teacher_Entry_6.grid(row=6, column=4)
+
+        #This is the button for writing data to a database
+        buttons_teacher_write = tk.Button(Teacher_write_Frame, text="Write to Database", command= self.teacherwrite)
+        buttons_teacher_write.grid(row=1, column=40, padx=25, pady=5, sticky="w")
+
+        #This is the image in the teacher window
+        img = Image.open('logo.jpg')
+        self.tkimage = ImageTk.PhotoImage(img)
+        Label(self,image = self.tkimage).place(x=850, y=45)
+
+        #Creating a frame. This frame holds all the information for reading student data from the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
+        Teacher_read_Frame = Frame(self, bd=4, relief=RIDGE, bg="LightGrey")
+        Teacher_read_Frame.place(x=1275, y=300, width=210, height=250)
+
+        #These are the entries and labels for querying students
+        Teacher_Label_7 = tk.Label(Teacher_read_Frame, text="Search By ID", bg="LightGrey", bd=5)
+        Teacher_Label_7.grid(row=1, column=0, padx=5, pady=5)
+        Teacher_Entry_7 = tk.Entry(Teacher_read_Frame, textvariable = self.teacherSearchID_var)
+        Teacher_Entry_7.grid(row=2, column=0, padx=5, pady=5)
+        Teacher_Label_8 = tk.Label(Teacher_read_Frame, text="Search By Last Name", bg="LightGrey", bd=5)
+        Teacher_Label_8.grid(row=3, column=0, padx=5, pady=5) 
+        Teacher_Entry_9 = tk.Entry(Teacher_read_Frame, textvariable = self.teacherSearchName_var)
+        Teacher_Entry_9.grid(row=4, column=0, padx=5, pady=5)
+
+        #This is the button for querying student data
+        buttons_teacher_search = tk.Button(Teacher_read_Frame, command= self.readdatateacher, text="Search Database")
+        buttons_teacher_search.grid(row=5, column=0, padx=25, pady=25)
+
+        #Creating a frame. This frame holds the tree window. Move this frame around and everything inside will follow  
+        Teacher_tree_Frame = Frame(self, bd=4, relief=RIDGE, bg="LightGrey")
+        Teacher_tree_Frame.place(x=20, y=300, width=1225, height=250)
+        self.teachertree = ttk.Treeview(Teacher_tree_Frame, columns=("ID", "FirstName","LastName","Age","Qual","Start"))
+        self.teachertree.grid(row=1, column=0, padx=5, pady=5)
+        self.teachertree.heading("ID", text="ID")
+        self.teachertree.heading("FirstName", text="First Name")
+        self.teachertree.heading("LastName", text=" Last Name")
+        self.teachertree.heading("Age", text="Age")
+        self.teachertree.heading("Qual", text="Qualifications")
+        self.teachertree.heading("Start", text="Start Date")
+        self.teachertree['show']='headings'
+        
+    def teacherwrite(self):
+        #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
+        #cur = con.cursor()
+        cursor.execute("insert into professor (first_name, last_name, age, qualifications, start_date) values(%s, %s, %s, %s, %s)", (self.teacherFirstName_var.get(), self.teacherLastName_var.get(), self.teacherAge_var.get(), self.teacherQual_var.get(), self.teacherStart_var.get()))
+        mydb.commit()
+        messagebox.showinfo("Successfull", "Record has been inserted.")
+        self.teacherFirstName_var.set("")
+        self.teacherLastName_var.set("")
+        self.teacherAge_var.set("")
+        self.teacherQual_var.set("")
+        self.teacherStart_var.set("")
+        
+    def readdatateacher(self):
+
+        if len(self.teacherSearchID_var.get()) == 0:
+
+            #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            #cur = con.cursor()
+         
+            sql = "SELECT * FROM professor WHERE last_name = %s"
+            adr = self.teacherSearchName_var.get()
+
+            val = cursor.execute(sql, (adr,))
+
+            rows = cursor.fetchall()
+            if(len(rows)!=0):
+                self.teachertree.delete(*self.teachertree.get_children())
+                for row in rows:
+                    self.teachertree.insert('', END, values=row)
+
+                mydb.commit()
+            else:
+                messagebox.showinfo("No", "Professor is not registered in the database!")
+                self.teacherSearchName_var.set("")
+
+        elif len(self.teacherSearchName_var.get()) == 0:
+
+            #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            #cur = con.cursor()
+         
+            sql = "SELECT * FROM professor WHERE professor_ID = %s"
+            adr = self.teacherSearchID_var.get()
+
+            val = cursor.execute(sql, (adr,))
+
+            rows = cursor.fetchall()
+            if(len(rows)!=0):
+                self.teachertree.delete(*self.teachertree.get_children())
+                for row in rows:
+                    self.teachertree.insert('', END, values=row)
+
+                mydb.commit()
+            else:
+                messagebox.showinfo("No", "Professor is not registered in the database!")
+                self.teacherSearchID_var.set("")
         else:
             messagebox.showinfo("Error", "Please use 1 criteria.")
 
