@@ -55,11 +55,13 @@ class ClassPage(tk.Frame):
         button2 = tk.Button(self, text="English 120", command= lambda: controller.show_frame(English120))
         button3 = tk.Button(self, text="Music 100", command= lambda: controller.show_frame(Music100))
         button4 = tk.Button(self, text="Physics 101", command= lambda: controller.show_frame(Physics101))
+        button5 = tk.Button(self, text="Main Menu", command= lambda: controller.show_frame(Example))
 
         button1.pack()
         button2.pack()
         button3.pack()
         button4.pack()
+        button5.pack()
 
 class Math150(tk.Frame):
     def __init__(self, parent, controller):
@@ -1086,14 +1088,14 @@ class Example(tk.Frame):
         tk.Frame.__init__(self, parent, controller)
 
         #This is the first window you see and has the 3 buttons for navigating to other windows
-        b1 = tk.Button(self, text="Student", command = self.studentWindow)
+        b1 = tk.Button(self, text="Manage Students", command = self.studentWindow)
         b1.pack(side="left",anchor='n', padx=40, pady=10)
 
-        b2 = tk.Button(self, text="Teacher", command = self.teacherWindow)
+        b2 = tk.Button(self, text="Manage Teachers", command = self.teacherWindow)
         b2.pack(side="left",anchor='n', padx=40, pady=10)
 
         #lambda: controller.show_frame(ClassPage)
-        b3 = tk.Button(self, text="Class", command = lambda: controller.show_frame(ClassPage))
+        b3 = tk.Button(self, text="Course Management", command = lambda: controller.show_frame(ClassPage))
         b3.pack(side="left",anchor='n', padx=40, pady=10)
         
         studenttitle = tk.Label(self, width=30, text="School Force", fg="DarkBlue", font=("times new roman", 15, "bold"))
@@ -1552,7 +1554,7 @@ class Example(tk.Frame):
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.geometry("600x300")
+    root.geometry("800x300")
     root.title('STUDENT MANAGEMENT SYSTEM')
     PageContainer(root).pack(side="top", fill="both", expand=True)
     root.mainloop()
