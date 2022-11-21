@@ -72,7 +72,7 @@ class Math150(tk.Frame):
         button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Math150))
         button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Math150))
         button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Math150))
-        button4 = tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage))
+        button4 = tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(Example))
 
         button1.pack()
         button2.pack()
@@ -88,7 +88,7 @@ class English120(tk.Frame):
         button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_English120))
         button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_English120))
         button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_English120))
-        button4 = tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage))
+        button4 = tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(Example))
 
         button1.pack()
         button2.pack()
@@ -104,7 +104,7 @@ class Music100(tk.Frame):
         button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Music100))
         button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Music100))
         button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Music100))
-        button4 = tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage))
+        button4 = tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(Example))
 
         button1.pack()
         button2.pack()
@@ -120,7 +120,7 @@ class Physics101(tk.Frame):
         button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Physics101))
         button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Physics101))
         button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Physics101))
-        button4 = tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage))
+        button4 = tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(Example))
 
         button1.pack()
         button2.pack()
@@ -803,7 +803,7 @@ class AddProfessor_Math150(tk.Frame):
 
         ## create all buttons
         tk.Button(self, text="Add", command=self.add_professor, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_professor(self):
         ## get the professor ID of the last name entered
@@ -845,7 +845,7 @@ class AddProfessor_English120(tk.Frame):
 
         ## create all buttons
         tk.Button(self, text="Add", command=self.add_professor, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_professor(self):
         ## get the professor ID of the last name entered
@@ -887,7 +887,7 @@ class AddProfessor_Music100(tk.Frame):
 
         ## create all buttons
         tk.Button(self, text="Add", command=self.add_professor, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_professor(self):
         ## get the professor ID of the last name entered
@@ -929,7 +929,7 @@ class AddProfessor_Physics101(tk.Frame):
 
         ## create all buttons
         tk.Button(self, text="Add", command=self.add_professor, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_professor(self):
         ## get the professor ID of the last name entered
@@ -995,7 +995,7 @@ class ReportCard(tk.Frame):
 
         if len(students) == 0:
             messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
-            last_name.set("")
+            self.last_name.set("")
             quit()
 
         # gets all courses that student is in
@@ -1053,7 +1053,7 @@ class ReportCard(tk.Frame):
 
             ## go to button next to each class
             ## ability to manage students from there
-            button_command = eval(course_name[0].replace(' ','_'))
+            button_command = eval(course_name[0].replace(' ',''))
             tk.Button(self, text=course_name[0], command=button_command).grid(row=(row + i), column=0)
 
             i+=1
@@ -1082,22 +1082,22 @@ class ReportCard(tk.Frame):
                 label.grid_forget()
                 
         # label to enter name
-        tk.Label(master, text="Name").grid(row=0, column=0)
+        tk.Label(self, text="Name").grid(row=0, column=0)
 
         # labels for subject codes
-        tk.Label(master, text="Subject").grid(row=5, column=1)
+        tk.Label(self, text="Subject").grid(row=5, column=1)
 
         # label for grades
-        tk.Label(master, text="Grade").grid(row=5, column=2)
+        tk.Label(self, text="Grade").grid(row=5, column=2)
 
         # labels for subject credits
-        tk.Label(master, text="Sub Credit").grid(row=5, column=4)
+        tk.Label(self, text="Sub Credit").grid(row=5, column=4)
 
         # label for course management
-        tk.Label(master, text="Manage Course").grid(row=5, column=0)
+        tk.Label(self, text="Manage Course").grid(row=5, column=0)
     
-        tk.Label(master, text="Total credits").grid(row=11, column=3)
-        tk.Label(master, text="Student GPA").grid(row=12, column=3)
+        tk.Label(self, text="Total credits").grid(row=11, column=3)
+        tk.Label(self, text="Student GPA").grid(row=12, column=3)
                 
                 
 #####################
@@ -1137,7 +1137,7 @@ class Example(tk.Frame):
         self.tkimage = ImageTk.PhotoImage(img)
         Label(window,image = self.tkimage).place(x=0, y=0)
         
-        window.after(9000,lambda:window.destroy())
+        window.after(5000,lambda:window.destroy())
       
     def studentWindow(self):
         window = tk.Toplevel(self)
@@ -1147,7 +1147,7 @@ class Example(tk.Frame):
         studenttitle.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
         #Creating a frame. This frame holds all the information for writing student data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
-        Student_write_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightBlue")
+        Student_write_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
         Student_write_Frame.place(x=50, y=45, width=550, height=200)
         
         #Setting the main window size
@@ -1164,15 +1164,15 @@ class Example(tk.Frame):
         self.studentSearchName_var = StringVar()
 
         #This is creating labels
-        #Student_Label_1 = tk.Label(Student_write_Frame, text="Student ID", bg="LightBlue", bd=5)
+        #Student_Label_1 = tk.Label(Student_write_Frame, text="Student ID", bg="LightGrey", bd=5)
         #Student_Label_1.grid(row=1, column=0)
-        Student_Label_2 = tk.Label(Student_write_Frame, text="Student First Name", bg="LightBlue", bd=5)
+        Student_Label_2 = tk.Label(Student_write_Frame, text="Student First Name", bg="LightGrey", bd=5)
         Student_Label_2.grid(row=2, column=0)
-        Student_Label_3 = tk.Label(Student_write_Frame, text="Student Last Name", bg="LightBlue", bd=5)
+        Student_Label_3 = tk.Label(Student_write_Frame, text="Student Last Name", bg="LightGrey", bd=5)
         Student_Label_3.grid(row=3, column=0)
-        Student_Label_4 = tk.Label(Student_write_Frame, text="Age", bg="LightBlue", bd=5)
+        Student_Label_4 = tk.Label(Student_write_Frame, text="Age", bg="LightGrey", bd=5)
         Student_Label_4.grid(row=4, column=0)
-        Student_Label_5 = tk.Label(Student_write_Frame, text="Grade Level", bg="LightBlue", bd=5)
+        Student_Label_5 = tk.Label(Student_write_Frame, text="Grade Level", bg="LightGrey", bd=5)
         Student_Label_5.grid(row=5, column=0)
 
         #This is creating labels and tying their input into variables
@@ -1197,15 +1197,15 @@ class Example(tk.Frame):
         Label(window,image = self.tkimage).place(x=750, y=45)
 
         #Creating a frame. This frame holds all the information for reading student data from the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
-        Student_read_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightBlue")
+        Student_read_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
         Student_read_Frame.place(x=1075, y=250, width=210, height=250)
 
         #These are the entries and labels for querying students
-        Student_Label_6 = tk.Label(Student_read_Frame, text="Search By ID", bg="LightBlue", bd=5)
+        Student_Label_6 = tk.Label(Student_read_Frame, text="Search By ID", bg="LightGrey", bd=5)
         Student_Label_6.grid(row=1, column=0, padx=5, pady=5)
         Student_Entry_6 = tk.Entry(Student_read_Frame, textvariable = self.studentSearchID_var)
         Student_Entry_6.grid(row=2, column=0, padx=5, pady=5)
-        Student_Label_7 = tk.Label(Student_read_Frame, text="Search By Last Name", bg="LightBlue", bd=5)
+        Student_Label_7 = tk.Label(Student_read_Frame, text="Search By Last Name", bg="LightGrey", bd=5)
         Student_Label_7.grid(row=3, column=0, padx=5, pady=5) 
         Student_Entry_7 = tk.Entry(Student_read_Frame, textvariable = self.studentSearchName_var)
         Student_Entry_7.grid(row=4, column=0, padx=5, pady=5)
@@ -1213,9 +1213,8 @@ class Example(tk.Frame):
         #This is the button for querying student data
         buttons_student_search = tk.Button(Student_read_Frame, command= self.readdatastudent, text="Search Database")
         buttons_student_search.grid(row=5, column=0, padx=25, pady=25)
-        tk.Button(Student_read_Frame, text="Student Report Card", command=self.ReportCard).grid(row=6, column=0)
         #Creating a frame. This frame holds the tree window. Move this frame around and everything inside will follow  
-        Student_tree_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightBlue")
+        Student_tree_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
         Student_tree_Frame.place(x=20, y=250, width=1025, height=250)
         self.studenttree = ttk.Treeview(Student_tree_Frame, columns=("ID", "FirstName","LastName","Age","Year"))
         self.studenttree.grid(row=1, column=0, padx=5, pady=5)
@@ -1237,7 +1236,7 @@ class Example(tk.Frame):
         teachertitle.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
         #Creating a frame. This frame holds all the information for writing student data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
-        Teacher_write_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightBlue")
+        Teacher_write_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
         Teacher_write_Frame.place(x=50, y=45, width=550, height=230)
        
 
@@ -1252,17 +1251,17 @@ class Example(tk.Frame):
         self.teacherSearchName_var = StringVar()
 
         #This is creating labels
-        #Teacher_Label_1 = tk.Label(Teacher_write_Frame, text="Teacher ID", bg="LightBlue", bd=5)
+        #Teacher_Label_1 = tk.Label(Teacher_write_Frame, text="Teacher ID", bg="LightGrey", bd=5)
         #Teacher_Label_1.grid(row=1, column=0)
-        Teacher_Label_2 = tk.Label(Teacher_write_Frame, text="Teacher First Name", bg="LightBlue", bd=5)
+        Teacher_Label_2 = tk.Label(Teacher_write_Frame, text="Teacher First Name", bg="LightGrey", bd=5)
         Teacher_Label_2.grid(row=2, column=0)
-        Teacher_Label_3 = tk.Label(Teacher_write_Frame, text="Teacher Last Name", bg="LightBlue", bd=5)
+        Teacher_Label_3 = tk.Label(Teacher_write_Frame, text="Teacher Last Name", bg="LightGrey", bd=5)
         Teacher_Label_3.grid(row=3, column=0)
-        Teacher_Label_4 = tk.Label(Teacher_write_Frame, text="Age", bg="LightBlue", bd=5)
+        Teacher_Label_4 = tk.Label(Teacher_write_Frame, text="Age", bg="LightGrey", bd=5)
         Teacher_Label_4.grid(row=4, column=0)
-        Teacher_Label_5 = tk.Label(Teacher_write_Frame, text="Qualifications", bg="LightBlue", bd=5)
+        Teacher_Label_5 = tk.Label(Teacher_write_Frame, text="Qualifications", bg="LightGrey", bd=5)
         Teacher_Label_5.grid(row=5, column=0)
-        Teacher_Label_6 = tk.Label(Teacher_write_Frame, text="Start Date", bg="LightBlue", bd=5)
+        Teacher_Label_6 = tk.Label(Teacher_write_Frame, text="Start Date", bg="LightGrey", bd=5)
         Teacher_Label_6.grid(row=6, column=0)
 
         #This is creating labels and tying their input into variables
@@ -1289,15 +1288,15 @@ class Example(tk.Frame):
         Label(window,image = self.tkimage).place(x=850, y=45)
 
         #Creating a frame. This frame holds all the information for reading student data from the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
-        Teacher_read_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightBlue")
+        Teacher_read_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
         Teacher_read_Frame.place(x=1275, y=300, width=210, height=250)
 
         #These are the entries and labels for querying students
-        Teacher_Label_7 = tk.Label(Teacher_read_Frame, text="Search By ID", bg="LightBlue", bd=5)
+        Teacher_Label_7 = tk.Label(Teacher_read_Frame, text="Search By ID", bg="LightGrey", bd=5)
         Teacher_Label_7.grid(row=1, column=0, padx=5, pady=5)
         Teacher_Entry_7 = tk.Entry(Teacher_read_Frame, textvariable = self.teacherSearchID_var)
         Teacher_Entry_7.grid(row=2, column=0, padx=5, pady=5)
-        Teacher_Label_8 = tk.Label(Teacher_read_Frame, text="Search By Last Name", bg="LightBlue", bd=5)
+        Teacher_Label_8 = tk.Label(Teacher_read_Frame, text="Search By Last Name", bg="LightGrey", bd=5)
         Teacher_Label_8.grid(row=3, column=0, padx=5, pady=5) 
         Teacher_Entry_9 = tk.Entry(Teacher_read_Frame, textvariable = self.teacherSearchName_var)
         Teacher_Entry_9.grid(row=4, column=0, padx=5, pady=5)
@@ -1307,7 +1306,7 @@ class Example(tk.Frame):
         buttons_teacher_search.grid(row=5, column=0, padx=25, pady=25)
 
         #Creating a frame. This frame holds the tree window. Move this frame around and everything inside will follow  
-        Teacher_tree_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightBlue")
+        Teacher_tree_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
         Teacher_tree_Frame.place(x=20, y=300, width=1225, height=250)
         self.teachertree = ttk.Treeview(Teacher_tree_Frame, columns=("ID", "FirstName","LastName","Age","Qual","Start"))
         self.teachertree.grid(row=1, column=0, padx=5, pady=5)
@@ -1331,7 +1330,7 @@ class Example(tk.Frame):
         sectiontitle.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
         #Creating a frame. This frame holds all the information for writing class data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
-        section_write_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightBlue")
+        section_write_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
         section_write_Frame.place(x=50, y=45, width=450, height=150)
 
         #Creating variables
@@ -1343,13 +1342,13 @@ class Example(tk.Frame):
         self.sectionSearchName_var = StringVar()
 
         #This is creating labels
-        section_Label_1 = tk.Label(section_write_Frame, text="section ID", bg="LightBlue", bd=5)
+        section_Label_1 = tk.Label(section_write_Frame, text="section ID", bg="LightGrey", bd=5)
         section_Label_1.grid(row=1, column=0)
-        section_Label_2 = tk.Label(section_write_Frame, text="Section Name", bg="LightBlue", bd=5)
+        section_Label_2 = tk.Label(section_write_Frame, text="Section Name", bg="LightGrey", bd=5)
         section_Label_2.grid(row=2, column=0)
-        section_Label_3 = tk.Label(section_write_Frame, text="Credits", bg="LightBlue", bd=5)
+        section_Label_3 = tk.Label(section_write_Frame, text="Credits", bg="LightGrey", bd=5)
         section_Label_3.grid(row=3, column=0)
-        section_Label_4 = tk.Label(section_write_Frame, text="Professor", bg="LightBlue", bd=5)
+        section_Label_4 = tk.Label(section_write_Frame, text="Professor", bg="LightGrey", bd=5)
         section_Label_4.grid(row=4, column=0)
 
         #This is creating labels and tying their input into variables
@@ -1373,15 +1372,15 @@ class Example(tk.Frame):
         Label(window,image = self.tkimage).place(x=650, y=45)
 
         #Creating a frame. This frame holds all the information for reading class data from the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
-        section_read_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightBlue")
+        section_read_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
         section_read_Frame.place(x=900, y=250, width=150, height=200)
 
         #These are the entries and labels for querying classes
-        section_Label_7 = tk.Label(section_read_Frame, text="Search By ID", bg="LightBlue", bd=5)
+        section_Label_7 = tk.Label(section_read_Frame, text="Search By ID", bg="LightGrey", bd=5)
         section_Label_7.grid(row=1, column=0, padx=5, pady=5)
         section_Entry_7 = tk.Entry(section_read_Frame, textvariable = self.sectionSearchID_var)
         section_Entry_7.grid(row=2, column=0, padx=5, pady=5)
-        section_Label_8 = tk.Label(section_read_Frame, text="Search By Name", bg="LightBlue", bd=5)
+        section_Label_8 = tk.Label(section_read_Frame, text="Search By Name", bg="LightGrey", bd=5)
         section_Label_8.grid(row=3, column=0, padx=5, pady=5) 
         section_Entry_9 = tk.Entry(section_read_Frame, textvariable = self.sectionSearchName_var)
         section_Entry_9.grid(row=4, column=0, padx=5, pady=5)
@@ -1391,7 +1390,7 @@ class Example(tk.Frame):
         buttons_section_search.grid(row=5, column=0, padx=25, pady=25)
 
         #Creating a frame. This frame holds the tree window. Move this frame around and everything inside will follow  
-        section_tree_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightBlue")
+        section_tree_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
         section_tree_Frame.place(x=20, y=250, width=825, height=250)
         self.sectiontree = ttk.Treeview(section_tree_Frame, columns=("ID", "Name","Creds","Prof"))
         self.sectiontree.grid(row=1, column=0, padx=5, pady=5)
@@ -1413,7 +1412,6 @@ class Example(tk.Frame):
         #cur = con.cursor()
         cursor.execute("insert into student (first_name, last_name, age, grade_level) values (%s, %s, %s, %s)", (self.studentFirstName_var.get(), self.studentLastName_var.get(), self.studentAge_var.get(), self.studentGradeLevel_var.get()))
         mydb.commit()
-        #mydb.close()
         messagebox.showinfo("Successfull", "Record has been inserted.")
         self.studentFirstName_var.set("")
         self.studentLastName_var.set("")
