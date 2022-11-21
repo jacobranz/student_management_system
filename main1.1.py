@@ -1236,7 +1236,6 @@ class Example(tk.Frame):
         #cur = con.cursor()
         cursor.execute("insert into course values(%s, %s, %s, %s)", (self.sectionID_var.get(), self.sectionName_var.get(), self.sectionCreds_var.get(), self.sectionProf_var.get()))
         mydb.commit()
-        mydb.close()
         messagebox.showinfo("Successfull", "Record has been inserted.")
 
     def studentwrite(self):
@@ -1246,61 +1245,67 @@ class Example(tk.Frame):
         mydb.commit()
         #mydb.close()
         messagebox.showinfo("Successfull", "Record has been inserted.")
+        self.studentFirstName_var.set("")
+        self.studentLastName_var.set("")
+        self.studentAge_var.set("")
+        self.studentGradeLevel_var.set("")
 
     def teacherwrite(self):
-        con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
-        cur = con.cursor()
-        cur.execute("insert into professor values(%s, %s, %s, %s, %s, %s)", (self.teacherID_var.get(), self.teacherFirstName_var.get(), self.teacherLastName_var.get(), self.teacherAge_var.get(), self.teacherQual_var.get(), self.teacherStart_var.get()))
-        con.commit()
-        con.close()
+        #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
+        #cur = con.cursor()
+        cursor.execute("insert into professor (first_name, last_name, age, qualifications, start_date) values(%s, %s, %s, %s, %s)", (self.teacherFirstName_var.get(), self.teacherLastName_var.get(), self.teacherAge_var.get(), self.teacherQual_var.get(), self.teacherStart_var.get()))
+        mydb.commit()
         messagebox.showinfo("Successfull", "Record has been inserted.")
+        self.teacherFirstName_var.set("")
+        self.teacherLastName_var.set("")
+        self.teacherAge_var.set("")
+        self.teacherQual_var.set("")
+        self.teacherStart_var.set("")
 
             
     def readdatastudent(self):
 
         if len(self.studentSearchID_var.get()) == 0:
 
-            con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
-            cur = con.cursor()
+            #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            #cur = con.cursor()
          
             sql = "SELECT * FROM student WHERE last_name = %s"
             adr = self.studentSearchName_var.get()
 
-            val = cur.execute(sql, (adr,))
+            val = cursor.execute(sql, (adr,))
 
-            rows = cur.fetchall()
+            rows = cursor.fetchall()
             if(len(rows)!=0):
                 self.studenttree.delete(*self.studenttree.get_children())
                 for row in rows:
                     self.studenttree.insert('', END, values=row)
 
-                con.commit()
+                mydb.commit()
             else:
                 messagebox.showinfo("No", "Student is not registered in the database!")
                 self.studentSearchName_var.set("")
-            con.close()
 
         elif len(self.studentSearchName_var.get()) == 0:
 
-            con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
-            cur = con.cursor()
+            #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            #cur = con.cursor()
          
             sql = "SELECT * FROM student WHERE student_ID = %s"
             adr = self.studentSearchID_var.get()
 
-            val = cur.execute(sql, (adr,))
+            val = cursor.execute(sql, (adr,))
 
-            rows = cur.fetchall()
+            rows = cursor.fetchall()
             if(len(rows)!=0):
                 self.studenttree.delete(*self.studenttree.get_children())
                 for row in rows:
                     self.studenttree.insert('', END, values=row)
 
-                con.commit()
+                mydb.commit()
             else:
                 messagebox.showinfo("No", "Student is not registered in the database!")
                 self.studentSearchID_var.set("")
-            con.close()
         else:
             messagebox.showinfo("Error", "Please use 1 criteria.")
             
@@ -1309,47 +1314,45 @@ class Example(tk.Frame):
 
         if len(self.teacherSearchID_var.get()) == 0:
 
-            con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
-            cur = con.cursor()
+            #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            #cur = con.cursor()
          
             sql = "SELECT * FROM professor WHERE last_name = %s"
             adr = self.teacherSearchName_var.get()
 
-            val = cur.execute(sql, (adr,))
+            val = cursor.execute(sql, (adr,))
 
-            rows = cur.fetchall()
+            rows = cursor.fetchall()
             if(len(rows)!=0):
                 self.teachertree.delete(*self.teachertree.get_children())
                 for row in rows:
                     self.teachertree.insert('', END, values=row)
 
-                con.commit()
+                mydb.commit()
             else:
                 messagebox.showinfo("No", "Professor is not registered in the database!")
                 self.teacherSearchName_var.set("")
-            con.close()
 
         elif len(self.teacherSearchName_var.get()) == 0:
 
-            con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
-            cur = con.cursor()
+            #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
+            #cur = con.cursor()
          
             sql = "SELECT * FROM professor WHERE professor_ID = %s"
             adr = self.teacherSearchID_var.get()
 
-            val = cur.execute(sql, (adr,))
+            val = cursor.execute(sql, (adr,))
 
-            rows = cur.fetchall()
+            rows = cursor.fetchall()
             if(len(rows)!=0):
                 self.teachertree.delete(*self.teachertree.get_children())
                 for row in rows:
                     self.teachertree.insert('', END, values=row)
 
-                con.commit()
+                mydb.commit()
             else:
                 messagebox.showinfo("No", "Professor is not registered in the database!")
                 self.teacherSearchID_var.set("")
-            con.close()
         else:
             messagebox.showinfo("Error", "Please use 1 criteria.")
 
