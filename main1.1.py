@@ -30,7 +30,7 @@ class PageContainer(tk.Frame):
 
         self.frame = {}
 
-        for F in (Example, Math150, English120, Music100, Physics101):
+        for F in (Example, Math150, English120, Music100, Physics101, ClassPage, EnterGrades_English120, EnterGrades_Math150, EnterGrades_Music100, EnterGrades_Physics101, AddStudent_English120, AddStudent_Math150, AddStudent_Music100, AddStudent_Physics101):
             frame = F(container, self)
             self.frame[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -179,7 +179,7 @@ class EnterGrades_Math150(tk.Frame):
         if len(is_enrolled) == 0:
             messagebox.showwarning("Not Enrolled", "Student is not enrolled in this class!")
             self.last_name.set("")
-
+            #tk.Button(self, text="Add Student to Course Here", command= lambda: self.controller.show_frame(AddStudent_Math150)).grid(row=15, column=1)
         ## get all assignments in the course
         cursor.execute('''select gradebook.assignment from gradebook where
                                             gradebook.student_ID = %s and gradebook.course_ID = 2''', (student_ID,))
