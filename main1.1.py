@@ -576,7 +576,7 @@ class AddStudent_Math150(tk.Frame):
             messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
             quit()
 
-        cursor.execute("select student_ID from enrollment where course_ID = 2")
+        cursor.execute("select student_ID from enrollment where course_ID = 2 and student_ID = %s", (student,))
         is_enrolled = cursor.fetchall()
         if len(is_enrolled) == 0:
             ## insert the value of student ID into the enrollment table with the appropriate class
@@ -637,7 +637,7 @@ class AddStudent_English120(tk.Frame):
             messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
             quit()
 
-        cursor.execute("select student_ID from enrollment where course_ID = 3")
+        cursor.execute("select student_ID from enrollment where course_ID = 3 and student_ID = %s", (student,))
         is_enrolled = cursor.fetchall()
         if len(is_enrolled) == 0:
             ## insert the value of student ID into the enrollment table with the appropriate class
@@ -698,7 +698,7 @@ class AddStudent_Music100(tk.Frame):
             messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
             quit()
 
-        cursor.execute("select student_ID from enrollment where course_ID = 4")
+        cursor.execute("select student_ID from enrollment where course_ID = 4 and student_ID = %s", (student,))
         is_enrolled = cursor.fetchall()
         if len(is_enrolled) == 0:
             ## insert the value of student ID into the enrollment table with the appropriate class
@@ -759,7 +759,7 @@ class AddStudent_Physics101(tk.Frame):
             messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
             quit()
 
-        cursor.execute("select student_ID from enrollment where course_ID = 1")
+        cursor.execute("select student_ID from enrollment where course_ID = 1 and student_ID = %s", (student,))
         is_enrolled = cursor.fetchall()
         if len(is_enrolled) == 0:
             ## insert the value of student ID into the enrollment table with the appropriate class
