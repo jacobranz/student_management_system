@@ -17,8 +17,6 @@ mydb = mysql.connector.connect(
 
 cursor = mydb.cursor()
 
-max_students = 20
-
 class PageContainer(tk.Frame):
 
     def __init__(self, root):
@@ -44,6 +42,9 @@ class PageContainer(tk.Frame):
             frame.grid(row=0, column=0, sticky="nsew")
         frame = self.frame[controller]
         frame.tkraise()
+
+    def get_page(self, page_class):
+        return self.frame[page_class]
 
 class ClassPage(tk.Frame):
     def __init__(self, parent, controller):
@@ -131,6 +132,7 @@ class Physics101(tk.Frame):
 
 class EnterGrades_Math150(tk.Frame):
     def __init__(self, parent, controller):
+        self.controller = controller
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="MATH 150")
         #label.pack(pady=10, padx=10)
@@ -184,7 +186,7 @@ class EnterGrades_Math150(tk.Frame):
         if len(is_enrolled) == 0:
             messagebox.showwarning("Not Enrolled", "Student is not enrolled in this class!")
             self.last_name.set("")
-            #tk.Button(self, text="Add Student to Course Here", command= lambda: self.controller.show_frame(AddStudent_Math150)).grid(row=15, column=1)
+            tk.Button(self, text="Add Student to Course Here").grid(row=15, column=1)
         ## get all assignments in the course
         cursor.execute('''select gradebook.assignment from gradebook where
                                             gradebook.student_ID = %s and gradebook.course_ID = 2''', (student_ID,))
@@ -208,12 +210,12 @@ class EnterGrades_Math150(tk.Frame):
 
     def clear(self):
         for label in self.grid_slaves():
-            if int(label.grid_info()["row"]) > 2:
+            if 2 < int(label.grid_info()["row"]) < 13:
                 label.grid_forget()
 
         self.last_name.set("")
 
-        tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
+        #tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
 
 
     def submit_grades(self):
@@ -287,6 +289,14 @@ class EnterGrades_English120(tk.Frame):
             messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
             self.last_name.set("")
 
+        ## throw warning if student exists but is not enrolled in the class
+        cursor.execute("select student_ID from enrollment where course_ID = 2 and student_ID = %s", (student_ID,))
+        is_enrolled = cursor.fetchall()
+        if len(is_enrolled) == 0:
+            messagebox.showwarning("Not Enrolled", "Student is not enrolled in this class!")
+            self.last_name.set("")
+            tk.Button(self, text="Add Student to Course Here").grid(row=15, column=1)
+
         ## get all assignments in the course
         cursor.execute('''select gradebook.assignment from gradebook where
                                             gradebook.student_ID = %s and gradebook.course_ID = 3''', (student_ID,))
@@ -310,12 +320,12 @@ class EnterGrades_English120(tk.Frame):
 
     def clear(self):
         for label in self.grid_slaves():
-            if int(label.grid_info()["row"]) > 2:
+            if 2 < int(label.grid_info()["row"]) < 13:
                 label.grid_forget()
 
         self.last_name.set("")
 
-        tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
+        #tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
 
 
     def submit_grades(self):
@@ -389,6 +399,14 @@ class EnterGrades_Music100(tk.Frame):
             messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
             self.last_name.set("")
 
+        ## throw warning if student exists but is not enrolled in the class
+        cursor.execute("select student_ID from enrollment where course_ID = 2 and student_ID = %s", (student_ID,))
+        is_enrolled = cursor.fetchall()
+        if len(is_enrolled) == 0:
+            messagebox.showwarning("Not Enrolled", "Student is not enrolled in this class!")
+            self.last_name.set("")
+            tk.Button(self, text="Add Student to Course Here").grid(row=15, column=1)
+
         ## get all assignments in the course
         cursor.execute('''select gradebook.assignment from gradebook where
                                             gradebook.student_ID = %s and gradebook.course_ID = 4''', (student_ID,))
@@ -412,12 +430,12 @@ class EnterGrades_Music100(tk.Frame):
 
     def clear(self):
         for label in self.grid_slaves():
-            if int(label.grid_info()["row"]) > 2:
+            if 2 < int(label.grid_info()["row"]) < 13:
                 label.grid_forget()
 
         self.last_name.set("")
 
-        tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
+        #tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
 
 
     def submit_grades(self):
@@ -491,6 +509,14 @@ class EnterGrades_Physics101(tk.Frame):
             messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
             self.last_name.set("")
 
+        ## throw warning if student exists but is not enrolled in the class
+        cursor.execute("select student_ID from enrollment where course_ID = 2 and student_ID = %s", (student_ID,))
+        is_enrolled = cursor.fetchall()
+        if len(is_enrolled) == 0:
+            messagebox.showwarning("Not Enrolled", "Student is not enrolled in this class!")
+            self.last_name.set("")
+            tk.Button(self, text="Add Student to Course Here").grid(row=15, column=1)
+
         ## get all assignments in the course
         cursor.execute('''select gradebook.assignment from gradebook where
                                             gradebook.student_ID = %s and gradebook.course_ID = 1''', (student_ID,))
@@ -514,12 +540,12 @@ class EnterGrades_Physics101(tk.Frame):
 
     def clear(self):
         for label in self.grid_slaves():
-            if int(label.grid_info()["row"]) > 2:
+            if 2 < int(label.grid_info()["row"]) < 13:
                 label.grid_forget()
 
         self.last_name.set("")
 
-        tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
+        #tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
 
 
     def submit_grades(self):
@@ -546,6 +572,8 @@ class EnterGrades_Physics101(tk.Frame):
 
 class AddStudent_Math150(tk.Frame):
     def __init__(self, parent, controller):
+        self.max_students = 1
+
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="ADD STUDENT")
         #label.pack(padx=10, pady=10)
@@ -571,14 +599,14 @@ class AddStudent_Math150(tk.Frame):
             student = student[0]
         if len(student_last) == 0:
             messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
-            quit()
+            self.last_name.set("")
 
         ## get student count and ensure it is beneath the max amount
         cursor.execute("select student_ID from gradebook where course_ID = 2")
         students = cursor.fetchall()
-        if len(students) > max_students:
+        if len(students) > self.max_students:
             messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
-            quit()
+            self.last_name.set("")
 
         cursor.execute("select student_ID from enrollment where course_ID = 2 and student_ID = %s", (student,))
         is_enrolled = cursor.fetchall()
@@ -603,10 +631,12 @@ class AddStudent_Math150(tk.Frame):
             self.last_name.set("")
         else:
             messagebox.showwarning("Enrolled", "Student is already enrolled in this class!")
-            quit()
+            self.last_name.set("")
 
 class AddStudent_English120(tk.Frame):
     def __init__(self, parent, controller):
+        self.max_students = 20
+
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="ADD STUDENT")
         #label.pack(padx=10, pady=10)
@@ -632,14 +662,14 @@ class AddStudent_English120(tk.Frame):
             student = student[0]
         if len(student_last) == 0:
             messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
-            quit()
+            self.last_name.set("")
 
         ## get student count and ensure it is beneath the max amount
         cursor.execute("select student_ID from gradebook where course_ID = 3")
         students = cursor.fetchall()
-        if len(students) > max_students:
+        if len(students) > self.max_students:
             messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
-            quit()
+            self.last_name.set("")
 
         cursor.execute("select student_ID from enrollment where course_ID = 3 and student_ID = %s", (student,))
         is_enrolled = cursor.fetchall()
@@ -664,10 +694,12 @@ class AddStudent_English120(tk.Frame):
             self.last_name.set("")
         else:
             messagebox.showwarning("Enrolled", "Student is already enrolled in this class!")
-            quit()
+            self.last_name.set("")
 
 class AddStudent_Music100(tk.Frame):
     def __init__(self, parent, controller):
+        self.max_students = 20
+
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="ADD STUDENT")
         #label.pack(padx=10, pady=10)
@@ -693,14 +725,14 @@ class AddStudent_Music100(tk.Frame):
             student = student[0]
         if len(student_last) == 0:
             messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
-            quit()
+            self.last_name.set("")
 
         ## get student count and ensure it is beneath the max amount
         cursor.execute("select student_ID from gradebook where course_ID = 4")
         students = cursor.fetchall()
-        if len(students) > max_students:
+        if len(students) > self.max_students:
             messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
-            quit()
+            self.last_name.set("")
 
         cursor.execute("select student_ID from enrollment where course_ID = 4 and student_ID = %s", (student,))
         is_enrolled = cursor.fetchall()
@@ -725,10 +757,12 @@ class AddStudent_Music100(tk.Frame):
             self.last_name.set("")
         else:
             messagebox.showwarning("Enrolled", "Student is already enrolled in this class!")
-            quit()
+            self.last_name.set("")
 
 class AddStudent_Physics101(tk.Frame):
     def __init__(self, parent, controller):
+        self.max_students = 20
+
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="ADD STUDENT")
         #label.pack(padx=10, pady=10)
@@ -754,14 +788,14 @@ class AddStudent_Physics101(tk.Frame):
             student = student[0]
         if len(student_last) == 0:
             messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
-            quit()
+            self.last_name.set("")
 
         ## get student count and ensure it is beneath the max amount
         cursor.execute("select student_ID from gradebook where course_ID = 1")
         students = cursor.fetchall()
-        if len(students) > max_students:
+        if len(students) > self.max_students:
             messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
-            quit()
+            self.last_name.set("")
 
         cursor.execute("select student_ID from enrollment where course_ID = 1 and student_ID = %s", (student,))
         is_enrolled = cursor.fetchall()
@@ -786,7 +820,7 @@ class AddStudent_Physics101(tk.Frame):
             self.last_name.set("")
         else:
             messagebox.showwarning("Enrolled", "Student is already enrolled in this class!")
-            quit()
+            self.last_name.set("")
 
 class AddProfessor_Math150(tk.Frame):
     def __init__(self, parent, controller):
@@ -999,7 +1033,6 @@ class ReportCard(tk.Frame):
         if len(students) == 0:
             messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
             self.last_name.set("")
-            quit()
 
         # gets all courses that student is in
         cursor.execute('''select c.course_ID from course c, enrollment e where
@@ -1153,7 +1186,7 @@ class Example(tk.Frame):
         Student_write_Frame.place(x=50, y=45, width=550, height=200)
         
         #Setting the main window size
-        window.geometry("%dx%d%+d%+d" % (1250, 550, 10, 10))
+        window.geometry("%dx%d%+d%+d" % (1350, 550, 10, 10))
         window.grid_columnconfigure((0,1), weight=1)
 
         #Creating variables used in this window
