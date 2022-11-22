@@ -161,7 +161,7 @@ class EnterGrades_Math150(tk.Frame):
         find_button = tk.Button(self, text="Find", command=self.find_student)
         find_button.grid(row=0,column=2)
         submit_button = tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
-        tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def find_student(self):
 
@@ -270,7 +270,7 @@ class EnterGrades_English120(tk.Frame):
         find_button = tk.Button(self, text="Find", command=self.find_student)
         find_button.grid(row=0,column=2)
         submit_button = tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
-        tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def find_student(self):
 
@@ -372,7 +372,7 @@ class EnterGrades_Music100(tk.Frame):
         find_button = tk.Button(self, text="Find", command=self.find_student)
         find_button.grid(row=0,column=2)
         submit_button = tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
-        tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def find_student(self):
 
@@ -474,7 +474,7 @@ class EnterGrades_Physics101(tk.Frame):
         find_button = tk.Button(self, text="Find", command=self.find_student)
         find_button.grid(row=0,column=2)
         submit_button = tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
-        tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def find_student(self):
 
@@ -561,7 +561,7 @@ class AddStudent_Math150(tk.Frame):
 
         ## create all buttons
         tk.Button(self, text="Add", command=self.add_student, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_student(self):
         ## get the student ID of the last name entered
@@ -622,7 +622,7 @@ class AddStudent_English120(tk.Frame):
 
         ## create all buttons
         tk.Button(self, text="Add", command=self.add_student, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_student(self):
         ## get the student ID of the last name entered
@@ -683,7 +683,7 @@ class AddStudent_Music100(tk.Frame):
 
         ## create all buttons
         tk.Button(self, text="Add", command=self.add_student, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_student(self):
         ## get the student ID of the last name entered
@@ -744,7 +744,7 @@ class AddStudent_Physics101(tk.Frame):
 
         ## create all buttons
         tk.Button(self, text="Add", command=self.add_student, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_student(self):
         ## get the student ID of the last name entered
