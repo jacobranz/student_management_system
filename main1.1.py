@@ -978,6 +978,7 @@ class ReportCard(tk.Frame):
         # button to display all the calculated credit scores and sgpa
         find_button = tk.Button(self, text="Find", command=self.find_student)
         find_button.grid(row=0,column=2)
+        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=13, column=3)
 
         tk.Label(self, text="Total credits").grid(row=11, column=3)
         tk.Label(self, text="Student GPA").grid(row=12, column=3)
@@ -1080,7 +1081,7 @@ class ReportCard(tk.Frame):
 
     def clear(self):
         for label in self.grid_slaves():
-            if int(label.grid_info()["row"]) > 3:
+            if 3 < int(label.grid_info()["row"]) < 13:
                 label.grid_forget()
                 
         # label to enter name
@@ -1099,8 +1100,7 @@ class ReportCard(tk.Frame):
         tk.Label(self, text="Manage Course").grid(row=5, column=0)
     
         tk.Label(self, text="Total credits").grid(row=11, column=3)
-        tk.Label(self, text="Student GPA").grid(row=12, column=3)
-                
+        tk.Label(self, text="Student GPA").grid(row=12, column=3)                
                 
 #####################
 #From FirstProject.py
