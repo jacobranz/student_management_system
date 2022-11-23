@@ -601,34 +601,34 @@ class AddStudent_Math150(tk.Frame):
             messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
             self.last_name.set("")
 
-        ## get student count and ensure it is beneath the max amount
-        cursor.execute("select student_ID from gradebook where course_ID = 2")
-        students = cursor.fetchall()
-        if len(students) > self.max_students:
-            messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
-            self.last_name.set("")
-
         cursor.execute("select student_ID from enrollment where course_ID = 2 and student_ID = %s", (student,))
         is_enrolled = cursor.fetchall()
         if len(is_enrolled) == 0:
-            ## insert the value of student ID into the enrollment table with the appropriate class
-            cursor.execute("insert into enrollment values (%s, 2)", (student,))
-            mydb.commit()
+            ## get student count and ensure it is beneath the max amount
+            cursor.execute("select student_ID from gradebook where course_ID = 2")
+            students = cursor.fetchall()
+            if len(students) > self.max_students:
+                messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
+                self.last_name.set("")
+            else:
+                ## insert the value of student ID into the enrollment table with the appropriate class
+                cursor.execute("insert into enrollment values (%s, 2)", (student,))
+                mydb.commit()
 
-            ## insert student into gradebook where assignments can be assigned to them and later graded
-            sql = "insert into gradebook values (%s, 2, %s, 0, 25)"
-            val = [
-                (student, 'Project 1'),
-                (student, 'Project 2'),
-                (student, 'Project 3'),
-                (student, 'Final')
-            ]
-            cursor.executemany(sql, val)
-            mydb.commit()
-            messagebox.showinfo("Success", "Student has been added to Math 150!")
+                ## insert student into gradebook where assignments can be assigned to them and later graded
+                sql = "insert into gradebook values (%s, 2, %s, 0, 25)"
+                val = [
+                    (student, 'Project 1'),
+                    (student, 'Project 2'),
+                    (student, 'Project 3'),
+                    (student, 'Final')
+                ]
+                cursor.executemany(sql, val)
+                mydb.commit()
+                messagebox.showinfo("Success", "Student has been added to Math 150!")
 
-            ## clear entry field to add more students
-            self.last_name.set("")
+                ## clear entry field to add more students
+                self.last_name.set("")
         else:
             messagebox.showwarning("Enrolled", "Student is already enrolled in this class!")
             self.last_name.set("")
@@ -664,34 +664,34 @@ class AddStudent_English120(tk.Frame):
             messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
             self.last_name.set("")
 
-        ## get student count and ensure it is beneath the max amount
-        cursor.execute("select student_ID from gradebook where course_ID = 3")
-        students = cursor.fetchall()
-        if len(students) > self.max_students:
-            messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
-            self.last_name.set("")
-
         cursor.execute("select student_ID from enrollment where course_ID = 3 and student_ID = %s", (student,))
         is_enrolled = cursor.fetchall()
         if len(is_enrolled) == 0:
-            ## insert the value of student ID into the enrollment table with the appropriate class
-            cursor.execute("insert into enrollment values (%s, 3)", (student,))
-            mydb.commit()
+            ## get student count and ensure it is beneath the max amount
+            cursor.execute("select student_ID from gradebook where course_ID = 3")
+            students = cursor.fetchall()
+            if len(students) > self.max_students:
+                messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
+                self.last_name.set("")
+            else:
+                ## insert the value of student ID into the enrollment table with the appropriate class
+                cursor.execute("insert into enrollment values (%s, 3)", (student,))
+                mydb.commit()
 
-            ## insert student into gradebook where assignments can be assigned to them and later graded
-            sql = "insert into gradebook values (%s, 3, %s, 0, 25)"
-            val = [
-                (student, 'Group Project 1'),
-                (student, 'Group Project 2'),
-                (student, 'Group Project 3'),
-                (student, 'Group Project 4')
-            ]
-            cursor.executemany(sql, val)
-            mydb.commit()
-            messagebox.showinfo("Success", "Student has been added to English 120!")
+                ## insert student into gradebook where assignments can be assigned to them and later graded
+                sql = "insert into gradebook values (%s, 3, %s, 0, 25)"
+                val = [
+                    (student, 'Group Project 1'),
+                    (student, 'Group Project 2'),
+                    (student, 'Group Project 3'),
+                    (student, 'Group Project 4')
+                ]
+                cursor.executemany(sql, val)
+                mydb.commit()
+                messagebox.showinfo("Success", "Student has been added to English 120!")
 
-            ## clear entry field to add more students
-            self.last_name.set("")
+                ## clear entry field to add more students
+                self.last_name.set("")
         else:
             messagebox.showwarning("Enrolled", "Student is already enrolled in this class!")
             self.last_name.set("")
@@ -727,34 +727,34 @@ class AddStudent_Music100(tk.Frame):
             messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
             self.last_name.set("")
 
-        ## get student count and ensure it is beneath the max amount
-        cursor.execute("select student_ID from gradebook where course_ID = 4")
-        students = cursor.fetchall()
-        if len(students) > self.max_students:
-            messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
-            self.last_name.set("")
-
         cursor.execute("select student_ID from enrollment where course_ID = 4 and student_ID = %s", (student,))
         is_enrolled = cursor.fetchall()
         if len(is_enrolled) == 0:
-            ## insert the value of student ID into the enrollment table with the appropriate class
-            cursor.execute("insert into enrollment values (%s, 4)", (student,))
-            mydb.commit()
+            ## get student count and ensure it is beneath the max amount
+            cursor.execute("select student_ID from gradebook where course_ID = 4")
+            students = cursor.fetchall()
+            if len(students) > self.max_students:
+                messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
+                self.last_name.set("")
+            else:
+                ## insert the value of student ID into the enrollment table with the appropriate class
+                cursor.execute("insert into enrollment values (%s, 4)", (student,))
+                mydb.commit()
 
-            ## insert student into gradebook where assignments can be assigned to them and later graded
-            sql = "insert into gradebook values (%s, 4, %s, 0, 25)"
-            val = [
-                (student, 'Project 1'),
-                (student, 'Project 2'),
-                (student, 'Project 3'),
-                (student, 'Final')
-            ]
-            cursor.executemany(sql, val)
-            mydb.commit()
-            messagebox.showinfo("Success", "Student has been added to Music 100!")
+                ## insert student into gradebook where assignments can be assigned to them and later graded
+                sql = "insert into gradebook values (%s, 4, %s, 0, 25)"
+                val = [
+                    (student, 'Project 1'),
+                    (student, 'Project 2'),
+                    (student, 'Project 3'),
+                    (student, 'Final')
+                ]
+                cursor.executemany(sql, val)
+                mydb.commit()
+                messagebox.showinfo("Success", "Student has been added to Music 100!")
 
-            ## clear entry field to add more students
-            self.last_name.set("")
+                ## clear entry field to add more students
+                self.last_name.set("")
         else:
             messagebox.showwarning("Enrolled", "Student is already enrolled in this class!")
             self.last_name.set("")
@@ -790,34 +790,34 @@ class AddStudent_Physics101(tk.Frame):
             messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
             self.last_name.set("")
 
-        ## get student count and ensure it is beneath the max amount
-        cursor.execute("select student_ID from gradebook where course_ID = 1")
-        students = cursor.fetchall()
-        if len(students) > self.max_students:
-            messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
-            self.last_name.set("")
-
         cursor.execute("select student_ID from enrollment where course_ID = 1 and student_ID = %s", (student,))
         is_enrolled = cursor.fetchall()
         if len(is_enrolled) == 0:
-            ## insert the value of student ID into the enrollment table with the appropriate class
-            cursor.execute("insert into enrollment values (%s, 1)", (student,))
-            mydb.commit()
+            ## get student count and ensure it is beneath the max amount
+            cursor.execute("select student_ID from gradebook where course_ID = 1")
+            students = cursor.fetchall()
+            if len(students) > self.max_students:
+                messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
+                self.last_name.set("")
+            else:
+                ## insert the value of student ID into the enrollment table with the appropriate class
+                cursor.execute("insert into enrollment values (%s, 1)", (student,))
+                mydb.commit()
 
-            ## insert student into gradebook where assignments can be assigned to them and later graded
-            sql = "insert into gradebook values (%s, 1, %s, 0, 25)"
-            val = [
-                (student, 'Project 1'),
-                (student, 'Project 2'),
-                (student, 'Project 3'),
-                (student, 'Final')
-            ]
-            cursor.executemany(sql, val)
-            mydb.commit()
-            messagebox.showinfo("Success", "Student has been added to Physics 101!")
+                ## insert student into gradebook where assignments can be assigned to them and later graded
+                sql = "insert into gradebook values (%s, 1, %s, 0, 25)"
+                val = [
+                    (student, 'Project 1'),
+                    (student, 'Project 2'),
+                    (student, 'Project 3'),
+                    (student, 'Final')
+                ]
+                cursor.executemany(sql, val)
+                mydb.commit()
+                messagebox.showinfo("Success", "Student has been added to Physics 101!")
 
-            ## clear entry field to add more students
-            self.last_name.set("")
+                ## clear entry field to add more students
+                self.last_name.set("")
         else:
             messagebox.showwarning("Enrolled", "Student is already enrolled in this class!")
             self.last_name.set("")
@@ -853,16 +853,17 @@ class AddProfessor_Math150(tk.Frame):
     
         cursor.execute("select professor_ID from course where name = 'Math 150'")
         course_info = cursor.fetchall()
-        print(course_info)
 
         if len(course_info) > 0:
             messagebox.showwarning("No Entry Found", "Math 150 already has a professor!")
             self.last_name.set("")
         else:
             ## insert the professor id into the course
-            cursor.execute("insert into course values (2, 'Math 150', 4, %s)", (prof,))
+            #cursor.execute("insert into course values (2, 'Math 150', 4, %s)", (prof,))
+            cursor.execute("update course set professor_ID = %s where course_ID = 2", (prof,))
             mydb.commit()
             messagebox.showinfo("Success", "Professor has been added to Math 150!")
+            self.last_name.set("")
 
 class AddProfessor_English120(tk.Frame):
     def __init__(self, parent, controller):
@@ -895,16 +896,17 @@ class AddProfessor_English120(tk.Frame):
     
         cursor.execute("select professor_ID from course where name = 'English 120'")
         course_info = cursor.fetchall()
-        print(course_info)
 
         if len(course_info) > 0:
             messagebox.showwarning("No Entry Found", "English 120 already has a professor!")
             self.last_name.set("")
         else:
             ## insert the professor id into the course
-            cursor.execute("insert into course values (3, 'English 120', 4, %s)", (prof,))
+            #cursor.execute("insert into course values (3, 'English 120', 4, %s)", (prof,))
+            cursor.execute("update course set professor_ID = %s where course_ID = 3", (prof,))
             mydb.commit()
             messagebox.showinfo("Success", "Professor has been added to English 120!")
+            self.last_name.set("")
 
 class AddProfessor_Music100(tk.Frame):
     def __init__(self, parent, controller):
@@ -937,16 +939,17 @@ class AddProfessor_Music100(tk.Frame):
     
         cursor.execute("select professor_ID from course where name = 'Music 100'")
         course_info = cursor.fetchall()
-        print(course_info)
 
         if len(course_info) > 0:
             messagebox.showwarning("No Entry Found", "Music 100 already has a professor!")
             self.last_name.set("")
         else:
             ## insert the professor id into the course
-            cursor.execute("insert into course values (4, 'Music 100', 4, %s)", (prof,))
+            #cursor.execute("insert into course values (4, 'Music 100', 4, %s)", (prof,))
+            cursor.execute("update course set professor_ID = %s where course_ID = 4", (prof,))
             mydb.commit()
             messagebox.showinfo("Success", "Professor has been added to Music 100!")
+            self.last_name.set("")
 
 class AddProfessor_Physics101(tk.Frame):
     def __init__(self, parent, controller):
@@ -979,16 +982,17 @@ class AddProfessor_Physics101(tk.Frame):
     
         cursor.execute("select professor_ID from course where name = 'Physics 101'")
         course_info = cursor.fetchall()
-        print(course_info)
 
         if len(course_info) > 0:
             messagebox.showwarning("No Entry Found", "Physics 101 already has a professor!")
             self.last_name.set("")
         else:
             ## insert the professor id into the course
-            cursor.execute("insert into course values (1, 'Physics 101', 4, %s)", (prof,))
+            #cursor.execute("insert into course values (1, 'Physics 101', 4, %s)", (prof,))
+            cursor.execute("update course set professor_ID = %s where course_ID = 1", (prof,))
             mydb.commit()
             messagebox.showinfo("Success", "Professor has been added to Physics 101!")
+            self.last_name.set("")
 
 class ReportCard(tk.Frame):
     def __init__(self, parent, controller):
