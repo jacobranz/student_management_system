@@ -290,7 +290,7 @@ class EnterGrades_English120(tk.Frame):
             self.last_name.set("")
 
         ## throw warning if student exists but is not enrolled in the class
-        cursor.execute("select student_ID from enrollment where course_ID = 2 and student_ID = %s", (student_ID,))
+        cursor.execute("select student_ID from enrollment where course_ID = 3 and student_ID = %s", (student_ID,))
         is_enrolled = cursor.fetchall()
         if len(is_enrolled) == 0:
             messagebox.showwarning("Not Enrolled", "Student is not enrolled in this class!")
@@ -400,7 +400,7 @@ class EnterGrades_Music100(tk.Frame):
             self.last_name.set("")
 
         ## throw warning if student exists but is not enrolled in the class
-        cursor.execute("select student_ID from enrollment where course_ID = 2 and student_ID = %s", (student_ID,))
+        cursor.execute("select student_ID from enrollment where course_ID = 4 and student_ID = %s", (student_ID,))
         is_enrolled = cursor.fetchall()
         if len(is_enrolled) == 0:
             messagebox.showwarning("Not Enrolled", "Student is not enrolled in this class!")
@@ -510,7 +510,7 @@ class EnterGrades_Physics101(tk.Frame):
             self.last_name.set("")
 
         ## throw warning if student exists but is not enrolled in the class
-        cursor.execute("select student_ID from enrollment where course_ID = 2 and student_ID = %s", (student_ID,))
+        cursor.execute("select student_ID from enrollment where course_ID = 1 and student_ID = %s", (student_ID,))
         is_enrolled = cursor.fetchall()
         if len(is_enrolled) == 0:
             messagebox.showwarning("Not Enrolled", "Student is not enrolled in this class!")
