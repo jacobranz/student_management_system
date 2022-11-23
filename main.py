@@ -75,7 +75,7 @@ class Math150(tk.Frame):
         button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Math150))
         button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Math150))
         button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Math150))
-        button4 = tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(Example))
+        button4 = tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
 
         button1.pack()
         button2.pack()
@@ -91,7 +91,7 @@ class English120(tk.Frame):
         button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_English120))
         button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_English120))
         button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_English120))
-        button4 = tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(Example))
+        button4 = tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
 
         button1.pack()
         button2.pack()
@@ -107,7 +107,7 @@ class Music100(tk.Frame):
         button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Music100))
         button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Music100))
         button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Music100))
-        button4 = tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(Example))
+        button4 = tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
 
         button1.pack()
         button2.pack()
@@ -123,7 +123,7 @@ class Physics101(tk.Frame):
         button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Physics101))
         button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Physics101))
         button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Physics101))
-        button4 = tk.Button(self, text="Back to Main Menu", command= lambda: controller.show_frame(Example))
+        button4 = tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
 
         button1.pack()
         button2.pack()
