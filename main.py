@@ -6,6 +6,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 from PIL import ImageTk, Image
+import customtkinter as ctk
 import time
 
 mydb = mysql.connector.connect(
@@ -17,12 +18,12 @@ mydb = mysql.connector.connect(
 
 cursor = mydb.cursor()
 
-class PageContainer(tk.Frame):
+class PageContainer(ctk.CTkFrame):
 
     def __init__(self, root):
-        tk.Frame.__init__(self, root)
+        super().__init__(self, root)
 
-        self.container = container = tk.Frame(self)
+        self.container = container = ctk.CTkFrame(self)
         container.pack(side='top', fill='both', expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
@@ -46,18 +47,18 @@ class PageContainer(tk.Frame):
     def get_page(self, page_class):
         return self.frame[page_class]
 
-class ClassPage(tk.Frame):
+class ClassPage(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="CLASS SELECTION")
+        ctk.CTkFrame.__init__(self, parent)
+        label = ctk.CTkLabel(self, text="CLASS SELECTION")
         label.pack(pady=10, padx=10)
 
-        button1 = tk.Button(self, text="Math 150", command= lambda: controller.show_frame(Math150))
-        button2 = tk.Button(self, text="English 120", command= lambda: controller.show_frame(English120))
-        button3 = tk.Button(self, text="Music 100", command= lambda: controller.show_frame(Music100))
-        button4 = tk.Button(self, text="Physics 101", command= lambda: controller.show_frame(Physics101))
-        button5 = tk.Button(self, text="Report Cards", command= lambda: controller.show_frame(ReportCard))
-        button6 = tk.Button(self, text="Main Menu", command= lambda: controller.show_frame(Example))
+        button1 = ctk.CTkButton(self, text="Math 150", command= lambda: controller.show_frame(Math150))
+        button2 = ctk.CTkButton(self, text="English 120", command= lambda: controller.show_frame(English120))
+        button3 = ctk.CTkButton(self, text="Music 100", command= lambda: controller.show_frame(Music100))
+        button4 = ctk.CTkButton(self, text="Physics 101", command= lambda: controller.show_frame(Physics101))
+        button5 = ctk.CTkButton(self, text="Report Cards", command= lambda: controller.show_frame(ReportCard))
+        button6 = ctk.CTkButton(self, text="Main Menu", command= lambda: controller.show_frame(Example))
 
         button1.pack()
         button2.pack()
@@ -66,104 +67,104 @@ class ClassPage(tk.Frame):
         button5.pack()
         button6.pack()
 
-class Math150(tk.Frame):
+class Math150(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="MATH 150 ACTIONS")
+        super().__init__(self, parent)
+        label = ctk.CTkLabel(self, text="MATH 150 ACTIONS")
         label.pack(padx=10, pady=10)
 
-        button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Math150))
-        button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Math150))
-        button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Math150))
-        button4 = tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
+        button1 = ctk.CTkButton(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Math150))
+        button2 = ctk.CTkButton(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Math150))
+        button3 = ctk.CTkButton(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Math150))
+        button4 = ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
 
         button1.pack()
         button2.pack()
         button3.pack()
         button4.pack()
 
-class English120(tk.Frame):
+class English120(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="ENGLISH 120 ACTIONS")
+        super().__init__(self, parent)
+        label = ctk.CTkLabel(self, text="ENGLISH 120 ACTIONS")
         label.pack(padx=10, pady=10)
 
-        button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_English120))
-        button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_English120))
-        button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_English120))
-        button4 = tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
+        button1 = ctk.CTkButton(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_English120))
+        button2 = ctk.CTkButton(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_English120))
+        button3 = ctk.CTkButton(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_English120))
+        button4 = ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
 
         button1.pack()
         button2.pack()
         button3.pack()
         button4.pack()
 
-class Music100(tk.Frame):
+class Music100(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="MUSIC 100 ACTIONS")
+        super().__init__(self, parent)
+        label = ctk.CTkLabel(self, text="MUSIC 100 ACTIONS")
         label.pack(padx=10, pady=10)
 
-        button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Music100))
-        button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Music100))
-        button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Music100))
-        button4 = tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
+        button1 = ctk.CTkButton(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Music100))
+        button2 = ctk.CTkButton(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Music100))
+        button3 = ctk.CTkButton(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Music100))
+        button4 = ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
 
         button1.pack()
         button2.pack()
         button3.pack()
         button4.pack()
 
-class Physics101(tk.Frame):
+class Physics101(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="PHYSICS 101 ACTIONS")
+        super().__init__(self, parent)
+        label = ctk.CTkLabel(self, text="PHYSICS 101 ACTIONS")
         label.pack(padx=10, pady=10)
 
-        button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Physics101))
-        button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Physics101))
-        button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Physics101))
-        button4 = tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
+        button1 = ctk.CTkButton(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Physics101))
+        button2 = ctk.CTkButton(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Physics101))
+        button3 = ctk.CTkButton(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Physics101))
+        button4 = ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
 
         button1.pack()
         button2.pack()
         button3.pack()
         button4.pack()
 
-class EnterGrades_Math150(tk.Frame):
+class EnterGrades_Math150(ctk.CTkFrame):
     def __init__(self, parent, controller):
         self.controller = controller
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="MATH 150")
+        super().__init__(self, parent)
+        label = ctk.CTkLabel(self, text="MATH 150")
         #label.pack(pady=10, padx=10)
 
         # set entry variables
-        self.last_name = tk.StringVar()
+        self.last_name = ctk.StringVar()
 
         # label to enter name
-        tk.Label(self, text="Student Last Name").grid(row=0, column=0)
+        ctk.CTkLabel(self, text="Student Last Name").grid(row=0, column=0)
 
         # labels for subject codes
-        tk.Label(self, text="Subject").grid(row=1, column=0)
+        ctk.CTkLabel(self, text="Subject").grid(row=1, column=0)
 
-        tk.Label(self, text="Grade").grid(row=1, column=1)
-        self.grade0 = tk.IntVar()
-        self.grade1 = tk.IntVar()
-        self.grade2 = tk.IntVar()
-        self.grade3 = tk.IntVar()
+        ctk.CTkLabel(self, text="Grade").grid(row=1, column=1)
+        self.grade0 = ctk.IntVar()
+        self.grade1 = ctk.IntVar()
+        self.grade2 = ctk.IntVar()
+        self.grade3 = ctk.IntVar()
         self.grades = [self.grade0, self.grade1, self.grade2, self.grade3]
 
         # Name age roll entries
-        e1=tk.Entry(self , textvariable=self.last_name)
+        e1 = ctk.CTkEntry(self , textvariable=self.last_name)
 
         # organizing them in the grid
         e1.grid(row=0, column=1)
 
         # button to display all the calculated credit scores and sgpa
-        find_button = tk.Button(self, text="Find", command=self.find_student)
+        find_button = ctk.CTkButton(self, text="Find", command=self.find_student)
         find_button.grid(row=0,column=2)
-        submit_button = tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
-        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        submit_button = ctk.CTkButton(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
+        ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def find_student(self):
 
@@ -200,13 +201,13 @@ class EnterGrades_Math150(tk.Frame):
             if assignment == "":
                 break
             
-            tk.Label(self, text=assignment[0]).grid(row=(row + i), column=column)
-            tk.Entry(self, textvariable=eval(f'self.grade{i}'), width=5).grid(row=(row + i), column=1)
+            ctk.CTkLabel(self, text=assignment[0]).grid(row=(row + i), column=column)
+            ctk.CTkEntry(self, textvariable=eval(f'self.grade{i}'), width=5).grid(row=(row + i), column=1)
 
             i+=1
 
         ## define button for clearing all fields
-        tk.Button(self, text="Clear", command=self.clear, width=20).grid(row=13, column=1)
+        ctk.CTkButton(self, text="Clear", command=self.clear, width=20).grid(row=13, column=1)
 
     def clear(self):
         for label in self.grid_slaves():
@@ -240,10 +241,10 @@ class EnterGrades_Math150(tk.Frame):
             i+=1
         messagebox.showinfo("Success", "Student grades have been entered.")
 
-class EnterGrades_English120(tk.Frame):
+class EnterGrades_English120(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="English 120")
+        super().__init__(self, parent)
+        label = ctk.CTkLabel(self, text="English 120")
         #label.pack(pady=10, padx=10)
 
         # set entry variables
