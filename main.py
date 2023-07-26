@@ -42,7 +42,7 @@ class PageContainer(ctk.CTkFrame):
             self.frame[controller] = frame = controller(self.container, self)
             frame.grid(row=0, column=0, sticky="nsew")
         frame = self.frame[controller]
-        frame.CTkraise()
+        frame.tkraise()
 
     def get_page(self, page_class):
         return self.frame[page_class]
