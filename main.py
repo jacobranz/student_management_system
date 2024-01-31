@@ -1,13 +1,12 @@
-## File that includes all the code written
+# File that includes all the code written
 import tkinter as tk
-import mysql.connector
 from tkinter import messagebox
 from tkinter import *
 from tkinter import ttk
-from tkinter import messagebox
+
+import mysql.connector
 from PIL import ImageTk, Image
 import customtkinter as ctk
-import time
 
 mydb = mysql.connector.connect(
     host = "127.0.0.1",
