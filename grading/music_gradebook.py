@@ -81,7 +81,7 @@ def submit_grades():
 entries = []
 
 ## Begin GUI
-master = ctk.Tk()
+master = ctk.CTk()
 master.title("Grade Book")
 master.geometry("700x250")
 
