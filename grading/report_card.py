@@ -1,4 +1,4 @@
-import tkinter as tk
+import customtkinter as ctk
 import mysql.connector
 from tkinter import messagebox
 
@@ -43,22 +43,22 @@ def clear():
 			label.grid_forget()
 
 	# label to enter name
-	tk.Label(master, text="Name").grid(row=0, column=0)
+	ctk.CTkLabel(master, text="Name").grid(row=0, column=0)
 
 	# labels for subject codes
-	tk.Label(master, text="Subject").grid(row=5, column=1)
+	ctk.CTkLabel(master, text="Subject").grid(row=5, column=1)
 
 	# label for grades
-	tk.Label(master, text="Grade").grid(row=5, column=2)
+	ctk.CTkLabel(master, text="Grade").grid(row=5, column=2)
 
 	# labels for subject credits
-	tk.Label(master, text="Sub Credit").grid(row=5, column=4)
+	ctk.CTkLabel(master, text="Sub Credit").grid(row=5, column=4)
 
 	# label for course management
-	tk.Label(master, text="Manage Course").grid(row=5, column=0)
+	ctk.CTkLabel(master, text="Manage Course").grid(row=5, column=0)
  
-	tk.Label(master, text="Total credits").grid(row=11, column=3)
-	tk.Label(master, text="Student GPA").grid(row=12, column=3)
+	ctk.CTkLabel(master, text="Total credits").grid(row=11, column=3)
+	ctk.CTkLabel(master, text="Student GPA").grid(row=12, column=3)
 
 def find_student():
 
@@ -94,7 +94,7 @@ def find_student():
 		cursor.execute("select name from course where course_ID = %s", course_ID)
 		course_name = cursor.fetchone()
 		
-		tk.Label(master, text=course_name[0]).grid(row=(row + i), column=column)
+		ctk.CTkLabel(master, text=course_name[0]).grid(row=(row + i), column=column)
 
 		cursor.execute('''select score, weight from gradebook 
 								where student_ID = %s and course_ID = %s
@@ -122,19 +122,19 @@ def find_student():
 		gpa = creds_earned / len(course_list)
 		total_gpa.append(gpa)
 
-		tk.Label(master, text=final_grade).grid(row=(row + i), column=(column + 1))
+		ctk.CTkLabel(master, text=final_grade).grid(row=(row + i), column=(column + 1))
 
 		## get credit count for each course
 		cursor.execute("select creds from course where course_ID = %s", course_ID)
 		credit_count = cursor.fetchall()
 		for creds in credit_count:
-			tk.Label(master, text=creds).grid(row=(row + i), column=4)
+			ctk.CTkLabel(master, text=creds).grid(row=(row + i), column=4)
 			total_creds.append(creds)
 
 		## go to button next to each class
 		## ability to manage students from there
 		button_command = eval(course_name[0].replace(' ','_'))
-		tk.Button(master, text=course_name[0], command=button_command).grid(row=(row + i), column=0)
+		ctk.CTkButton(master, text=course_name[0], command=button_command).grid(row=(row + i), column=0)
 
 		i+=1
 	
@@ -143,55 +143,55 @@ def find_student():
 	for cred in total_creds:
 		total += cred[0]
 		
-	tk.Label(master, text=total).grid(row=11,column=4)
+	ctk.CTkLabel(master, text=total).grid(row=11,column=4)
 
 	## calculate student GPA
 	total_student_gpa = 0
 	for gpa in total_gpa:
 		total_student_gpa += gpa
 
-	tk.Label(master, text=total_student_gpa).grid(row=12, column=4)
+	ctk.CTkLabel(master, text=total_student_gpa).grid(row=12, column=4)
  
 	## define button for clearing all fields
-	tk.Button(master, text="Clear", command=clear, width=20).grid(row=13, column=1)
+	ctk.CTkButton(master, text="Clear", command=clear, width=20).grid(row=13, column=1)
 			
 
 
 ## Begin GUI
-master = tk.Tk()
+master = ctk.CTk()
 master.title("MARKSHEET")
 master.geometry("700x250")
 
 # set entry variables
-last_name = tk.StringVar()
+last_name = ctk.StringVar()
 
 # label to enter name
-tk.Label(master, text="Name").grid(row=0, column=0)
+ctk.CTkLabel(master, text="Name").grid(row=0, column=0)
 
 # labels for subject codes
-tk.Label(master, text="Subject").grid(row=5, column=1)
+ctk.CTkLabel(master, text="Subject").grid(row=5, column=1)
 
 # label for grades
-tk.Label(master, text="Grade").grid(row=5, column=2)
+ctk.CTkLabel(master, text="Grade").grid(row=5, column=2)
 
 # labels for subject credits
-tk.Label(master, text="Sub Credit").grid(row=5, column=4)
+ctk.CTkLabel(master, text="Sub Credit").grid(row=5, column=4)
 
 # label for course management
-tk.Label(master, text="Manage Course").grid(row=5, column=0)
+ctk.CTkLabel(master, text="Manage Course").grid(row=5, column=0)
 
 # Name age roll entries
-e1=tk.Entry(master, textvariable=last_name)
+e1=ctk.CTkEntry(master, textvariable=last_name)
 
 # organizing them in the grid
 e1.grid(row=0, column=1)
 
 # button to display all the calculated credit scores and sgpa
-find_button = tk.Button(master, text="Find", command=find_student)
+find_button = ctk.CTkButton(master, text="Find", command=find_student)
 find_button.grid(row=0,column=2)
 
-tk.Label(master, text="Total credits").grid(row=11, column=3)
-tk.Label(master, text="Student GPA").grid(row=12, column=3)
+ctk.CTkLabel(master, text="Total credits").grid(row=11, column=3)
+ctk.CTkLabel(master, text="Student GPA").grid(row=12, column=3)
 
 master.mainloop()
 
