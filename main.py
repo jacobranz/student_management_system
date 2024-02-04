@@ -19,8 +19,8 @@ cursor = mydb.cursor()
 
 class PageContainer(ctk.CTkFrame):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, master, **kwargs):
+        super().__init__(master, **kwargs)
 
         self.container = container = ctk.CTkFrame(self)
         container.pack(side='top', fill='both', expand=True)
