@@ -1181,14 +1181,16 @@ class Example(ctk.CTkFrame):
       
     def studentWindow(self):
         window = ctk.CTkToplevel(self)
+        window.grid_rowconfigure(0, weight=1)
+        window.grid_columnconfigure(0, weight=1)
 
         #Window Title
         studenttitle = ctk.CTkLabel(window, width=18, text="Manage Students", fg_color="black", font=("times new roman", 15, "bold"))
         studenttitle.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
         #Creating a frame. This frame holds all the information for writing student data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
-        Student_write_Frame = ctk.CTkFrame(window, bd=4, relief=RIDGE, bg="LightGrey")
-        Student_write_Frame.place(x=50, y=45, width=550, height=200)
+        Student_write_Frame = ctk.CTkFrame(window)
+        Student_write_Frame.grid(row=0, column=2)
         
         #Setting the main window size
         window.geometry("%dx%d%+d%+d" % (1350, 550, 10, 10))
@@ -1206,13 +1208,13 @@ class Example(ctk.CTkFrame):
         #This is creating labels
         #Student_Label_1 = tk.Label(Student_write_Frame, text="Student ID", bg="LightGrey", bd=5)
         #Student_Label_1.grid(row=1, column=0)
-        Student_Label_2 = ctk.CTkLabel(Student_write_Frame, text="Student First Name", bg="LightGrey", bd=5)
+        Student_Label_2 = ctk.CTkLabel(Student_write_Frame, text="Student First Name",)
         Student_Label_2.grid(row=2, column=0)
-        Student_Label_3 = ctk.CTkLabel(Student_write_Frame, text="Student Last Name", bg="LightGrey", bd=5)
+        Student_Label_3 = ctk.CTkLabel(Student_write_Frame, text="Student Last Name")
         Student_Label_3.grid(row=3, column=0)
-        Student_Label_4 = ctk.CTkLabel(Student_write_Frame, text="Age", bg="LightGrey", bd=5)
+        Student_Label_4 = ctk.CTkLabel(Student_write_Frame, text="Age")
         Student_Label_4.grid(row=4, column=0)
-        Student_Label_5 = ctk.CTkLabel(Student_write_Frame, text="Grade Level", bg="LightGrey", bd=5)
+        Student_Label_5 = ctk.CTkLabel(Student_write_Frame, text="Grade Level")
         Student_Label_5.grid(row=5, column=0)
 
         #This is creating labels and tying their input into variables
@@ -1237,15 +1239,15 @@ class Example(ctk.CTkFrame):
         ctk.CTkLabel(window,image = self.tkimage).place(x=750, y=45)
 
         #Creating a frame. This frame holds all the information for reading student data from the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
-        Student_read_Frame = ctk.CTkFrame(window, bd=4, relief=RIDGE, bg="LightGrey")
-        Student_read_Frame.place(x=1075, y=250, width=210, height=250)
+        Student_read_Frame = ctk.CTkFrame(window)
+        Student_read_Frame.grid(row=0, column=3)
 
         #These are the entries and labels for querying students
-        Student_Label_6 = ctk.CTkLabel(Student_read_Frame, text="Search By ID", bg="LightGrey", bd=5)
+        Student_Label_6 = ctk.CTkLabel(Student_read_Frame, text="Search By ID")
         Student_Label_6.grid(row=1, column=0, padx=5, pady=5)
         Student_Entry_6 = ctk.CTkEntry(Student_read_Frame, textvariable = self.studentSearchID_var)
         Student_Entry_6.grid(row=2, column=0, padx=5, pady=5)
-        Student_Label_7 = ctk.CTkLabel(Student_read_Frame, text="Search By Last Name", bg="LightGrey", bd=5)
+        Student_Label_7 = ctk.CTkLabel(Student_read_Frame, text="Search By Last Name")
         Student_Label_7.grid(row=3, column=0, padx=5, pady=5) 
         Student_Entry_7 = ctk.CTkEntry(Student_read_Frame, textvariable = self.studentSearchName_var)
         Student_Entry_7.grid(row=4, column=0, padx=5, pady=5)
@@ -1254,8 +1256,8 @@ class Example(ctk.CTkFrame):
         buttons_student_search = ctk.CTkButton(Student_read_Frame, command= self.readdatastudent, text="Search Database")
         buttons_student_search.grid(row=5, column=0, padx=25, pady=25)
         #Creating a frame. This frame holds the tree window. Move this frame around and everything inside will follow  
-        Student_tree_Frame = ctk.CTkFrame(window, bd=4, relief=RIDGE, bg="LightGrey")
-        Student_tree_Frame.place(x=20, y=250, width=1025, height=250)
+        Student_tree_Frame = ctk.CTkFrame(window)
+        Student_tree_Frame.grid(row=0, column=4)
         self.studenttree = ttk.Treeview(Student_tree_Frame, columns=("ID", "FirstName","LastName","Age","Year"))
         self.studenttree.grid(row=1, column=0, padx=5, pady=5)
         self.studenttree.heading("ID", text="ID")
@@ -1276,7 +1278,7 @@ class Example(ctk.CTkFrame):
         teachertitle.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
         #Creating a frame. This frame holds all the information for writing student data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
-        Teacher_write_Frame = ctk.CTkFrame(window, bd=4, relief=RIDGE, bg="LightGrey")
+        Teacher_write_Frame = ctk.CTkFrame(window)
         Teacher_write_Frame.place(x=50, y=45, width=550, height=230)
        
 

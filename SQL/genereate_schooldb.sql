@@ -9,7 +9,7 @@ Before running this script, for easiest results open 'MySQLWorkbench'.
 
 -- Below are the commands to run to generate the necessary tables inside of the 'grades' schema.
 create table professor (
-	professor_ID int,
+	professor_ID int not null auto_increment,
     first_name varchar(255),
     last_name varchar(255),
     age int,
@@ -19,7 +19,7 @@ create table professor (
 );
 
 create table student (
-	student_ID int,
+	student_ID int not null auto_increment,
     first_name varchar(255),
     last_name varchar(255),
     age int,
@@ -28,7 +28,7 @@ create table student (
 );
 
 create table course (
-	course_ID int,
+	course_ID int not null auto_increment,
     name varchar(255),
     creds int,
     professor_ID int,
