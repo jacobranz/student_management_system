@@ -41,7 +41,7 @@ class PageContainer(ctk.CTkFrame):
             self.frame[controller] = frame = controller(self.container, self)
             frame.grid(row=0, column=0, sticky="nsew")
         frame = self.frame[controller]
-        frame.CTkraise()
+        frame.tkraise()
 
     def get_page(self, page_class):
         return self.frame[page_class]
@@ -68,7 +68,7 @@ class ClassPage(ctk.CTkFrame):
 
 class Math150(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="MATH 150 ACTIONS")
         label.pack(padx=10, pady=10)
 
@@ -84,7 +84,7 @@ class Math150(ctk.CTkFrame):
 
 class English120(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="ENGLISH 120 ACTIONS")
         label.pack(padx=10, pady=10)
 
@@ -100,7 +100,7 @@ class English120(ctk.CTkFrame):
 
 class Music100(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="MUSIC 100 ACTIONS")
         label.pack(padx=10, pady=10)
 
@@ -116,7 +116,7 @@ class Music100(ctk.CTkFrame):
 
 class Physics101(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="PHYSICS 101 ACTIONS")
         label.pack(padx=10, pady=10)
 
@@ -133,7 +133,7 @@ class Physics101(ctk.CTkFrame):
 class EnterGrades_Math150(ctk.CTkFrame):
     def __init__(self, parent, controller):
         self.controller = controller
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="MATH 150")
         #label.pack(pady=10, padx=10)
 
@@ -242,7 +242,7 @@ class EnterGrades_Math150(ctk.CTkFrame):
 
 class EnterGrades_English120(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="English 120")
         #label.pack(pady=10, padx=10)
 
@@ -352,7 +352,7 @@ class EnterGrades_English120(ctk.CTkFrame):
 
 class EnterGrades_Music100(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="MUSIC 100")
         #label.pack(pady=10, padx=10)
 
@@ -462,7 +462,7 @@ class EnterGrades_Music100(ctk.CTkFrame):
 
 class EnterGrades_Physics101(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="PHYSICS 101")
         #label.pack(pady=10, padx=10)
 
@@ -574,7 +574,7 @@ class AddStudent_Math150(ctk.CTkFrame):
     def __init__(self, parent, controller):
         self.max_students = 1
 
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="ADD STUDENT")
         #label.pack(padx=10, pady=10)
 
@@ -637,7 +637,7 @@ class AddStudent_English120(ctk.CTkFrame):
     def __init__(self, parent, controller):
         self.max_students = 20
 
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="ADD STUDENT")
         #label.pack(padx=10, pady=10)
 
@@ -700,7 +700,7 @@ class AddStudent_Music100(ctk.CTkFrame):
     def __init__(self, parent, controller):
         self.max_students = 20
 
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="ADD STUDENT")
         #label.pack(padx=10, pady=10)
 
@@ -763,7 +763,7 @@ class AddStudent_Physics101(ctk.CTkFrame):
     def __init__(self, parent, controller):
         self.max_students = 20
 
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="ADD STUDENT")
         #label.pack(padx=10, pady=10)
 
@@ -824,7 +824,7 @@ class AddStudent_Physics101(ctk.CTkFrame):
 
 class AddProfessor_Math150(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = tk.Label(self, text="ADD PROFESSOR")
         #label.pack(padx=10, pady=10)
 
@@ -867,7 +867,7 @@ class AddProfessor_Math150(ctk.CTkFrame):
 
 class AddProfessor_English120(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="ADD PROFESSOR")
         #label.pack(padx=10, pady=10)
 
@@ -910,7 +910,7 @@ class AddProfessor_English120(ctk.CTkFrame):
 
 class AddProfessor_Music100(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="ADD PROFESSOR")
         #label.pack(padx=10, pady=10)
 
@@ -953,7 +953,7 @@ class AddProfessor_Music100(ctk.CTkFrame):
 
 class AddProfessor_Physics101(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        super().__init__(self, parent)
+        super().__init__(master=parent)
         label = tk.Label(self, text="ADD PROFESSOR")
         #label.pack(padx=10, pady=10)
 
@@ -996,7 +996,7 @@ class AddProfessor_Physics101(ctk.CTkFrame):
 
 class ReportCard(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        super().__init__(self, parent, controller)
+        super().__init__(master=parent)
         # set entry variables
         self.last_name = ctk.StringVar()
         # label to enter name
@@ -1145,7 +1145,7 @@ class ReportCard(ctk.CTkFrame):
 #####################
 class Example(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        super().__init__(self, parent, controller)
+        super().__init__(master=parent)
 
         #This is the first window you see and has the 3 buttons for navigating to other windows
         b1 = ctk.CTkButton(self, text="Manage Students", command = self.studentWindow)
@@ -1158,10 +1158,10 @@ class Example(ctk.CTkFrame):
         b3 = ctk.CTkButton(self, text="Course Management", command = lambda: controller.show_frame(ClassPage))
         b3.pack(side="left",anchor='n', padx=40, pady=10)
         
-        studenttitle = ctk.CTkLabel(self, width=30, text="School Force", fg="DarkBlue", font=("times new roman", 15, "bold"))
+        studenttitle = ctk.CTkLabel(self, width=30, text="School Force", fg_color="DarkBlue", font=("times new roman", 15, "bold"))
         studenttitle.pack(side="top",anchor='w', padx=40, pady=10)
 
-        studenttitle = ctk.CTkLabel(self, width=30, text="Ranz Release 4.2.1", fg="black", font=("times new roman", 8, "bold"))
+        studenttitle = ctk.CTkLabel(self, width=30, text="Ranz Release 4.2.1", fg_color="black", font=("times new roman", 8, "bold"))
         studenttitle.pack(side="bottom",anchor='w', padx=40, pady=10)
         
         root.lift()
@@ -1183,7 +1183,7 @@ class Example(ctk.CTkFrame):
         window = ctk.CTkToplevel(self)
 
         #Window Title
-        studenttitle = ctk.CTkLabel(window, width=18, text="Manage Students", fg="black", font=("times new roman", 15, "bold"))
+        studenttitle = ctk.CTkLabel(window, width=18, text="Manage Students", fg_color="black", font=("times new roman", 15, "bold"))
         studenttitle.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
         #Creating a frame. This frame holds all the information for writing student data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
@@ -1272,7 +1272,7 @@ class Example(ctk.CTkFrame):
         window.grid_columnconfigure((0,1), weight=1)
 
         #Window Title
-        teachertitle = ctk.CTkLabel(window, width=18, text="Manage Teachers", fg="black", font=("times new roman", 15, "bold"))
+        teachertitle = ctk.CTkLabel(window, width=18, text="Manage Teachers", fg_color="black", font=("times new roman", 15, "bold"))
         teachertitle.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
         #Creating a frame. This frame holds all the information for writing student data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
@@ -1366,7 +1366,7 @@ class Example(ctk.CTkFrame):
         window.grid_columnconfigure((0,1), weight=1)
 
         #Window Title
-        sectiontitle = ctk.CTkLabel(window, width=18, text="Manage sections", fg="black", font=("times new roman", 15, "bold"))
+        sectiontitle = ctk.CTkLabel(window, width=18, text="Manage sections", fg_color="black", font=("times new roman", 15, "bold"))
         sectiontitle.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
         #Creating a frame. This frame holds all the information for writing class data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
