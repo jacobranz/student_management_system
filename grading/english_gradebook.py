@@ -1,4 +1,4 @@
-import tkinter as tk
+import customtkinter as ctk
 import mysql.connector
 from tkinter import messagebox
 
@@ -18,7 +18,7 @@ def clear():
     
     last_name.set("")
 
-    tk.Button(master, text="Submit", command=submit_grades).grid(row=13, column=0)
+    ctk.CTkButton(master, text="Submit", command=submit_grades).grid(row=13, column=0)
 
 def find_student():
 
@@ -60,13 +60,13 @@ def find_student():
             if assignment == "":
                 break
             
-            tk.Label(master, text=assignment[0]).grid(row=(row + i), column=column)
-            tk.Entry(master, textvariable=eval(f'grade{i}'), width=5).grid(row=(row + i), column=1)
+            ctk.CTkLabel(master, text=assignment[0]).grid(row=(row + i), column=column)
+            ctk.CTkEntry(master, textvariable=eval(f'grade{i}'), width=5).grid(row=(row + i), column=1)
 
             i+=1
         
         ## define button for clearing all fields
-        tk.Button(master, text="Clear", command=clear, width=20).grid(row=13, column=1)
+        ctk.CTkButton(master, text="Clear", command=clear, width=20).grid(row=13, column=1)
 
 def submit_grades():
 
@@ -93,37 +93,37 @@ def submit_grades():
 entries = []
 
 ## Begin GUI
-master = tk.Tk()
+master = ctk.CTk()
 master.title("Grade Book")
 master.geometry("700x250")
 
 # set entry variables
-last_name = tk.StringVar()
-class1 = tk.StringVar()
+last_name = ctk.StringVar()
+class1 = ctk.StringVar()
 
 # label to enter name
-tk.Label(master, text="Student Last Name").grid(row=0, column=0)
+ctk.CTkLabel(master, text="Student Last Name").grid(row=0, column=0)
 
 # labels for subject codes
-tk.Label(master, text="Subject").grid(row=1, column=0)
+ctk.CTkLabel(master, text="Subject").grid(row=1, column=0)
 
-tk.Label(master, text="Grade").grid(row=1, column=1)
-grade0 = tk.IntVar()
-grade1 = tk.IntVar()
-grade2 = tk.IntVar()
-grade3 = tk.IntVar()
+ctk.CTkLabel(master, text="Grade").grid(row=1, column=1)
+grade0 = ctk.IntVar()
+grade1 = ctk.IntVar()
+grade2 = ctk.IntVar()
+grade3 = ctk.IntVar()
 grades = [grade0, grade1, grade2, grade3]
 
 # Name age roll entries
-e1=tk.Entry(master, textvariable=last_name)
+e1=ctk.CTkEntry(master, textvariable=last_name)
 
 # organizing them in the grid
 e1.grid(row=0, column=1)
 
 # button to display all the calculated credit scores and sgpa
-find_button = tk.Button(master, text="Find", command=find_student)
+find_button = ctk.CTkButton(master, text="Find", command=find_student)
 find_button.grid(row=0,column=2)
-submit_button = tk.Button(master, text="Submit", command=submit_grades).grid(row=13, column=0)
+submit_button = ctk.CTkButton(master, text="Submit", command=submit_grades).grid(row=13, column=0)
 
 
 master.mainloop()

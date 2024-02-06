@@ -1,4 +1,4 @@
-import tkinter as tk
+import customtkinter as ctk
 import mysql.connector
 from tkinter import messagebox
 
@@ -30,20 +30,20 @@ def add_student():
         mydb.commit()
 
 
-window = tk.Tk()
+window = ctk.CTk()
 window.title("Add Professor to Course")
 window.geometry("500x300")
 
 ## create all tkinter variables
-last_name = tk.StringVar()
+last_name = ctk.StringVar()
 
 ## create all labels
-tk.Label(window, text="Professor Last Name").grid(row=0, column=0)
+ctk.CTkLabel(window, text="Professor Last Name").grid(row=0, column=0)
 
 ## create all entries
-tk.Entry(window, textvariable=last_name).grid(row=0, column=1)
+ctk.CTkEntry(window, textvariable=last_name).grid(row=0, column=1)
 
 ## create all buttons
-tk.Button(window, text="Add", command=add_student, width=5).grid(row=2, column=0)
+ctk.CTkButton(window, text="Add", command=add_student, width=5).grid(row=2, column=0)
 
 window.mainloop()

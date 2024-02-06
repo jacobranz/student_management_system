@@ -1,12 +1,12 @@
-## File that includes all the code written
+# File that includes all the code written
 import tkinter as tk
-import mysql.connector
 from tkinter import messagebox
 from tkinter import *
 from tkinter import ttk
-from tkinter import messagebox
+
+import mysql.connector
 from PIL import ImageTk, Image
-import time
+import customtkinter as ctk
 
 mydb = mysql.connector.connect(
     host = "127.0.0.1",
@@ -17,12 +17,12 @@ mydb = mysql.connector.connect(
 
 cursor = mydb.cursor()
 
-class PageContainer(tk.Frame):
+class PageContainer(ctk.CTkFrame):
 
-    def __init__(self, root):
-        tk.Frame.__init__(self, root)
+    def __init__(self, master, **kwargs):
+        super().__init__(master, **kwargs)
 
-        self.container = container = tk.Frame(self)
+        self.container = container = ctk.CTkFrame(self)
         container.pack(side='top', fill='both', expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
@@ -46,18 +46,18 @@ class PageContainer(tk.Frame):
     def get_page(self, page_class):
         return self.frame[page_class]
 
-class ClassPage(tk.Frame):
+class ClassPage(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="CLASS SELECTION")
+        ctk.CTkFrame.__init__(self, parent)
+        label = ctk.CTkLabel(self, text="CLASS SELECTION")
         label.pack(pady=10, padx=10)
 
-        button1 = tk.Button(self, text="Math 150", command= lambda: controller.show_frame(Math150))
-        button2 = tk.Button(self, text="English 120", command= lambda: controller.show_frame(English120))
-        button3 = tk.Button(self, text="Music 100", command= lambda: controller.show_frame(Music100))
-        button4 = tk.Button(self, text="Physics 101", command= lambda: controller.show_frame(Physics101))
-        button5 = tk.Button(self, text="Report Cards", command= lambda: controller.show_frame(ReportCard))
-        button6 = tk.Button(self, text="Main Menu", command= lambda: controller.show_frame(Example))
+        button1 = ctk.CTkButton(self, text="Math 150", command= lambda: controller.show_frame(Math150))
+        button2 = ctk.CTkButton(self, text="English 120", command= lambda: controller.show_frame(English120))
+        button3 = ctk.CTkButton(self, text="Music 100", command= lambda: controller.show_frame(Music100))
+        button4 = ctk.CTkButton(self, text="Physics 101", command= lambda: controller.show_frame(Physics101))
+        button5 = ctk.CTkButton(self, text="Report Cards", command= lambda: controller.show_frame(ReportCard))
+        button6 = ctk.CTkButton(self, text="Main Menu", command= lambda: controller.show_frame(Example))
 
         button1.pack()
         button2.pack()
@@ -66,104 +66,104 @@ class ClassPage(tk.Frame):
         button5.pack()
         button6.pack()
 
-class Math150(tk.Frame):
+class Math150(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="MATH 150 ACTIONS")
+        super().__init__(master=parent)
+        label = ctk.CTkLabel(self, text="MATH 150 ACTIONS")
         label.pack(padx=10, pady=10)
 
-        button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Math150))
-        button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Math150))
-        button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Math150))
-        button4 = tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
+        button1 = ctk.CTkButton(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Math150))
+        button2 = ctk.CTkButton(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Math150))
+        button3 = ctk.CTkButton(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Math150))
+        button4 = ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
 
         button1.pack()
         button2.pack()
         button3.pack()
         button4.pack()
 
-class English120(tk.Frame):
+class English120(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="ENGLISH 120 ACTIONS")
+        super().__init__(master=parent)
+        label = ctk.CTkLabel(self, text="ENGLISH 120 ACTIONS")
         label.pack(padx=10, pady=10)
 
-        button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_English120))
-        button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_English120))
-        button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_English120))
-        button4 = tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
+        button1 = ctk.CTkButton(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_English120))
+        button2 = ctk.CTkButton(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_English120))
+        button3 = ctk.CTkButton(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_English120))
+        button4 = ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
 
         button1.pack()
         button2.pack()
         button3.pack()
         button4.pack()
 
-class Music100(tk.Frame):
+class Music100(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="MUSIC 100 ACTIONS")
+        super().__init__(master=parent)
+        label = ctk.CTkLabel(self, text="MUSIC 100 ACTIONS")
         label.pack(padx=10, pady=10)
 
-        button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Music100))
-        button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Music100))
-        button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Music100))
-        button4 = tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
+        button1 = ctk.CTkButton(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Music100))
+        button2 = ctk.CTkButton(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Music100))
+        button3 = ctk.CTkButton(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Music100))
+        button4 = ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
 
         button1.pack()
         button2.pack()
         button3.pack()
         button4.pack()
 
-class Physics101(tk.Frame):
+class Physics101(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="PHYSICS 101 ACTIONS")
+        super().__init__(master=parent)
+        label = ctk.CTkLabel(self, text="PHYSICS 101 ACTIONS")
         label.pack(padx=10, pady=10)
 
-        button1 = tk.Button(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Physics101))
-        button2 = tk.Button(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Physics101))
-        button3 = tk.Button(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Physics101))
-        button4 = tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
+        button1 = ctk.CTkButton(self, text="Enter Grades", command= lambda: controller.show_frame(EnterGrades_Physics101))
+        button2 = ctk.CTkButton(self, text="Add Student", command= lambda: controller.show_frame(AddStudent_Physics101))
+        button3 = ctk.CTkButton(self, text="Add Professor", command= lambda: controller.show_frame(AddProfessor_Physics101))
+        button4 = ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage))
 
         button1.pack()
         button2.pack()
         button3.pack()
         button4.pack()
 
-class EnterGrades_Math150(tk.Frame):
+class EnterGrades_Math150(ctk.CTkFrame):
     def __init__(self, parent, controller):
         self.controller = controller
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="MATH 150")
+        super().__init__(master=parent)
+        label = ctk.CTkLabel(self, text="MATH 150")
         #label.pack(pady=10, padx=10)
 
         # set entry variables
-        self.last_name = tk.StringVar()
+        self.last_name = ctk.StringVar()
 
         # label to enter name
-        tk.Label(self, text="Student Last Name").grid(row=0, column=0)
+        ctk.CTkLabel(self, text="Student Last Name").grid(row=0, column=0)
 
         # labels for subject codes
-        tk.Label(self, text="Subject").grid(row=1, column=0)
+        ctk.CTkLabel(self, text="Subject").grid(row=1, column=0)
 
-        tk.Label(self, text="Grade").grid(row=1, column=1)
-        self.grade0 = tk.IntVar()
-        self.grade1 = tk.IntVar()
-        self.grade2 = tk.IntVar()
-        self.grade3 = tk.IntVar()
+        ctk.CTkLabel(self, text="Grade").grid(row=1, column=1)
+        self.grade0 = ctk.IntVar()
+        self.grade1 = ctk.IntVar()
+        self.grade2 = ctk.IntVar()
+        self.grade3 = ctk.IntVar()
         self.grades = [self.grade0, self.grade1, self.grade2, self.grade3]
 
         # Name age roll entries
-        e1=tk.Entry(self , textvariable=self.last_name)
+        e1 = ctk.CTkEntry(self , textvariable=self.last_name)
 
         # organizing them in the grid
         e1.grid(row=0, column=1)
 
         # button to display all the calculated credit scores and sgpa
-        find_button = tk.Button(self, text="Find", command=self.find_student)
+        find_button = ctk.CTkButton(self, text="Find", command=self.find_student)
         find_button.grid(row=0,column=2)
-        submit_button = tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
-        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        submit_button = ctk.CTkButton(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
+        ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def find_student(self):
 
@@ -200,13 +200,13 @@ class EnterGrades_Math150(tk.Frame):
             if assignment == "":
                 break
             
-            tk.Label(self, text=assignment[0]).grid(row=(row + i), column=column)
-            tk.Entry(self, textvariable=eval(f'self.grade{i}'), width=5).grid(row=(row + i), column=1)
+            ctk.CTkLabel(self, text=assignment[0]).grid(row=(row + i), column=column)
+            ctk.CTkEntry(self, textvariable=eval(f'self.grade{i}'), width=5).grid(row=(row + i), column=1)
 
             i+=1
 
         ## define button for clearing all fields
-        tk.Button(self, text="Clear", command=self.clear, width=20).grid(row=13, column=1)
+        ctk.CTkButton(self, text="Clear", command=self.clear, width=20).grid(row=13, column=1)
 
     def clear(self):
         for label in self.grid_slaves():
@@ -240,39 +240,39 @@ class EnterGrades_Math150(tk.Frame):
             i+=1
         messagebox.showinfo("Success", "Student grades have been entered.")
 
-class EnterGrades_English120(tk.Frame):
+class EnterGrades_English120(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="English 120")
+        super().__init__(master=parent)
+        label = ctk.CTkLabel(self, text="English 120")
         #label.pack(pady=10, padx=10)
 
         # set entry variables
         self.last_name = tk.StringVar()
 
         # label to enter name
-        tk.Label(self, text="Student Last Name").grid(row=0, column=0)
+        ctk.CTkLabel(self, text="Student Last Name").grid(row=0, column=0)
 
         # labels for subject codes
-        tk.Label(self, text="Subject").grid(row=1, column=0)
+        ctk.CTkLabel(self, text="Subject").grid(row=1, column=0)
 
         tk.Label(self, text="Grade").grid(row=1, column=1)
-        self.grade0 = tk.IntVar()
-        self.grade1 = tk.IntVar()
-        self.grade2 = tk.IntVar()
-        self.grade3 = tk.IntVar()
+        self.grade0 = ctk.IntVar()
+        self.grade1 = ctk.IntVar()
+        self.grade2 = ctk.IntVar()
+        self.grade3 = ctk.IntVar()
         self.grades = [self.grade0, self.grade1, self.grade2, self.grade3]
 
         # Name age roll entries
-        e1=tk.Entry(self , textvariable=self.last_name)
+        e1=ctk.CTkEntry(self , textvariable=self.last_name)
 
         # organizing them in the grid
         e1.grid(row=0, column=1)
 
         # button to display all the calculated credit scores and sgpa
-        find_button = tk.Button(self, text="Find", command=self.find_student)
+        find_button = ctk.CTkButton(self, text="Find", command=self.find_student)
         find_button.grid(row=0,column=2)
-        submit_button = tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
-        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        submit_button = ctk.CTkButton(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
+        ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def find_student(self):
 
@@ -310,13 +310,13 @@ class EnterGrades_English120(tk.Frame):
             if assignment == "":
                 break
             
-            tk.Label(self, text=assignment[0]).grid(row=(row + i), column=column)
-            tk.Entry(self, textvariable=eval(f'self.grade{i}'), width=5).grid(row=(row + i), column=1)
+            ctk.CTkLabel(self, text=assignment[0]).grid(row=(row + i), column=column)
+            ctk.CTkEntry(self, textvariable=eval(f'self.grade{i}'), width=5).grid(row=(row + i), column=1)
 
             i+=1
 
         ## define button for clearing all fields
-        tk.Button(self, text="Clear", command=self.clear, width=20).grid(row=13, column=1)
+        ctk.CTkButton(self, text="Clear", command=self.clear, width=20).grid(row=13, column=1)
 
     def clear(self):
         for label in self.grid_slaves():
@@ -325,7 +325,7 @@ class EnterGrades_English120(tk.Frame):
 
         self.last_name.set("")
 
-        #tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
+        #ctk.CTkButton(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
 
 
     def submit_grades(self):
@@ -350,39 +350,39 @@ class EnterGrades_English120(tk.Frame):
             i+=1
         messagebox.showinfo("Success", "Student grades have been entered.")
 
-class EnterGrades_Music100(tk.Frame):
+class EnterGrades_Music100(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="MUSIC 100")
+        super().__init__(master=parent)
+        label = ctk.CTkLabel(self, text="MUSIC 100")
         #label.pack(pady=10, padx=10)
 
         # set entry variables
-        self.last_name = tk.StringVar()
+        self.last_name = ctk.StringVar()
 
         # label to enter name
-        tk.Label(self, text="Student Last Name").grid(row=0, column=0)
+        ctk.CTkLabel(self, text="Student Last Name").grid(row=0, column=0)
 
         # labels for subject codes
-        tk.Label(self, text="Subject").grid(row=1, column=0)
+        ctk.CTkLabel(self, text="Subject").grid(row=1, column=0)
 
-        tk.Label(self, text="Grade").grid(row=1, column=1)
-        self.grade0 = tk.IntVar()
-        self.grade1 = tk.IntVar()
-        self.grade2 = tk.IntVar()
-        self.grade3 = tk.IntVar()
+        ctk.CTkLabel(self, text="Grade").grid(row=1, column=1)
+        self.grade0 = ctk.IntVar()
+        self.grade1 = ctk.IntVar()
+        self.grade2 = ctk.IntVar()
+        self.grade3 = ctk.IntVar()
         self.grades = [self.grade0, self.grade1, self.grade2, self.grade3]
 
         # Name age roll entries
-        e1=tk.Entry(self , textvariable=self.last_name)
+        e1=ctk.CTkEntry(self , textvariable=self.last_name)
 
         # organizing them in the grid
         e1.grid(row=0, column=1)
 
         # button to display all the calculated credit scores and sgpa
-        find_button = tk.Button(self, text="Find", command=self.find_student)
+        find_button = ctk.CTkButton(self, text="Find", command=self.find_student)
         find_button.grid(row=0,column=2)
-        submit_button = tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
-        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        submit_button = ctk.CTkButton(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
+        ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def find_student(self):
 
@@ -405,7 +405,7 @@ class EnterGrades_Music100(tk.Frame):
         if len(is_enrolled) == 0:
             messagebox.showwarning("Not Enrolled", "Student is not enrolled in this class!")
             self.last_name.set("")
-            tk.Button(self, text="Add Student to Course Here").grid(row=15, column=1)
+            ctk.CTkButton(self, text="Add Student to Course Here").grid(row=15, column=1)
 
         ## get all assignments in the course
         cursor.execute('''select gradebook.assignment from gradebook where
@@ -420,13 +420,13 @@ class EnterGrades_Music100(tk.Frame):
             if assignment == "":
                 break
             
-            tk.Label(self, text=assignment[0]).grid(row=(row + i), column=column)
-            tk.Entry(self, textvariable=eval(f'self.grade{i}'), width=5).grid(row=(row + i), column=1)
+            ctk.CTkLabel(self, text=assignment[0]).grid(row=(row + i), column=column)
+            ctk.CTkEntry(self, textvariable=eval(f'self.grade{i}'), width=5).grid(row=(row + i), column=1)
 
             i+=1
 
         ## define button for clearing all fields
-        tk.Button(self, text="Clear", command=self.clear, width=20).grid(row=13, column=1)
+        ctk.CTkButton(self, text="Clear", command=self.clear, width=20).grid(row=13, column=1)
 
     def clear(self):
         for label in self.grid_slaves():
@@ -460,39 +460,39 @@ class EnterGrades_Music100(tk.Frame):
             i+=1
         messagebox.showinfo("Success", "Student grades have been entered.")
 
-class EnterGrades_Physics101(tk.Frame):
+class EnterGrades_Physics101(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="PHYSICS 101")
+        super().__init__(master=parent)
+        label = ctk.CTkLabel(self, text="PHYSICS 101")
         #label.pack(pady=10, padx=10)
 
         # set entry variables
-        self.last_name = tk.StringVar()
+        self.last_name = ctk.StringVar()
 
         # label to enter name
-        tk.Label(self, text="Student Last Name").grid(row=0, column=0)
+        ctk.CTkLabel(self, text="Student Last Name").grid(row=0, column=0)
 
         # labels for subject codes
-        tk.Label(self, text="Subject").grid(row=1, column=0)
+        ctk.CTkLabel(self, text="Subject").grid(row=1, column=0)
 
-        tk.Label(self, text="Grade").grid(row=1, column=1)
-        self.grade0 = tk.IntVar()
-        self.grade1 = tk.IntVar()
-        self.grade2 = tk.IntVar()
-        self.grade3 = tk.IntVar()
+        ctk.CTkLabel(self, text="Grade").grid(row=1, column=1)
+        self.grade0 = ctk.IntVar()
+        self.grade1 = ctk.IntVar()
+        self.grade2 = ctk.IntVar()
+        self.grade3 = ctk.IntVar()
         self.grades = [self.grade0, self.grade1, self.grade2, self.grade3]
 
         # Name age roll entries
-        e1=tk.Entry(self , textvariable=self.last_name)
+        e1=ctk.CTkEntry(self , textvariable=self.last_name)
 
         # organizing them in the grid
         e1.grid(row=0, column=1)
 
         # button to display all the calculated credit scores and sgpa
-        find_button = tk.Button(self, text="Find", command=self.find_student)
+        find_button = ctk.CTkButton(self, text="Find", command=self.find_student)
         find_button.grid(row=0,column=2)
-        submit_button = tk.Button(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
-        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        submit_button = ctk.CTkButton(self, text="Submit", command=self.submit_grades).grid(row=13, column=0)
+        ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def find_student(self):
 
@@ -530,13 +530,13 @@ class EnterGrades_Physics101(tk.Frame):
             if assignment == "":
                 break
             
-            tk.Label(self, text=assignment[0]).grid(row=(row + i), column=column)
-            tk.Entry(self, textvariable=eval(f'self.grade{i}'), width=5).grid(row=(row + i), column=1)
+            ctk.CTkLabel(self, text=assignment[0]).grid(row=(row + i), column=column)
+            ctk.CTkEntry(self, textvariable=eval(f'self.grade{i}'), width=5).grid(row=(row + i), column=1)
 
             i+=1
 
         ## define button for clearing all fields
-        tk.Button(self, text="Clear", command=self.clear, width=20).grid(row=13, column=1)
+        ctk.CTkButton(self, text="Clear", command=self.clear, width=20).grid(row=13, column=1)
 
     def clear(self):
         for label in self.grid_slaves():
@@ -570,26 +570,26 @@ class EnterGrades_Physics101(tk.Frame):
             i+=1
         messagebox.showinfo("Success", "Student grades have been entered.")
 
-class AddStudent_Math150(tk.Frame):
+class AddStudent_Math150(ctk.CTkFrame):
     def __init__(self, parent, controller):
         self.max_students = 1
 
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="ADD STUDENT")
+        super().__init__(master=parent)
+        label = ctk.CTkLabel(self, text="ADD STUDENT")
         #label.pack(padx=10, pady=10)
 
         ## create all tkinter variables
-        self.last_name = tk.StringVar()
+        self.last_name = ctk.StringVar()
 
         ## create all labels
-        tk.Label(self, text="Student Last Name").grid(row=0, column=0)
+        ctk.CTkLabel(self, text="Student Last Name").grid(row=0, column=0)
 
         ## create all entries
-        tk.Entry(self, textvariable=self.last_name).grid(row=0, column=1)
+        ctk.CTkEntry(self, textvariable=self.last_name).grid(row=0, column=1)
 
         ## create all buttons
-        tk.Button(self, text="Add", command=self.add_student, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        ctk.CTkButton(self, text="Add", command=self.add_student, width=5).grid(row=2, column=0)
+        ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_student(self):
         ## get the student ID of the last name entered
@@ -633,26 +633,26 @@ class AddStudent_Math150(tk.Frame):
             messagebox.showwarning("Enrolled", "Student is already enrolled in this class!")
             self.last_name.set("")
 
-class AddStudent_English120(tk.Frame):
+class AddStudent_English120(ctk.CTkFrame):
     def __init__(self, parent, controller):
         self.max_students = 20
 
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="ADD STUDENT")
+        super().__init__(master=parent)
+        label = ctk.CTkLabel(self, text="ADD STUDENT")
         #label.pack(padx=10, pady=10)
 
         ## create all tkinter variables
-        self.last_name = tk.StringVar()
+        self.last_name = ctk.StringVar()
 
         ## create all labels
-        tk.Label(self, text="Student Last Name").grid(row=0, column=0)
+        ctk.CTkLabel(self, text="Student Last Name").grid(row=0, column=0)
 
         ## create all entries
-        tk.Entry(self, textvariable=self.last_name).grid(row=0, column=1)
+        ctk.CTkEntry(self, textvariable=self.last_name).grid(row=0, column=1)
 
         ## create all buttons
-        tk.Button(self, text="Add", command=self.add_student, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        ctk.CTkButton(self, text="Add", command=self.add_student, width=5).grid(row=2, column=0)
+        ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_student(self):
         ## get the student ID of the last name entered
@@ -696,26 +696,26 @@ class AddStudent_English120(tk.Frame):
             messagebox.showwarning("Enrolled", "Student is already enrolled in this class!")
             self.last_name.set("")
 
-class AddStudent_Music100(tk.Frame):
+class AddStudent_Music100(ctk.CTkFrame):
     def __init__(self, parent, controller):
         self.max_students = 20
 
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="ADD STUDENT")
+        super().__init__(master=parent)
+        label = ctk.CTkLabel(self, text="ADD STUDENT")
         #label.pack(padx=10, pady=10)
 
         ## create all tkinter variables
-        self.last_name = tk.StringVar()
+        self.last_name = ctk.StringVar()
 
         ## create all labels
-        tk.Label(self, text="Student Last Name").grid(row=0, column=0)
+        ctk.CTkLabel(self, text="Student Last Name").grid(row=0, column=0)
 
         ## create all entries
-        tk.Entry(self, textvariable=self.last_name).grid(row=0, column=1)
+        ctk.CTkEntry(self, textvariable=self.last_name).grid(row=0, column=1)
 
         ## create all buttons
-        tk.Button(self, text="Add", command=self.add_student, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        ctk.CTkButton(self, text="Add", command=self.add_student, width=5).grid(row=2, column=0)
+        ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_student(self):
         ## get the student ID of the last name entered
@@ -759,26 +759,26 @@ class AddStudent_Music100(tk.Frame):
             messagebox.showwarning("Enrolled", "Student is already enrolled in this class!")
             self.last_name.set("")
 
-class AddStudent_Physics101(tk.Frame):
+class AddStudent_Physics101(ctk.CTkFrame):
     def __init__(self, parent, controller):
         self.max_students = 20
 
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="ADD STUDENT")
+        super().__init__(master=parent)
+        label = ctk.CTkLabel(self, text="ADD STUDENT")
         #label.pack(padx=10, pady=10)
 
         ## create all tkinter variables
-        self.last_name = tk.StringVar()
+        self.last_name = ctk.StringVar()
 
         ## create all labels
-        tk.Label(self, text="Student Last Name").grid(row=0, column=0)
+        ctk.CTkLabel(self, text="Student Last Name").grid(row=0, column=0)
 
         ## create all entries
-        tk.Entry(self, textvariable=self.last_name).grid(row=0, column=1)
+        ctk.CTkEntry(self, textvariable=self.last_name).grid(row=0, column=1)
 
         ## create all buttons
-        tk.Button(self, text="Add", command=self.add_student, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        ctk.CTkButton(self, text="Add", command=self.add_student, width=5).grid(row=2, column=0)
+        ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_student(self):
         ## get the student ID of the last name entered
@@ -822,24 +822,24 @@ class AddStudent_Physics101(tk.Frame):
             messagebox.showwarning("Enrolled", "Student is already enrolled in this class!")
             self.last_name.set("")
 
-class AddProfessor_Math150(tk.Frame):
+class AddProfessor_Math150(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        super().__init__(master=parent)
         label = tk.Label(self, text="ADD PROFESSOR")
         #label.pack(padx=10, pady=10)
 
         ## create all tkinter variables
-        self.last_name = tk.StringVar()
+        self.last_name = ctk.StringVar()
 
         ## create all labels
-        tk.Label(self, text="Professor Last Name").grid(row=0, column=0)
+        ctk.CTkLabel(self, text="Professor Last Name").grid(row=0, column=0)
 
         ## create all entries
-        tk.Entry(self, textvariable=self.last_name).grid(row=0, column=1)
+        ctk.CTkEntry(self, textvariable=self.last_name).grid(row=0, column=1)
 
         ## create all buttons
-        tk.Button(self, text="Add", command=self.add_professor, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        ctk.CTkButton(self, text="Add", command=self.add_professor, width=5).grid(row=2, column=0)
+        ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_professor(self):
         ## get the professor ID of the last name entered
@@ -865,24 +865,24 @@ class AddProfessor_Math150(tk.Frame):
             messagebox.showinfo("Success", "Professor has been added to Math 150!")
             self.last_name.set("")
 
-class AddProfessor_English120(tk.Frame):
+class AddProfessor_English120(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="ADD PROFESSOR")
+        super().__init__(master=parent)
+        label = ctk.CTkLabel(self, text="ADD PROFESSOR")
         #label.pack(padx=10, pady=10)
 
         ## create all tkinter variables
-        self.last_name = tk.StringVar()
+        self.last_name = ctk.StringVar()
 
         ## create all labels
-        tk.Label(self, text="Professor Last Name").grid(row=0, column=0)
+        ctk.CTkLabel(self, text="Professor Last Name").grid(row=0, column=0)
 
         ## create all entries
-        tk.Entry(self, textvariable=self.last_name).grid(row=0, column=1)
+        ctk.CTkEntry(self, textvariable=self.last_name).grid(row=0, column=1)
 
         ## create all buttons
-        tk.Button(self, text="Add", command=self.add_professor, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        ctk.CTkButton(self, text="Add", command=self.add_professor, width=5).grid(row=2, column=0)
+        ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_professor(self):
         ## get the professor ID of the last name entered
@@ -908,24 +908,24 @@ class AddProfessor_English120(tk.Frame):
             messagebox.showinfo("Success", "Professor has been added to English 120!")
             self.last_name.set("")
 
-class AddProfessor_Music100(tk.Frame):
+class AddProfessor_Music100(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="ADD PROFESSOR")
+        super().__init__(master=parent)
+        label = ctk.CTkLabel(self, text="ADD PROFESSOR")
         #label.pack(padx=10, pady=10)
 
         ## create all tkinter variables
-        self.last_name = tk.StringVar()
+        self.last_name = ctk.StringVar()
 
         ## create all labels
-        tk.Label(self, text="Professor Last Name").grid(row=0, column=0)
+        ctk.CTkLabel(self, text="Professor Last Name").grid(row=0, column=0)
 
         ## create all entries
-        tk.Entry(self, textvariable=self.last_name).grid(row=0, column=1)
+        ctk.CTkEntry(self, textvariable=self.last_name).grid(row=0, column=1)
 
         ## create all buttons
-        tk.Button(self, text="Add", command=self.add_professor, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        ctk.CTkButton(self, text="Add", command=self.add_professor, width=5).grid(row=2, column=0)
+        ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_professor(self):
         ## get the professor ID of the last name entered
@@ -951,24 +951,24 @@ class AddProfessor_Music100(tk.Frame):
             messagebox.showinfo("Success", "Professor has been added to Music 100!")
             self.last_name.set("")
 
-class AddProfessor_Physics101(tk.Frame):
+class AddProfessor_Physics101(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        super().__init__(master=parent)
         label = tk.Label(self, text="ADD PROFESSOR")
         #label.pack(padx=10, pady=10)
 
         ## create all tkinter variables
-        self.last_name = tk.StringVar()
+        self.last_name = ctk.StringVar()
 
         ## create all labels
-        tk.Label(self, text="Professor Last Name").grid(row=0, column=0)
+        ctk.CTkLabel(self, text="Professor Last Name").grid(row=0, column=0)
 
         ## create all entries
-        tk.Entry(self, textvariable=self.last_name).grid(row=0, column=1)
+        ctk.CTkEntry(self, textvariable=self.last_name).grid(row=0, column=1)
 
         ## create all buttons
-        tk.Button(self, text="Add", command=self.add_professor, width=5).grid(row=2, column=0)
-        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
+        ctk.CTkButton(self, text="Add", command=self.add_professor, width=5).grid(row=2, column=0)
+        ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=14, column=1)
 
     def add_professor(self):
         ## get the professor ID of the last name entered
@@ -994,32 +994,32 @@ class AddProfessor_Physics101(tk.Frame):
             messagebox.showinfo("Success", "Professor has been added to Physics 101!")
             self.last_name.set("")
 
-class ReportCard(tk.Frame):
+class ReportCard(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent, controller)
+        super().__init__(master=parent)
         # set entry variables
-        self.last_name = tk.StringVar()
+        self.last_name = ctk.StringVar()
         # label to enter name
-        tk.Label(self, text="Name").grid(row=0, column=0)
+        ctk.CTkLabel(self, text="Name").grid(row=0, column=0)
         # labels for subject codes
-        tk.Label(self, text="Subject").grid(row=5, column=1)
+        ctk.CTkLabel(self, text="Subject").grid(row=5, column=1)
         # label for grades
-        tk.Label(self, text="Grade").grid(row=5, column=2)
+        ctk.CTkLabel(self, text="Grade").grid(row=5, column=2)
         # labels for subject credits
-        tk.Label(self, text="Sub Credit").grid(row=5, column=4)
+        ctk.CTkLabel(self, text="Sub Credit").grid(row=5, column=4)
         # label for course management
-        tk.Label(self, text="Manage Course").grid(row=5, column=0)
+        ctk.CTkLabel(self, text="Manage Course").grid(row=5, column=0)
         # Name age roll entries
-        e1=tk.Entry(self, textvariable=self.last_name)
+        e1=ctk.CTkEntry(self, textvariable=self.last_name)
         # organizing them in the grid
         e1.grid(row=0, column=1)
         # button to display all the calculated credit scores and sgpa
-        find_button = tk.Button(self, text="Find", command=self.find_student)
+        find_button = ctk.CTkButton(self, text="Find", command=self.find_student)
         find_button.grid(row=0,column=2)
-        tk.Button(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=13, column=3)
+        ctk.CTkButton(self, text="Back to Class Selection", command= lambda: controller.show_frame(ClassPage)).grid(row=13, column=3)
 
-        tk.Label(self, text="Total credits").grid(row=11, column=3)
-        tk.Label(self, text="Student GPA").grid(row=12, column=3)
+        ctk.CTkLabel(self, text="Total credits").grid(row=11, column=3)
+        ctk.CTkLabel(self, text="Student GPA").grid(row=12, column=3)
 
     def find_student(self):
 
@@ -1054,7 +1054,7 @@ class ReportCard(tk.Frame):
             cursor.execute("select name from course where course_ID = %s", course_ID)
             course_name = cursor.fetchone()
             
-            tk.Label(self, text=course_name[0]).grid(row=(row + i), column=column)
+            ctk.CTkLabel(self, text=course_name[0]).grid(row=(row + i), column=column)
 
             cursor.execute('''select score, weight from gradebook 
                                     where student_ID = %s and course_ID = %s
@@ -1082,19 +1082,19 @@ class ReportCard(tk.Frame):
             gpa = creds_earned / len(course_list)
             total_gpa.append(gpa)
 
-            tk.Label(self, text=final_grade).grid(row=(row + i), column=(column + 1))
+            ctk.CTkLabel(self, text=final_grade).grid(row=(row + i), column=(column + 1))
 
             ## get credit count for each course
             cursor.execute("select creds from course where course_ID = %s", course_ID)
             credit_count = cursor.fetchall()
             for creds in credit_count:
-                tk.Label(self, text=creds).grid(row=(row + i), column=4)
+                ctk.CTkLabel(self, text=creds).grid(row=(row + i), column=4)
                 total_creds.append(creds)
 
             ## go to button next to each class
             ## ability to manage students from there
             button_command = eval(course_name[0].replace(' ',''))
-            tk.Button(self, text=course_name[0], command=button_command).grid(row=(row + i), column=0)
+            ctk.CTkButton(self, text=course_name[0], command=button_command).grid(row=(row + i), column=0)
 
             i+=1
         
@@ -1103,17 +1103,17 @@ class ReportCard(tk.Frame):
         for cred in total_creds:
             total += cred[0]
             
-        tk.Label(self, text=total).grid(row=11,column=4)
+        ctk.CTkLabel(self, text=total).grid(row=11,column=4)
 
         ## calculate student GPA
         total_student_gpa = 0
         for gpa in total_gpa:
             total_student_gpa += gpa
 
-        tk.Label(self, text=total_student_gpa).grid(row=12, column=4)
+        ctk.CTkLabel(self, text=total_student_gpa).grid(row=12, column=4)
     
         ## define button for clearing all fields
-        tk.Button(self, text="Clear", command=self.clear, width=20).grid(row=13, column=1)
+        ctk.CTkButton(self, text="Clear", command=self.clear, width=20).grid(row=13, column=1)
 
 
     def clear(self):
@@ -1123,139 +1123,141 @@ class ReportCard(tk.Frame):
         self.last_name.set("")        
 
         # label to enter name
-        tk.Label(self, text="Name").grid(row=0, column=0)
+        ctk.CTkLabel(self, text="Name").grid(row=0, column=0)
 
         # labels for subject codes
-        tk.Label(self, text="Subject").grid(row=5, column=1)
+        ctk.CTkLabel(self, text="Subject").grid(row=5, column=1)
 
         # label for grades
-        tk.Label(self, text="Grade").grid(row=5, column=2)
+        ctk.CTkLabel(self, text="Grade").grid(row=5, column=2)
 
         # labels for subject credits
-        tk.Label(self, text="Sub Credit").grid(row=5, column=4)
+        ctk.CTkLabel(self, text="Sub Credit").grid(row=5, column=4)
 
         # label for course management
-        tk.Label(self, text="Manage Course").grid(row=5, column=0)
+        ctk.CTkLabel(self, text="Manage Course").grid(row=5, column=0)
     
-        tk.Label(self, text="Total credits").grid(row=11, column=3)
-        tk.Label(self, text="Student GPA").grid(row=12, column=3)                
+        ctk.CTkLabel(self, text="Total credits").grid(row=11, column=3)
+        ctk.CTkLabel(self, text="Student GPA").grid(row=12, column=3)                
                 
 #####################
 #From FirstProject.py
 #####################
-class Example(tk.Frame):
+class Example(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent, controller)
+        super().__init__(master=parent)
 
         #This is the first window you see and has the 3 buttons for navigating to other windows
-        b1 = tk.Button(self, text="Manage Students", command = self.studentWindow)
+        b1 = ctk.CTkButton(self, text="Manage Students", command = self.studentWindow)
         b1.pack(side="left",anchor='n', padx=40, pady=10)
 
-        b2 = tk.Button(self, text="Manage Teachers", command = self.teacherWindow)
+        b2 = ctk.CTkButton(self, text="Manage Teachers", command = self.teacherWindow)
         b2.pack(side="left",anchor='n', padx=40, pady=10)
 
         #lambda: controller.show_frame(ClassPage)
-        b3 = tk.Button(self, text="Course Management", command = lambda: controller.show_frame(ClassPage))
+        b3 = ctk.CTkButton(self, text="Course Management", command = lambda: controller.show_frame(ClassPage))
         b3.pack(side="left",anchor='n', padx=40, pady=10)
         
-        studenttitle = tk.Label(self, width=30, text="School Force", fg="DarkBlue", font=("times new roman", 15, "bold"))
+        studenttitle = ctk.CTkLabel(self, width=30, text="School Force", fg_color="DarkBlue", font=("times new roman", 15, "bold"))
         studenttitle.pack(side="top",anchor='w', padx=40, pady=10)
 
-        studenttitle = tk.Label(self, width=30, text="Ranz Release 4.2.1", fg="black", font=("times new roman", 8, "bold"))
+        studenttitle = ctk.CTkLabel(self, width=30, text="Ranz Release 4.2.1", fg_color="black", font=("times new roman", 8, "bold"))
         studenttitle.pack(side="bottom",anchor='w', padx=40, pady=10)
         
         root.lift()
         self.splashwindow()
         
     def splashwindow(self):
-        window = tk.Toplevel(self)
+        window = ctk.CTkToplevel(self)
         window.attributes("-topmost", True)
         window.geometry("%dx%d%+d%+d" % (520, 350, 10, 10))
         window.title('Loading')
         #This is the image in the students window
         img = Image.open('intro.jpg')
         self.tkimage = ImageTk.PhotoImage(img)
-        Label(window,image = self.tkimage).place(x=0, y=0)
+        ctk.CTkLabel(window,image = self.tkimage).place(x=0, y=0)
         
         window.after(5000,lambda:window.destroy())
       
     def studentWindow(self):
-        window = tk.Toplevel(self)
+        window = ctk.CTkToplevel(self)
+        window.grid_rowconfigure(0, weight=1)
+        window.grid_columnconfigure(0, weight=1)
 
         #Window Title
-        studenttitle = Label(window, width=18, text="Manage Students", fg="black", font=("times new roman", 15, "bold"))
+        studenttitle = ctk.CTkLabel(window, width=18, text="Manage Students", fg_color="black", font=("times new roman", 15, "bold"))
         studenttitle.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
         #Creating a frame. This frame holds all the information for writing student data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
-        Student_write_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
-        Student_write_Frame.place(x=50, y=45, width=550, height=200)
+        Student_write_Frame = ctk.CTkFrame(window)
+        Student_write_Frame.grid(row=0, column=2)
         
         #Setting the main window size
         window.geometry("%dx%d%+d%+d" % (1350, 550, 10, 10))
         window.grid_columnconfigure((0,1), weight=1)
 
         #Creating variables used in this window
-        self.studentID_var = IntVar()
-        self.studentFirstName_var = StringVar()
-        self.studentLastName_var = StringVar()
-        self.studentAge_var = IntVar()
-        self.studentGradeLevel_var = IntVar()
-        self.studentSearchID_var = StringVar()
-        self.studentSearchName_var = StringVar()
+        self.studentID_var = ctk.IntVar()
+        self.studentFirstName_var = ctk.StringVar()
+        self.studentLastName_var = ctk.StringVar()
+        self.studentAge_var = ctk.IntVar()
+        self.studentGradeLevel_var = ctk.IntVar()
+        self.studentSearchID_var = ctk.StringVar()
+        self.studentSearchName_var = ctk.StringVar()
 
         #This is creating labels
         #Student_Label_1 = tk.Label(Student_write_Frame, text="Student ID", bg="LightGrey", bd=5)
         #Student_Label_1.grid(row=1, column=0)
-        Student_Label_2 = tk.Label(Student_write_Frame, text="Student First Name", bg="LightGrey", bd=5)
+        Student_Label_2 = ctk.CTkLabel(Student_write_Frame, text="Student First Name",)
         Student_Label_2.grid(row=2, column=0)
-        Student_Label_3 = tk.Label(Student_write_Frame, text="Student Last Name", bg="LightGrey", bd=5)
+        Student_Label_3 = ctk.CTkLabel(Student_write_Frame, text="Student Last Name")
         Student_Label_3.grid(row=3, column=0)
-        Student_Label_4 = tk.Label(Student_write_Frame, text="Age", bg="LightGrey", bd=5)
+        Student_Label_4 = ctk.CTkLabel(Student_write_Frame, text="Age")
         Student_Label_4.grid(row=4, column=0)
-        Student_Label_5 = tk.Label(Student_write_Frame, text="Grade Level", bg="LightGrey", bd=5)
+        Student_Label_5 = ctk.CTkLabel(Student_write_Frame, text="Grade Level")
         Student_Label_5.grid(row=5, column=0)
 
         #This is creating labels and tying their input into variables
         #Student_Entry_1 = tk.Entry(Student_write_Frame, textvariable = self.studentID_var)
         #Student_Entry_1.grid(row=1, column=4)
-        Student_Entry_2 = tk.Entry(Student_write_Frame, textvariable = self.studentFirstName_var)
+        Student_Entry_2 = ctk.CTkEntry(Student_write_Frame, textvariable = self.studentFirstName_var)
         Student_Entry_2.grid(row=2, column=4)
-        Student_Entry_3 = tk.Entry(Student_write_Frame, textvariable = self.studentLastName_var)
+        Student_Entry_3 = ctk.CTkEntry(Student_write_Frame, textvariable = self.studentLastName_var)
         Student_Entry_3.grid(row=3, column=4)
-        Student_Entry_4 = tk.Entry(Student_write_Frame, textvariable = self.studentAge_var)
+        Student_Entry_4 = ctk.CTkEntry(Student_write_Frame, textvariable = self.studentAge_var)
         Student_Entry_4.grid(row=4, column=4)
-        Student_Entry_5 = tk.Entry(Student_write_Frame, textvariable = self.studentGradeLevel_var)
+        Student_Entry_5 = ctk.CTkEntry(Student_write_Frame, textvariable = self.studentGradeLevel_var)
         Student_Entry_5.grid(row=5, column=4)
 
         #This is the button for writing data to a database
-        buttons_student_write = tk.Button(Student_write_Frame, text="Write to Database", command= self.studentwrite)
+        buttons_student_write = ctk.CTkButton(Student_write_Frame, text="Write to Database", command= self.studentwrite)
         buttons_student_write.grid(row=1, column=40, padx=25, pady=5, sticky="w")
 
         #This is the image in the students window
         img = Image.open('logo.jpg')
         self.tkimage = ImageTk.PhotoImage(img)
-        Label(window,image = self.tkimage).place(x=750, y=45)
+        ctk.CTkLabel(window,image = self.tkimage).place(x=750, y=45)
 
         #Creating a frame. This frame holds all the information for reading student data from the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
-        Student_read_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
-        Student_read_Frame.place(x=1075, y=250, width=210, height=250)
+        Student_read_Frame = ctk.CTkFrame(window)
+        Student_read_Frame.grid(row=0, column=3)
 
         #These are the entries and labels for querying students
-        Student_Label_6 = tk.Label(Student_read_Frame, text="Search By ID", bg="LightGrey", bd=5)
+        Student_Label_6 = ctk.CTkLabel(Student_read_Frame, text="Search By ID")
         Student_Label_6.grid(row=1, column=0, padx=5, pady=5)
-        Student_Entry_6 = tk.Entry(Student_read_Frame, textvariable = self.studentSearchID_var)
+        Student_Entry_6 = ctk.CTkEntry(Student_read_Frame, textvariable = self.studentSearchID_var)
         Student_Entry_6.grid(row=2, column=0, padx=5, pady=5)
-        Student_Label_7 = tk.Label(Student_read_Frame, text="Search By Last Name", bg="LightGrey", bd=5)
+        Student_Label_7 = ctk.CTkLabel(Student_read_Frame, text="Search By Last Name")
         Student_Label_7.grid(row=3, column=0, padx=5, pady=5) 
-        Student_Entry_7 = tk.Entry(Student_read_Frame, textvariable = self.studentSearchName_var)
+        Student_Entry_7 = ctk.CTkEntry(Student_read_Frame, textvariable = self.studentSearchName_var)
         Student_Entry_7.grid(row=4, column=0, padx=5, pady=5)
 
         #This is the button for querying student data
-        buttons_student_search = tk.Button(Student_read_Frame, command= self.readdatastudent, text="Search Database")
+        buttons_student_search = ctk.CTkButton(Student_read_Frame, command= self.readdatastudent, text="Search Database")
         buttons_student_search.grid(row=5, column=0, padx=25, pady=25)
         #Creating a frame. This frame holds the tree window. Move this frame around and everything inside will follow  
-        Student_tree_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
-        Student_tree_Frame.place(x=20, y=250, width=1025, height=250)
+        Student_tree_Frame = ctk.CTkFrame(window)
+        Student_tree_Frame.grid(row=0, column=4)
         self.studenttree = ttk.Treeview(Student_tree_Frame, columns=("ID", "FirstName","LastName","Age","Year"))
         self.studenttree.grid(row=1, column=0, padx=5, pady=5)
         self.studenttree.heading("ID", text="ID")
@@ -1267,87 +1269,88 @@ class Example(tk.Frame):
         
 
     def teacherWindow(self):
-        window = tk.Toplevel(self)
+        window = ctk.CTkToplevel(self)
         window.geometry("%dx%d%+d%+d" % (1500, 600, 10, 10))
-        window.grid_columnconfigure((0,1), weight=1)
+        window.grid_rowconfigure(0, weight=1)
+        window.grid_columnconfigure(0, weight=1)
 
         #Window Title
-        teachertitle = Label(window, width=18, text="Manage Teachers", fg="black", font=("times new roman", 15, "bold"))
+        teachertitle = ctk.CTkLabel(window, width=18, text="Manage Teachers", fg_color="black", font=("times new roman", 15, "bold"))
         teachertitle.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
         #Creating a frame. This frame holds all the information for writing student data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
-        Teacher_write_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
-        Teacher_write_Frame.place(x=50, y=45, width=550, height=230)
+        Teacher_write_Frame = ctk.CTkFrame(window)
+        Teacher_write_Frame.grid(row=1, column=2)
        
 
         #Creating variables used in this window
-        self.teacherID_var = StringVar()
-        self.teacherFirstName_var = StringVar()
-        self.teacherLastName_var = StringVar()
-        self.teacherAge_var = StringVar()
-        self.teacherQual_var = StringVar()
-        self.teacherStart_var = StringVar()
-        self.teacherSearchID_var = StringVar()
-        self.teacherSearchName_var = StringVar()
+        self.teacherID_var = ctk.StringVar()
+        self.teacherFirstName_var = ctk.StringVar()
+        self.teacherLastName_var = ctk.StringVar()
+        self.teacherAge_var = ctk.StringVar()
+        self.teacherQual_var = ctk.StringVar()
+        self.teacherStart_var = ctk.StringVar()
+        self.teacherSearchID_var = ctk.StringVar()
+        self.teacherSearchName_var = ctk.StringVar()
 
         #This is creating labels
         #Teacher_Label_1 = tk.Label(Teacher_write_Frame, text="Teacher ID", bg="LightGrey", bd=5)
         #Teacher_Label_1.grid(row=1, column=0)
-        Teacher_Label_2 = tk.Label(Teacher_write_Frame, text="Teacher First Name", bg="LightGrey", bd=5)
+        Teacher_Label_2 = ctk.CTkLabel(Teacher_write_Frame, text="Teacher First Name")
         Teacher_Label_2.grid(row=2, column=0)
-        Teacher_Label_3 = tk.Label(Teacher_write_Frame, text="Teacher Last Name", bg="LightGrey", bd=5)
+        Teacher_Label_3 = ctk.CTkLabel(Teacher_write_Frame, text="Teacher Last Name")
         Teacher_Label_3.grid(row=3, column=0)
-        Teacher_Label_4 = tk.Label(Teacher_write_Frame, text="Age", bg="LightGrey", bd=5)
+        Teacher_Label_4 = ctk.CTkLabel(Teacher_write_Frame, text="Age")
         Teacher_Label_4.grid(row=4, column=0)
-        Teacher_Label_5 = tk.Label(Teacher_write_Frame, text="Qualifications", bg="LightGrey", bd=5)
+        Teacher_Label_5 = ctk.CTkLabel(Teacher_write_Frame, text="Qualifications")
         Teacher_Label_5.grid(row=5, column=0)
-        Teacher_Label_6 = tk.Label(Teacher_write_Frame, text="Start Date", bg="LightGrey", bd=5)
+        Teacher_Label_6 = ctk.CTkLabel(Teacher_write_Frame, text="Start Date")
         Teacher_Label_6.grid(row=6, column=0)
 
         #This is creating labels and tying their input into variables
         #Teacher_Entry_1 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherID_var)
         #Teacher_Entry_1.grid(row=1, column=4)
-        Teacher_Entry_2 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherFirstName_var)
+        Teacher_Entry_2 = ctk.CTkEntry(Teacher_write_Frame, textvariable = self.teacherFirstName_var)
         Teacher_Entry_2.grid(row=2, column=4)
-        Teacher_Entry_3 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherLastName_var)
+        Teacher_Entry_3 = ctk.CTkEntry(Teacher_write_Frame, textvariable = self.teacherLastName_var)
         Teacher_Entry_3.grid(row=3, column=4)
-        Teacher_Entry_4 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherAge_var)
+        Teacher_Entry_4 = ctk.CTkEntry(Teacher_write_Frame, textvariable = self.teacherAge_var)
         Teacher_Entry_4.grid(row=4, column=4)
-        Teacher_Entry_5 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherQual_var)
+        Teacher_Entry_5 = ctk.CTkEntry(Teacher_write_Frame, textvariable = self.teacherQual_var)
         Teacher_Entry_5.grid(row=5, column=4)
-        Teacher_Entry_6 = tk.Entry(Teacher_write_Frame, textvariable = self.teacherStart_var)
+        Teacher_Entry_6 = ctk.CTkEntry(Teacher_write_Frame, textvariable = self.teacherStart_var)
         Teacher_Entry_6.grid(row=6, column=4)
 
         #This is the button for writing data to a database
-        buttons_teacher_write = tk.Button(Teacher_write_Frame, text="Write to Database", command= self.teacherwrite)
+        buttons_teacher_write = ctk.CTkButton(Teacher_write_Frame, text="Write to Database", command= self.teacherwrite)
         buttons_teacher_write.grid(row=1, column=40, padx=25, pady=5, sticky="w")
 
         #This is the image in the teacher window
         img = Image.open('logo.jpg')
         self.tkimage = ImageTk.PhotoImage(img)
-        Label(window,image = self.tkimage).place(x=850, y=45)
+        ctk.Label(window,image = self.tkimage).place(x=850, y=45)
 
         #Creating a frame. This frame holds all the information for reading student data from the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
-        Teacher_read_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
-        Teacher_read_Frame.place(x=1275, y=300, width=210, height=250)
+        Teacher_read_Frame = ctk.CTkFrame(window)
+        Teacher_read_Frame.grid(row=1, column=4)
 
         #These are the entries and labels for querying students
-        Teacher_Label_7 = tk.Label(Teacher_read_Frame, text="Search By ID", bg="LightGrey", bd=5)
+        Teacher_Label_7 = ctk.CTkLabel(Teacher_read_Frame, text="Search By ID")
         Teacher_Label_7.grid(row=1, column=0, padx=5, pady=5)
-        Teacher_Entry_7 = tk.Entry(Teacher_read_Frame, textvariable = self.teacherSearchID_var)
+        Teacher_Entry_7 = ctk.CTkEntry(Teacher_read_Frame, textvariable = self.teacherSearchID_var)
         Teacher_Entry_7.grid(row=2, column=0, padx=5, pady=5)
-        Teacher_Label_8 = tk.Label(Teacher_read_Frame, text="Search By Last Name", bg="LightGrey", bd=5)
+        Teacher_Label_8 = ctk.CTkLabel(Teacher_read_Frame, text="Search By Last Name")
         Teacher_Label_8.grid(row=3, column=0, padx=5, pady=5) 
-        Teacher_Entry_9 = tk.Entry(Teacher_read_Frame, textvariable = self.teacherSearchName_var)
+        Teacher_Entry_9 = ctk.CTkEntry(Teacher_read_Frame, textvariable = self.teacherSearchName_var)
         Teacher_Entry_9.grid(row=4, column=0, padx=5, pady=5)
 
         #This is the button for querying student data
-        buttons_teacher_search = tk.Button(Teacher_read_Frame, command= self.readdatateacher, text="Search Database")
+        buttons_teacher_search = ctk.CTkButton(Teacher_read_Frame, command= self.readdatateacher, text="Search Database")
         buttons_teacher_search.grid(row=5, column=0, padx=25, pady=25)
 
         #Creating a frame. This frame holds the tree window. Move this frame around and everything inside will follow  
-        Teacher_tree_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
-        Teacher_tree_Frame.place(x=20, y=300, width=1225, height=250)
+        Teacher_tree_Frame = Frame(window)
+        Teacher_tree_Frame.grid(row=1, column=6)
         self.teachertree = ttk.Treeview(Teacher_tree_Frame, columns=("ID", "FirstName","LastName","Age","Qual","Start"))
         self.teachertree.grid(row=1, column=0, padx=5, pady=5)
         self.teachertree.heading("ID", text="ID")
@@ -1361,76 +1364,76 @@ class Example(tk.Frame):
 
         
     def sectionWindow(self, controller):
-        window = tk.Toplevel(self)
+        window = ctk.CTkToplevel(self)
         window.geometry("%dx%d%+d%+d" % (1100, 550, 10, 10))
         window.grid_columnconfigure((0,1), weight=1)
 
         #Window Title
-        sectiontitle = Label(window, width=18, text="Manage sections", fg="black", font=("times new roman", 15, "bold"))
+        sectiontitle = ctk.CTkLabel(window, width=18, text="Manage sections", fg_color="black", font=("times new roman", 15, "bold"))
         sectiontitle.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
         #Creating a frame. This frame holds all the information for writing class data to the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
-        section_write_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
+        section_write_Frame = ctk.CTkFrame(window, bd=4, relief=RIDGE, bg="LightGrey")
         section_write_Frame.place(x=50, y=45, width=450, height=150)
 
         #Creating variables
-        self.sectionID_var = StringVar()
-        self.sectionName_var = StringVar()
-        self.sectionCreds_var = StringVar()
-        self.sectionProf_var = StringVar()
-        self.sectionSearchID_var = StringVar()
-        self.sectionSearchName_var = StringVar()
+        self.sectionID_var = ctk.StringVar()
+        self.sectionName_var = ctk.StringVar()
+        self.sectionCreds_var = ctk.StringVar()
+        self.sectionProf_var = ctk.StringVar()
+        self.sectionSearchID_var = ctk.StringVar()
+        self.sectionSearchName_var = ctk.StringVar()
 
         #This is creating labels
-        section_Label_1 = tk.Label(section_write_Frame, text="section ID", bg="LightGrey", bd=5)
+        section_Label_1 = ctk.CTkLabel(section_write_Frame, text="section ID", bg="LightGrey", bd=5)
         section_Label_1.grid(row=1, column=0)
-        section_Label_2 = tk.Label(section_write_Frame, text="Section Name", bg="LightGrey", bd=5)
+        section_Label_2 = ctk.CTkLabel(section_write_Frame, text="Section Name", bg="LightGrey", bd=5)
         section_Label_2.grid(row=2, column=0)
-        section_Label_3 = tk.Label(section_write_Frame, text="Credits", bg="LightGrey", bd=5)
+        section_Label_3 = ctk.CTkLabel(section_write_Frame, text="Credits", bg="LightGrey", bd=5)
         section_Label_3.grid(row=3, column=0)
-        section_Label_4 = tk.Label(section_write_Frame, text="Professor", bg="LightGrey", bd=5)
+        section_Label_4 = ctk.CTkLabel(section_write_Frame, text="Professor", bg="LightGrey", bd=5)
         section_Label_4.grid(row=4, column=0)
 
         #This is creating labels and tying their input into variables
-        section_Entry_1 = tk.Entry(section_write_Frame, textvariable = self.sectionID_var)
+        section_Entry_1 = ctk.CTkEntry(section_write_Frame, textvariable = self.sectionID_var)
         section_Entry_1.grid(row=1, column=4)
-        section_Entry_2 = tk.Entry(section_write_Frame, textvariable = self.sectionName_var)
+        section_Entry_2 = ctk.CTkEntry(section_write_Frame, textvariable = self.sectionName_var)
         section_Entry_2.grid(row=2, column=4)
-        section_Entry_3 = tk.Entry(section_write_Frame, textvariable = self.sectionCreds_var)
+        section_Entry_3 = ctk.CTkEntry(section_write_Frame, textvariable = self.sectionCreds_var)
         section_Entry_3.grid(row=3, column=4)
-        section_Entry_4 = tk.Entry(section_write_Frame, textvariable = self.sectionProf_var)
+        section_Entry_4 = ctk.CTkEntry(section_write_Frame, textvariable = self.sectionProf_var)
         section_Entry_4.grid(row=4, column=4)
 
 
         #This is the button for writing data to a database
-        buttons_section_write = tk.Button(section_write_Frame, text="Write to Database", command= self.sectionwrite)
+        buttons_section_write = ctk.CTkButton(section_write_Frame, text="Write to Database", command= self.sectionwrite)
         buttons_section_write.grid(row=1, column=40, padx=25, pady=5, sticky="w")
 
         #This is the image in the section window
         img = Image.open('logo.jpg')
         self.tkimage = ImageTk.PhotoImage(img)
-        Label(window,image = self.tkimage).place(x=650, y=45)
+        ctk.CTkLabel(window,image = self.tkimage).place(x=650, y=45)
 
         #Creating a frame. This frame holds all the information for reading class data from the database. This frame holds buttons and entry boxes. Move this frame around and everything inside will follow
-        section_read_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
+        section_read_Frame = ctk.CTkFrame(window, bd=4, relief=RIDGE, bg="LightGrey")
         section_read_Frame.place(x=900, y=250, width=150, height=200)
 
         #These are the entries and labels for querying classes
-        section_Label_7 = tk.Label(section_read_Frame, text="Search By ID", bg="LightGrey", bd=5)
+        section_Label_7 = ctk.CTkLabel(section_read_Frame, text="Search By ID", bg="LightGrey", bd=5)
         section_Label_7.grid(row=1, column=0, padx=5, pady=5)
-        section_Entry_7 = tk.Entry(section_read_Frame, textvariable = self.sectionSearchID_var)
+        section_Entry_7 = ctk.CTkEntry(section_read_Frame, textvariable = self.sectionSearchID_var)
         section_Entry_7.grid(row=2, column=0, padx=5, pady=5)
-        section_Label_8 = tk.Label(section_read_Frame, text="Search By Name", bg="LightGrey", bd=5)
+        section_Label_8 = ctk.CTkLabel(section_read_Frame, text="Search By Name", bg="LightGrey", bd=5)
         section_Label_8.grid(row=3, column=0, padx=5, pady=5) 
-        section_Entry_9 = tk.Entry(section_read_Frame, textvariable = self.sectionSearchName_var)
+        section_Entry_9 = ctk.CTkEntry(section_read_Frame, textvariable = self.sectionSearchName_var)
         section_Entry_9.grid(row=4, column=0, padx=5, pady=5)
 
         #This is the button for querying class data
-        buttons_section_search = tk.Button(section_read_Frame, command= self.readdataclass, text="Search Database")
+        buttons_section_search = ctk.CTkButton(section_read_Frame, command= self.readdataclass, text="Search Database")
         buttons_section_search.grid(row=5, column=0, padx=25, pady=25)
 
         #Creating a frame. This frame holds the tree window. Move this frame around and everything inside will follow  
-        section_tree_Frame = Frame(window, bd=4, relief=RIDGE, bg="LightGrey")
+        section_tree_Frame = ctk.CTkFrame(window, bd=4, relief=RIDGE, bg="LightGrey")
         section_tree_Frame.place(x=20, y=250, width=825, height=250)
         self.sectiontree = ttk.Treeview(section_tree_Frame, columns=("ID", "Name","Creds","Prof"))
         self.sectiontree.grid(row=1, column=0, padx=5, pady=5)
@@ -1611,7 +1614,7 @@ class Example(tk.Frame):
             messagebox.showinfo("Error", "Please use 1 criteria.")
 
 if __name__ == "__main__":
-    root = tk.Tk()
+    root = ctk.CTk()
     root.geometry("800x300")
     root.title('STUDENT MANAGEMENT SYSTEM')
     PageContainer(root).pack(side="top", fill="both", expand=True)
