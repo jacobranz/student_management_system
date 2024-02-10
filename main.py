@@ -14,6 +14,6 @@ cursor = mydb.cursor()
 if __name__ == "__main__":
     root = ctk.CTk()
     root.geometry("800x300")
-    root.title('STUDENT MANAGEMENT SYSTEM')
+    root.title("STUDENT MANAGEMENT SYSTEM")
     PageContainer(root).pack(side="top", fill="both", expand=True)
     root.mainloop()
