@@ -2,6 +2,8 @@
 import mysql.connector
 import customtkinter as ctk
 
+from views.page_container import PageContainer
+
 mydb = mysql.connector.connect(
     host = "127.0.0.1",
     user = "root",
