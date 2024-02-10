@@ -1,6 +1,14 @@
+from tkinter import messagebox
+import customtkinter as ctk
+
+from .class_page import ClassPage
+
 class ReportCard(ctk.CTkFrame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller, cursor):
         super().__init__(master=parent)
+        
+        self.cursor = cursor
+        
         # set entry variables
         self.last_name = ctk.StringVar()
         # label to enter name
@@ -33,8 +41,8 @@ class ReportCard(ctk.CTkFrame):
         sql = "select student_ID from student where last_name = %s"
         adr = (self.last_name.get(),)
         
-        cursor.execute(sql, adr)
-        students = cursor.fetchall()
+        self.cursor.execute(sql, adr)
+        students = self.cursor.fetchall()
         for student in students:
             student_ID = student[0]
 
@@ -43,10 +51,10 @@ class ReportCard(ctk.CTkFrame):
             self.last_name.set("")
 
         # gets all courses that student is in
-        cursor.execute('''select c.course_ID from course c, enrollment e where
+        self.cursor.execute('''select c.course_ID from course c, enrollment e where
                                 e.student_ID = %s and e.course_ID = c.course_ID
                                 order by name asc''', (student_ID,))
-        course_list = cursor.fetchall()
+        course_list = self.cursor.fetchall()
 
         i=0
         row=6
@@ -55,15 +63,15 @@ class ReportCard(ctk.CTkFrame):
             if course_ID == "":
                 break
 
-            cursor.execute("select name from course where course_ID = %s", course_ID)
-            course_name = cursor.fetchone()
+            self.cursor.execute("select name from course where course_ID = %s", course_ID)
+            course_name = self.cursor.fetchone()
             
             ctk.CTkLabel(self, text=course_name[0]).grid(row=(row + i), column=column)
 
-            cursor.execute('''select score, weight from gradebook 
+            self.cursor.execute('''select score, weight from gradebook 
                                     where student_ID = %s and course_ID = %s
                                     ''', (student_ID, course_ID[0]))
-            allgrades = cursor.fetchall()
+            allgrades = self.cursor.fetchall()
             
             final_grade = 0
             creds_earned = 0
@@ -89,8 +97,8 @@ class ReportCard(ctk.CTkFrame):
             ctk.CTkLabel(self, text=final_grade).grid(row=(row + i), column=(column + 1))
 
             ## get credit count for each course
-            cursor.execute("select creds from course where course_ID = %s", course_ID)
-            credit_count = cursor.fetchall()
+            self.cursor.execute("select creds from course where course_ID = %s", course_ID)
+            credit_count = self.cursor.fetchall()
             for creds in credit_count:
                 ctk.CTkLabel(self, text=creds).grid(row=(row + i), column=4)
                 total_creds.append(creds)

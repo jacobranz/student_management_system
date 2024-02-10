@@ -1,9 +1,23 @@
 #####################
 #From FirstProject.py
 #####################
+
+from tkinter import ttk
+from tkinter import messagebox
+from tkinter import *
+
+from PIL import Image, ImageTk
+import customtkinter as ctk
+import mysql.connector
+
+from .class_page import ClassPage
+
 class Example(ctk.CTkFrame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller, mydb, cursor):
         super().__init__(master=parent)
+
+        self.mydb = mydb
+        self.cursor = cursor
 
         #This is the first window you see and has the 3 buttons for navigating to other windows
         b1 = ctk.CTkButton(self, text="Manage Students", command = self.studentWindow)
@@ -22,7 +36,7 @@ class Example(ctk.CTkFrame):
         studenttitle = ctk.CTkLabel(self, width=30, text="Ranz Release 4.2.1", fg_color="black", font=("times new roman", 8, "bold"))
         studenttitle.pack(side="bottom",anchor='w', padx=40, pady=10)
         
-        root.lift()
+        # root.lift() #! unsure how to fix this or what variable to use instead of the variable root, which is found locally in main.py
         self.splashwindow()
         
     def splashwindow(self):
@@ -303,16 +317,16 @@ class Example(ctk.CTkFrame):
         
     def sectionwrite(self):
         #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
-        #cur = con.cursor()
-        cursor.execute("insert into course values(%s, %s, %s, %s)", (self.sectionID_var.get(), self.sectionName_var.get(), self.sectionCreds_var.get(), self.sectionProf_var.get()))
-        mydb.commit()
+        #cur = con.self.cursor()
+        self.cursor.execute("insert into course values(%s, %s, %s, %s)", (self.sectionID_var.get(), self.sectionName_var.get(), self.sectionCreds_var.get(), self.sectionProf_var.get()))
+        self.mydb.commit()
         messagebox.showinfo("Successfull", "Record has been inserted.")
 
     def studentwrite(self):
         #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
-        #cur = con.cursor()
-        cursor.execute("insert into student (first_name, last_name, age, grade_level) values (%s, %s, %s, %s)", (self.studentFirstName_var.get(), self.studentLastName_var.get(), self.studentAge_var.get(), self.studentGradeLevel_var.get()))
-        mydb.commit()
+        #cur = con.self.cursor()
+        self.cursor.execute("insert into student (first_name, last_name, age, grade_level) values (%s, %s, %s, %s)", (self.studentFirstName_var.get(), self.studentLastName_var.get(), self.studentAge_var.get(), self.studentGradeLevel_var.get()))
+        self.mydb.commit()
         messagebox.showinfo("Successfull", "Record has been inserted.")
         self.studentFirstName_var.set("")
         self.studentLastName_var.set("")
@@ -321,9 +335,9 @@ class Example(ctk.CTkFrame):
 
     def teacherwrite(self):
         #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
-        #cur = con.cursor()
-        cursor.execute("insert into professor (first_name, last_name, age, qualifications, start_date) values(%s, %s, %s, %s, %s)", (self.teacherFirstName_var.get(), self.teacherLastName_var.get(), self.teacherAge_var.get(), self.teacherQual_var.get(), self.teacherStart_var.get()))
-        mydb.commit()
+        #cur = con.self.cursor()
+        self.cursor.execute("insert into professor (first_name, last_name, age, qualifications, start_date) values(%s, %s, %s, %s, %s)", (self.teacherFirstName_var.get(), self.teacherLastName_var.get(), self.teacherAge_var.get(), self.teacherQual_var.get(), self.teacherStart_var.get()))
+        self.mydb.commit()
         messagebox.showinfo("Successfull", "Record has been inserted.")
         self.teacherFirstName_var.set("")
         self.teacherLastName_var.set("")
@@ -337,20 +351,20 @@ class Example(ctk.CTkFrame):
         if len(self.studentSearchID_var.get()) == 0:
 
             #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
-            #cur = con.cursor()
+            #cur = con.self.cursor()
          
             sql = "SELECT * FROM student WHERE last_name = %s"
             adr = self.studentSearchName_var.get()
 
-            val = cursor.execute(sql, (adr,))
+            val = self.cursor.execute(sql, (adr,))
 
-            rows = cursor.fetchall()
+            rows = self.cursor.fetchall()
             if(len(rows)!=0):
                 self.studenttree.delete(*self.studenttree.get_children())
                 for row in rows:
                     self.studenttree.insert('', END, values=row)
 
-                mydb.commit()
+                self.mydb.commit()
             else:
                 messagebox.showinfo("No", "Student is not registered in the database!")
                 self.studentSearchName_var.set("")
@@ -358,20 +372,20 @@ class Example(ctk.CTkFrame):
         elif len(self.studentSearchName_var.get()) == 0:
 
             #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
-            #cur = con.cursor()
+            #cur = con.self.cursor()
          
             sql = "SELECT * FROM student WHERE student_ID = %s"
             adr = self.studentSearchID_var.get()
 
-            val = cursor.execute(sql, (adr,))
+            val = self.cursor.execute(sql, (adr,))
 
-            rows = cursor.fetchall()
+            rows = self.cursor.fetchall()
             if(len(rows)!=0):
                 self.studenttree.delete(*self.studenttree.get_children())
                 for row in rows:
                     self.studenttree.insert('', END, values=row)
 
-                mydb.commit()
+                self.mydb.commit()
             else:
                 messagebox.showinfo("No", "Student is not registered in the database!")
                 self.studentSearchID_var.set("")
@@ -384,20 +398,20 @@ class Example(ctk.CTkFrame):
         if len(self.teacherSearchID_var.get()) == 0:
 
             #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
-            #cur = con.cursor()
+            #cur = con.self.cursor()
          
             sql = "SELECT * FROM professor WHERE last_name = %s"
             adr = self.teacherSearchName_var.get()
 
-            val = cursor.execute(sql, (adr,))
+            val = self.cursor.execute(sql, (adr,))
 
-            rows = cursor.fetchall()
+            rows = self.cursor.fetchall()
             if(len(rows)!=0):
                 self.teachertree.delete(*self.teachertree.get_children())
                 for row in rows:
                     self.teachertree.insert('', END, values=row)
 
-                mydb.commit()
+                self.mydb.commit()
             else:
                 messagebox.showinfo("No", "Professor is not registered in the database!")
                 self.teacherSearchName_var.set("")
@@ -405,20 +419,20 @@ class Example(ctk.CTkFrame):
         elif len(self.teacherSearchName_var.get()) == 0:
 
             #con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
-            #cur = con.cursor()
+            #cur = con.self.cursor()
          
             sql = "SELECT * FROM professor WHERE professor_ID = %s"
             adr = self.teacherSearchID_var.get()
 
-            val = cursor.execute(sql, (adr,))
+            val = self.cursor.execute(sql, (adr,))
 
-            rows = cursor.fetchall()
+            rows = self.cursor.fetchall()
             if(len(rows)!=0):
                 self.teachertree.delete(*self.teachertree.get_children())
                 for row in rows:
                     self.teachertree.insert('', END, values=row)
 
-                mydb.commit()
+                self.mydb.commit()
             else:
                 messagebox.showinfo("No", "Professor is not registered in the database!")
                 self.teacherSearchID_var.set("")
@@ -430,7 +444,7 @@ class Example(ctk.CTkFrame):
         if len(self.sectionSearchID_var.get()) == 0:
 
             con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
-            cur = con.cursor()
+            cur = con.self.cursor()
          
             sql = "SELECT * FROM course WHERE name = %s"
             adr = self.sectionSearchName_var.get()
@@ -451,7 +465,7 @@ class Example(ctk.CTkFrame):
         elif len(self.sectionSearchName_var.get()) == 0:
 
             con = mysql.connector.connect(host="localhost", user="root", password="ctu1234", database="grades")
-            cur = con.cursor()
+            cur = con.self.cursor()
          
             sql = "SELECT * FROM course WHERE course_ID = %s"
             adr = self.sectionSearchID_var.get()

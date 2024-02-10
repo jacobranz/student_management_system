@@ -1,11 +1,19 @@
+from tkinter import messagebox
+import customtkinter as ctk
+
+from ..views.class_page import ClassPage
+
 class EnterGrades_English120(ctk.CTkFrame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller, mydb, cursor):
         super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="English 120")
         #label.pack(pady=10, padx=10)
 
+        self.mydb = mydb
+        self.cursor = cursor
+
         # set entry variables
-        self.last_name = tk.StringVar()
+        self.last_name = ctk.StringVar()
 
         # label to enter name
         ctk.CTkLabel(self, text="Student Last Name").grid(row=0, column=0)
@@ -13,7 +21,7 @@ class EnterGrades_English120(ctk.CTkFrame):
         # labels for subject codes
         ctk.CTkLabel(self, text="Subject").grid(row=1, column=0)
 
-        tk.Label(self, text="Grade").grid(row=1, column=1)
+        ctk.CTkLabel(self, text="Grade").grid(row=1, column=1)
         self.grade0 = ctk.IntVar()
         self.grade1 = ctk.IntVar()
         self.grade2 = ctk.IntVar()
@@ -37,8 +45,8 @@ class EnterGrades_English120(ctk.CTkFrame):
         sql = "select student_ID from student where last_name = %s"
         adr = (self.last_name.get(),)
 
-        cursor.execute(sql, adr)
-        students = cursor.fetchall()
+        self.cursor.execute(sql, adr)
+        students = self.cursor.fetchall()
         for student in students:
             student_ID = student[0]
 
@@ -48,17 +56,17 @@ class EnterGrades_English120(ctk.CTkFrame):
             self.last_name.set("")
 
         ## throw warning if student exists but is not enrolled in the class
-        cursor.execute("select student_ID from enrollment where course_ID = 3 and student_ID = %s", (student_ID,))
-        is_enrolled = cursor.fetchall()
+        self.cursor.execute("select student_ID from enrollment where course_ID = 3 and student_ID = %s", (student_ID,))
+        is_enrolled = self.cursor.fetchall()
         if len(is_enrolled) == 0:
             messagebox.showwarning("Not Enrolled", "Student is not enrolled in this class!")
             self.last_name.set("")
-            tk.Button(self, text="Add Student to Course Here").grid(row=15, column=1)
+            ctk.CTkButton(self, text="Add Student to Course Here").grid(row=15, column=1)
 
         ## get all assignments in the course
-        cursor.execute('''select gradebook.assignment from gradebook where
+        self.cursor.execute('''select gradebook.assignment from gradebook where
                                             gradebook.student_ID = %s and gradebook.course_ID = 3''', (student_ID,))
-        assignment_list = cursor.fetchall()
+        assignment_list = self.cursor.fetchall()
         
 
         i=0
@@ -88,13 +96,13 @@ class EnterGrades_English120(ctk.CTkFrame):
 
     def submit_grades(self):
 
-        cursor.execute("select student_ID from student where last_name = %s", (self.last_name.get(),))
-        for student in cursor.fetchall():
+        self.cursor.execute("select student_ID from student where last_name = %s", (self.last_name.get(),))
+        for student in self.cursor.fetchall():
             student_ID = student[0]
 
-        cursor.execute('''select gradebook.assignment from gradebook where
+        self.cursor.execute('''select gradebook.assignment from gradebook where
                                             gradebook.student_ID = %s and gradebook.course_ID = 3''', (student_ID,))
-        assignment_list = cursor.fetchall()
+        assignment_list = self.cursor.fetchall()
         assignment0 = assignment_list[0]
         assignment1 = assignment_list[1]
         assignment2 = assignment_list[2]
@@ -102,8 +110,8 @@ class EnterGrades_English120(ctk.CTkFrame):
 
         i = 0
         for grade in self.grades:
-            cursor.execute('''update gradebook set score = %s where
+            self.cursor.execute('''update gradebook set score = %s where
                                 assignment = %s and student_ID = %s and course_ID = 3''', (grade.get(), eval(f'assignment{i}[0]'), student_ID))
-            mydb.commit()
+            self.mydb.commit()
             i+=1
         messagebox.showinfo("Success", "Student grades have been entered.")

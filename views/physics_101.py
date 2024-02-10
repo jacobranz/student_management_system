@@ -1,3 +1,10 @@
+import customtkinter as ctk
+
+from .class_page import ClassPage
+from ..enter_grades.enter_grades_physics import EnterGrades_Physics101
+from ..add_professor.add_professor_physics import AddProfessor_Physics101
+from ..add_student.add_student_physics import AddStudent_Physics101
+
 class Physics101(ctk.CTkFrame):
     def __init__(self, parent, controller):
         super().__init__(master=parent)

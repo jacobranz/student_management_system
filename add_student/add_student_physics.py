@@ -1,10 +1,18 @@
+from tkinter import messagebox
+import customtkinter as ctk
+
+from ..views.class_page import ClassPage
+
 class AddStudent_Physics101(ctk.CTkFrame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller, mydb, cursor):
         self.max_students = 20
 
         super().__init__(master=parent)
         label = ctk.CTkLabel(self, text="ADD STUDENT")
         #label.pack(padx=10, pady=10)
+
+        self.mydb = mydb
+        self.cursor = cursor
 
         ## create all tkinter variables
         self.last_name = ctk.StringVar()
@@ -21,27 +29,27 @@ class AddStudent_Physics101(ctk.CTkFrame):
 
     def add_student(self):
         ## get the student ID of the last name entered
-        cursor.execute("select student_ID from student where last_name = %s", (self.last_name.get(),))
-        student_last = cursor.fetchall()
+        self.cursor.execute("select student_ID from student where last_name = %s", (self.last_name.get(),))
+        student_last = self.cursor.fetchall()
         for student in student_last:
             student = student[0]
         if len(student_last) == 0:
             messagebox.showwarning("No Entry Found", "Student entered does not exist in the system!")
             self.last_name.set("")
 
-        cursor.execute("select student_ID from enrollment where course_ID = 1 and student_ID = %s", (student,))
-        is_enrolled = cursor.fetchall()
+        self.cursor.execute("select student_ID from enrollment where course_ID = 1 and student_ID = %s", (student,))
+        is_enrolled = self.cursor.fetchall()
         if len(is_enrolled) == 0:
             ## get student count and ensure it is beneath the max amount
-            cursor.execute("select student_ID from gradebook where course_ID = 1")
-            students = cursor.fetchall()
+            self.cursor.execute("select student_ID from gradebook where course_ID = 1")
+            students = self.cursor.fetchall()
             if len(students) > self.max_students:
                 messagebox.showwarning("Adding Error", "Max amount of students for this class has been reached!")
                 self.last_name.set("")
             else:
                 ## insert the value of student ID into the enrollment table with the appropriate class
-                cursor.execute("insert into enrollment values (%s, 1)", (student,))
-                mydb.commit()
+                self.cursor.execute("insert into enrollment values (%s, 1)", (student,))
+                self.mydb.commit()
 
                 ## insert student into gradebook where assignments can be assigned to them and later graded
                 sql = "insert into gradebook values (%s, 1, %s, 0, 25)"
@@ -51,8 +59,8 @@ class AddStudent_Physics101(ctk.CTkFrame):
                     (student, 'Project 3'),
                     (student, 'Final')
                 ]
-                cursor.executemany(sql, val)
-                mydb.commit()
+                self.cursor.executemany(sql, val)
+                self.mydb.commit()
                 messagebox.showinfo("Success", "Student has been added to Physics 101!")
 
                 ## clear entry field to add more students

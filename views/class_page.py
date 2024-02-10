@@ -1,3 +1,12 @@
+import customtkinter as ctk
+
+from .math_150 import Math150
+from .english_120 import English120
+from .music_100 import Music100
+from .example import Example
+from .report_card import ReportCard
+from .physics_101 import Physics101
+
 class ClassPage(ctk.CTkFrame):
     def __init__(self, parent, controller):
         ctk.CTkFrame.__init__(self, parent)

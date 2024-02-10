@@ -1,8 +1,16 @@
+from tkinter import messagebox
+import customtkinter as ctk
+
+from ..views.class_page import ClassPage
+
 class AddProfessor_Math150(ctk.CTkFrame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller, mydb, cursor):
         super().__init__(master=parent)
-        label = tk.Label(self, text="ADD PROFESSOR")
+        label = ctk.CTkLabel(self, text="ADD PROFESSOR")
         #label.pack(padx=10, pady=10)
+
+        self.mydb = mydb
+        self.cursor = cursor
 
         ## create all tkinter variables
         self.last_name = ctk.StringVar()
@@ -19,24 +27,24 @@ class AddProfessor_Math150(ctk.CTkFrame):
 
     def add_professor(self):
         ## get the professor ID of the last name entered
-        cursor.execute("select professor_ID from professor where last_name = %s", (self.last_name.get(),))
-        prof_last = cursor.fetchall()
+        self.cursor.execute("select professor_ID from professor where last_name = %s", (self.last_name.get(),))
+        prof_last = self.cursor.fetchall()
         for prof in prof_last:
             prof = prof[0]
         if len(prof_last) == 0:
             messagebox.showwarning("No Entry Found", "Professor entered does not exist in the system!")
             self.last_name.set("")
     
-        cursor.execute("select professor_ID from course where name = 'Math 150'")
-        course_info = cursor.fetchall()
+        self.cursor.execute("select professor_ID from course where name = 'Math 150'")
+        course_info = self.cursor.fetchall()
 
         if len(course_info) > 0:
             messagebox.showwarning("No Entry Found", "Math 150 already has a professor!")
             self.last_name.set("")
         else:
             ## insert the professor id into the course
-            #cursor.execute("insert into course values (2, 'Math 150', 4, %s)", (prof,))
-            cursor.execute("update course set professor_ID = %s where course_ID = 2", (prof,))
-            mydb.commit()
+            #self.cursor.execute("insert into course values (2, 'Math 150', 4, %s)", (prof,))
+            self.cursor.execute("update course set professor_ID = %s where course_ID = 2", (prof,))
+            self.mydb.commit()
             messagebox.showinfo("Success", "Professor has been added to Math 150!")
             self.last_name.set("")

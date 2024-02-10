@@ -1,3 +1,10 @@
+import customtkinter as ctk
+
+from .class_page import ClassPage
+from ..add_professor.add_professor_math import AddProfessor_Math150
+from ..add_student.add_student_math import AddStudent_Math150
+from ..enter_grades.enter_grades_math import EnterGrades_Math150
+
 class Math150(ctk.CTkFrame):
     def __init__(self, parent, controller):
         super().__init__(master=parent)
